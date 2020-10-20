@@ -1,0 +1,42 @@
+// app global css in SCSS form
+//$
+@import 'typography';
+
+*{
+  font-family: 'Montserrat';
+}
+
+.q-tab__indicator {
+  height: 12px!important;
+  border-radius: 12px 12px 0 0!important;;
+}
+
+.input {
+  @include text_16-22_medium;
+  padding-bottom: 14px;
+  & i {
+    display: none;
+  }
+}
+.input_label {
+  @include text_16-22_medium;
+  color: $colorGray;
+}
+.input_hint {
+  @include signature_12-16_semibold;
+  color: $colorGray;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.8s ease!important;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s ease!important;
+
+}
+.slide-fade-enter, .slide-fade-leave-to
+{
+  transform: translateY(500px)!important;
+}
+
+

@@ -1,0 +1,60 @@
+// Grid settings
+$gridBreakpointFirst: 'xs';
+$gridBreakpointLast: 'xl';
+$gridBreakpoints: (
+  xs-min: 0,
+  xs-max: 767px,
+
+  sm-min: 768px,
+  sm-max: 991px,
+
+  md-min: 992px,
+  md-max: 1199px,
+
+  lg-min: 1200px,
+  lg-max: 1799px,
+
+  xl-min: 1200px,
+  xl-max: 1799px,
+);
+$gridMaxWidth: (
+  xs: auto,
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+);
+
+// Transition settings
+$primaryTransition: all .3s cubic-bezier(.25, .8, .5, 1);
+
+$fontFamily: 'Montserrat', 'system', sans-serif;
+
+// Color settings
+$colorBlack: #333333;
+$colorWhite: #ffffff;
+$colorInteractive:#0661B2;
+$colorGray: #8A8A8E;
+$colorGray1: #C7C7CC;
+$colorGray2: #f2f4f6;
+$colorGray3: #aab9c6;
+$colorGray4: #C6C6C9;
+$colorDanger: #CC0B19;
+
+
+$colorGrayLight: #f5f8fb;
+$colorGrayDark: #777777;
+$colorGrayDark1: #aaaaaa;
+$colorGrayDark2: #cccccc;
+$colorBlue: #0661B2;
+$colorDarkBlue: #639EE9;
+$colorOrange: #FD9C0B;
+$colorRedLight: #ED6363;
+$colorGreen: #61C233;
+
+
+$colorSecondary: #6c757d;
+$colorSuccess: #28a745;
+$colorInfo: #17a2b8;
+$colorWarning: #ffc107;
+

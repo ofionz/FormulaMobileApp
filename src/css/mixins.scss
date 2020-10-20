@@ -1,0 +1,471 @@
+@import 'variables';
+@mixin title-big_30-38_bold {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 38px;
+  letter-spacing: -0.08px;
+  color: $colorBlack;
+}
+@mixin title_20-24_bold {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: -0.08px;
+  color: $colorBlack;
+}
+@mixin title-mini_18-22_semibold {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.08px;
+  color: $colorBlack;
+}
+@mixin title-subscreen_16-20_semibold {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.408px;
+  color: $colorBlack;
+}
+@mixin text_16-22_medium{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: -0.08px;
+  color: $colorBlack;
+}
+@mixin btn-text-negative_17-22_regular{
+  font-family: SF Pro Text;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+  color: $colorInteractive;
+}
+@mixin btn-text-positive_17-22_semiblod{
+  font-family: SF Pro Text;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: -0.408px;
+color: $colorInteractive;
+}
+@mixin signature_12-16_semibold{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.078px;
+  color: $colorBlack;}
+@mixin btn-signature_13-18_semibold{
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.078px;
+  color: $colorInteractive;
+;}
+
+
+
+
+@mixin clearFix {
+  &::after {
+    display: block;
+    content: '';
+    clear: both;
+  }
+}
+
+@mixin visuallyHidden {
+  &:not(:focus):not(:active) {
+    width: 1px;
+    height: 1px;
+    border: 0;
+    padding: 0;
+    margin: -1px;
+    position: absolute;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+  }
+}
+
+@mixin hover {
+  &:not([disabled]):hover {
+    @content;
+  }
+}
+
+// ========== media queries:
+/*
+  // простые условия
+  media('breakpoint')
+
+  // диапазон условий
+  media('breakpointFrom', 'breakpointTo')
+  mediaHeight('sizeFrom', 'sizeTo')
+
+  // от указанного размера (включительно)
+  mediaMin('breakpoint')
+  mediaHeightMin('size')
+
+  // до указанного размера (включительно)
+  mediaMax('breakpoint')
+  mediaHeightMax('size')
+*/
+
+// size helpers
+@function getMinSize($breakpoint) {
+  @return map-get($gridBreakpoints, '#{$breakpoint}-min') or $breakpoint;
+}
+
+@function getMaxSize($breakpoint) {
+  @return map-get($gridBreakpoints, '#{$breakpoint}-max') or $breakpoint;
+}
+
+// ...
+@mixin media($breakpointFrom, $breakpointTo: false) {
+  @if ($breakpointTo) {
+    @media only screen and (min-width: getMinSize($breakpointFrom)) and (max-width: getMaxSize($breakpointTo)) {
+      @content;
+    }
+  } @else {
+    @if ($breakpointFrom == $gridBreakpointFirst) {
+      @media (max-width: getMaxSize($breakpointFrom)) {
+        @content;
+      }
+    } @else if ($breakpointFrom == $gridBreakpointLast) {
+      @media only screen and (min-width: getMinSize($breakpointFrom)) {
+        @content;
+      }
+    } @else {
+      @media only screen and (min-width: getMinSize($breakpointFrom)) and (max-width: getMaxSize($breakpointFrom)) {
+        @content;
+      }
+    }
+  }
+}
+
+// media min-width
+@mixin mediaMin($breakpoint) {
+  @media only screen and (min-width: getMinSize($breakpoint)) {
+    @content;
+  }
+}
+
+// media max-width
+@mixin mediaMax($breakpoint) {
+  @media only screen and (max-width: getMaxSize($breakpoint)) {
+    @content;
+  }
+}
+
+// ...
+@mixin mediaHeight($sizeFrom, $sizeTo) {
+  @media only screen and (min-height: $sizeFrom) and (max-height: $sizeTo) {
+    @content;
+  }
+}
+
+@mixin mediaHeightMin($size) {
+  @media only screen and (min-width: $size) {
+    @content;
+  }
+}
+
+@mixin mediaHeightMax($size) {
+  @media only screen and (max-width: $size) {
+    @content;
+  }
+}
+// ========== media queries;
+
+@mixin genColumn($prefix, $columns) {
+  @for $column from 1 through $columns {
+    .column#{$prefix}-#{$column} {
+      width: percentage($column / $columns);
+    }
+  }
+}
+
+@mixin typography($fontSize, $lineHeight: false, $letterSpacing: false) {
+  $lineHeight: if($lineHeight != false, $lineHeight, $fontSize);
+  @if ($lineHeight != 'normal' and $lineHeight != 'inherit') {
+    $lineHeight: $lineHeight / $fontSize;
+  }
+  font-size: $fontSize;
+  line-height: $lineHeight;
+
+  @if ($letterSpacing) {
+    letter-spacing: $letterSpacing;
+  }
+}
+
+@mixin resetList {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style: none;
+  list-style-position: outside;
+}
+
+@mixin resetButton {
+  background: 0 0;
+  border: 0;
+  border-radius: 0;
+}
+
+@mixin hide-text {
+  text-indent: 150%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin wordBreak {
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  word-break: break-all;
+}
+
+@mixin fontGradient($from, $to, $direction) {
+  background: -webkit-linear-gradient($direction, $from, $to);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@mixin backgroundGradient($from, $to, $fallback: $from) {
+  background: $fallback;
+  background: -moz-linear-gradient(78deg, $from 10.13%, $to 82.47%)!important;
+  background: -webkit-linear-gradient(78deg, $from 10.13%, $to 82.47%)!important;
+  background: linear-gradient(78deg, $from 10.13%, $to 82.47%)!important;
+}
+
+@mixin borderX($left, $right: $left) {
+  border-left: $left;
+  border-right: $right;
+}
+
+@mixin borderY($top, $bottom: $top) {
+  border-top: $top;
+  border-bottom: $bottom;
+}
+
+@mixin paddingX($left, $right: $left) {
+  padding-left: $left;
+  padding-right: $right;
+}
+
+@mixin paddingY($top, $bottom: $top) {
+  padding-top: $top;
+  padding-bottom: $bottom;
+}
+
+@mixin marginX($left, $right: $left) {
+  margin-left: $left;
+  margin-right: $right;
+}
+
+@mixin marginY($top, $bottom: $top) {
+  margin-top: $top;
+  margin-bottom: $bottom;
+}
+
+/**
+  Задает позиционирование по всем сторонам
+  поведение аналогично margin и padding
+ */
+@mixin positionAll($args...) {
+  $top: false;
+  $right: false;
+  $bottom: false;
+  $left: false;
+
+  @if (length($args) == 1) {
+    $top: nth($args, 1);
+  }
+  @if (length($args) > 1) {
+    $right: nth($args, 2);
+  } @else {
+    $right: nth($args, 1);
+  }
+  @if (length($args) > 2) {
+    $bottom: nth($args, 3);
+  } @else {
+    $bottom: nth($args, 1);
+  }
+  @if (length($args) == 4) {
+    $left: nth($args, 4);
+  } @else if (length($args) > 1) {
+    $left: nth($args, 2);
+  } @else {
+    $left: nth($args, 1);
+  }
+
+
+  @if ($top != false) {
+    top: $top;
+  }
+  @if ($right != false) {
+    right: $right;
+  }
+  @if ($bottom != false) {
+    bottom: $bottom;
+  }
+  @if ($left != false) {
+    left: $left;
+  }
+}
+
+/**
+  Задает позиционирование по выбранным сторонам
+ */
+@mixin positionSet($args...) {
+  @if (nth($args, 1) != false) {
+    top: nth($args, 1);
+  }
+  @if (length($args) >= 2 and nth($args, 2) != false) {
+    right: nth($args, 2);
+  }
+  @if (length($args) >= 3 and nth($args, 3) != false) {
+    bottom: nth($args, 3);
+  }
+  @if (length($args) == 4 and nth($args, 4) != false) {
+    left: nth($args, 4);
+  }
+}
+
+
+@mixin positionX($left, $right: $left) {
+  left: $left;
+  right: $right;
+}
+
+@mixin positionY($top, $bottom: $top) {
+  top: $top;
+  bottom: $bottom;
+}
+
+@mixin stateColor($color, $colorHover: false, $colorActive: false) {
+  @if ($colorHover == false) {
+    $colorHover: $color;
+  }
+  @if ($colorActive == false) {
+    $colorActive: $colorHover;
+  }
+
+  color: $color;
+
+  &:hover {
+    &:not([disabled]) {
+      color: $colorHover;
+    }
+  }
+
+  &:active {
+    &:not([disabled]) {
+      color: $colorActive;
+    }
+  }
+}
+
+@mixin stateBorder($border, $borderHover: false, $borderActive: false) {
+  @if ($borderHover == false) {
+    $borderHover: $border;
+  }
+  @if ($borderActive == false) {
+    $borderActive: $borderHover;
+  }
+
+  border-color: $border;
+
+  &:hover {
+    &:not([disabled]) {
+      border-color: $borderHover;
+    }
+  }
+
+  &:active {
+    &:not([disabled]) {
+      border-color: $borderActive;
+    }
+  }
+}
+
+// ========== Project mixins:
+@mixin pageElement {
+  height: 100%;
+  @include paddingY(32px);
+  box-sizing: border-box;
+
+  @include mediaMin('sm') {
+    @include paddingY(56px);
+  }
+}
+
+@mixin sectionIndent {
+  @include media('xs') {
+    margin-bottom: 32px;
+  }
+
+  @include media('sm') {
+    margin-bottom: 48px;
+  }
+
+  @include mediaMin('md') {
+    margin-bottom: 64px;
+  }
+}
+
+@mixin phoneLink {
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition-duration: .3s;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  @include stateBorder(transparent, $colorBlack);
+  @include stateColor(inherit);
+}
+
+@mixin gradientBrand {
+  @include backgroundGradient($colorBlue, $colorDanger, $colorDanger);
+}
+@mixin textGradientBrand {
+  @include gradientBrand;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  // @include fontGradient($colorDanger 0%, $colorBlue 100%, left);
+}
+
+%link {
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition-duration: .3s;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  @include stateColor($colorBlack);
+  @include stateBorder($colorBlack, transparent);
+}
