@@ -63,7 +63,7 @@
           <span class="q-mr-sm">Долг: 14900</span>
           <span
             :class="$style.link"
-            @click="openSwiper"
+            @click="openPopup"
           >Оплатить</span>
         </div>
         <span :class="$style.link">Редактировать данные</span>
@@ -166,8 +166,8 @@
 
     </div>
     <UiPopUp
-      @close="closeSwiper"
-      :visible="isSliderVisible"
+      @close="closePopup"
+      :visible="isPopupVisible"
     >
       <template #label>
         <div class="q-mb-lg">Долг 14 900 ₽</div>
@@ -195,7 +195,7 @@
           </template>
         </q-input>
         <UiButton
-          @click="openSwiper"
+          @click="openPopup"
           fluid
           theme="background-brand"
           :class="$style.btn_pay"
@@ -222,18 +222,18 @@
     },
     data() {
       return {
-        isSliderVisible: false,
+        isPopupVisible: false,
         paymentAmount: "",
       };
     },
     methods: {
-      closeSwiper() {
+      closePopup() {
         this.$emit('blockToggle', false);
-        this.isSliderVisible = false;
+        this.isPopupVisible = false;
       },
-      openSwiper() {
+      openPopup() {
         this.$emit('blockToggle', true);
-        this.isSliderVisible = true;
+        this.isPopupVisible = true;
       },
 
     },

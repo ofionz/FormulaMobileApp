@@ -15,17 +15,17 @@
       return {
          TABS_CONFIG : [
            {
-             url: "/driving",
+             url: "/student/driving",
              iconName: "car",
              label: "Вождение",
            },
           {
-            url: "/services",
+            url: "/student/services",
             iconName: "stars",
             label: "Сервисы",
           },
            {
-             url: "/cabinet",
+             url: "/student/cabinet",
              iconName: "road",
              label: "Кабинет",
            },

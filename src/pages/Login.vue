@@ -14,6 +14,7 @@
         v-ripple="false"
         :class="$style.tab"
         class="text-capitalize"
+        @click="resetSteps"
       >
         <label :class="$style.tab_label">Вход</label></q-tab
       >
@@ -62,9 +63,7 @@
           fluid
           theme="background-brand"
         >
-
-            Войти
-
+          Войти
         </UiButton>
         <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
           <template #label>Под кем заходим ?</template>
@@ -72,7 +71,12 @@
             <UiButton class="q-mt-lg" fluid theme="outline-brand">
               Преподаватель
             </UiButton>
-            <UiButton class="q-mt-md" @click="$router.push('/')" fluid theme="outline-brand">
+            <UiButton
+              class="q-mt-md"
+              @click="$router.push('/student')"
+              fluid
+              theme="outline-brand"
+            >
               Курсант
             </UiButton>
             <UiButton class="q-mt-md" fluid theme="outline-brand">
@@ -85,8 +89,8 @@
           </template>
         </UiPopUp>
       </q-tab-panel>
-
-      <q-tab-panel :class="$style.panel" name="register">
+      <q-tab-panel name="register">
+      <div v-if="firstStepRegistration" :class="$style.stepsRegistration" >
         <q-input
           v-model="registerForm.name"
           :rules="[val => val.length || 'Введите имя']"
@@ -99,7 +103,6 @@
             </div>
           </template>
         </q-input>
-
         <q-input
           v-model="registerForm.surname"
           class="input"
@@ -119,6 +122,8 @@
           v-model="registerForm.phone"
           label-slot
           class="input"
+          @focusin="maskVisible = true"
+          :fill-mask = 'maskVisible'
           mask="+7(###) ### - ## - ##"
           :rules="[val => val.length || 'Введите телефон']"
         >
@@ -136,7 +141,6 @@
           label-slot
           bottom-slots
           class="input"
-
           :rules="[emailRule]"
         >
           <template v-slot:label>
@@ -164,7 +168,7 @@
           ></UiCheckbox
         >
         <UiButton
-          @click="loadData"
+          @click="registerButtonHandler"
           :class="$style.button_register"
           fluid
           theme="background-brand"
@@ -189,6 +193,49 @@
             </UiButton>
           </template>
         </UiPopUp>
+      </div>
+        <div v-else :class="$style.stepsRegistration" >
+          <q-input
+            v-model="registerForm.password"
+            :rules="[val => val.length || 'Введите пароль']"
+            label-slot
+            type="password"
+            class="input"
+          >
+            <template v-slot:label>
+              <div class="row items-center all-pointer-events input_label">
+                Придумайте пароль
+              </div>
+            </template>
+          </q-input>
+          <q-input
+            v-model="registerForm.password"
+            class="input"
+            label-slot
+            type="password"
+            :rules="[val => val.length || 'Введите еще раз пароль']"
+          >
+            <template v-slot:label>
+              <div
+                :class="$style.input_label"
+                class="row items-center all-pointer-events input_label"
+              >
+                Повторите пароль
+              </div>
+            </template>
+          </q-input>
+
+
+          <UiButton
+            @click="loadData"
+            :class="$style.button_register"
+            fluid
+            theme="background-brand"
+          >
+            Поехали!
+          </UiButton>
+
+        </div>
       </q-tab-panel>
     </q-tab-panels>
   </div>
@@ -208,6 +255,8 @@ export default {
   data() {
     return {
       isSliderVisible: false,
+      firstStepRegistration: true,
+      maskVisible: false,
       license: false,
       tab: "login",
       login: "",
@@ -216,23 +265,27 @@ export default {
         name: "",
         surname: "",
         phone: "",
-        email: ""
+        email: "",
+        password: ""
       }
     };
   },
   mounted() {
     if (window.device) {
-      StatusBar.hide();
+      //TODO FIX проблема  с клавиатурой в полноэкранном режиме
+      // StatusBar.hide();
     }
   },
   methods: {
-
+    registerButtonHandler (){
+      this.firstStepRegistration = false;
+    },
     closeSwiper() {
-      this.$emit('blockToggle', false);
+      this.$emit("blockToggle", false);
       this.isSliderVisible = false;
     },
     openSwiper() {
-      this.$emit('blockToggle', true);
+      this.$emit("blockToggle", true);
       this.isSliderVisible = true;
     },
 
@@ -258,13 +311,20 @@ export default {
         }, 3000);
       });
     },
+    resetSteps (){
+      this.firstStepRegistration = true;
+    },
     loadData() {
-      this.$axios
-        .get("https://reqres.in/api/users?page=2")
-        .then(response => {
-          this.registerForm.name = response.data.ad.company;
-        })
-        .catch(() => {});
+
+
+
+
+      // this.$axios
+      //   .get("https://reqres.in/api/users?page=2")
+      //   .then(response => {
+      //     this.registerForm.name = response.data.ad.company;
+      //   })
+      //   .catch(() => {});
     }
   }
 };
@@ -311,8 +371,9 @@ $tab_panel_height: 120px;
 .panels {
   height: calc(100vh - #{$tab_panel_height});
 }
-.panel {
+.stepsRegistration {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 </style>

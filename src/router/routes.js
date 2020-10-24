@@ -1,13 +1,14 @@
 
 const routes = [
+  { path: '/', redirect: '/guest' },
   {
-    path: '/',
+    path: '/student',
     component: () => import('layouts/StudentLayout.vue'),
     children: [
-      { path: '/', redirect: '/driving' },
-      { path: '/driving', component: () => import('pages/Driving.vue') },
-      { path: '/services', component: () => import('pages/Services.vue') },
-      { path: '/cabinet', component: () => import('pages/Cabinet.vue') },
+      { path: '/student', redirect: '/student/driving' },
+      { path: 'driving', component: () => import('pages/Driving.vue') },
+      { path: 'services', component: () => import('pages/Services.vue') },
+      { path: 'cabinet', component: () => import('pages/Cabinet.vue') },
     ],
   },
   {
@@ -20,6 +21,8 @@ const routes = [
       { path: 'login', component: () => import('pages/Login.vue') },
     ],
   },
+
+  { path: '*', redirect: '/' },
 
   {
     path: '*',

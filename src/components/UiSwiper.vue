@@ -1,6 +1,6 @@
 <template>
 
-  <div :class="$style.swiperWrap" class ="flex column">
+  <div class ="flex column">
     <span :class="$style.swiperName">{{swiperData.name}}</span>
     <swiper
       class="flex column" :class="$style.swiper"
