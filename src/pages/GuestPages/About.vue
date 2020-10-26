@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import UiIcon from '../components/UiIcon';
+  import UiIcon from '../../components/UiIcon';
 
   export default {
     name: 'About',

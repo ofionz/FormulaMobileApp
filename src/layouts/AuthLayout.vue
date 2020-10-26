@@ -15,17 +15,17 @@
       return {
          TABS_CONFIG : [
            {
-             url: "about",
+             name: "about",
              iconName: "road",
              label: "О нас",
            },
           {
-            url: "prices",
+            name: "prices",
             iconName: "money",
             label: "Услуги",
           },
            {
-             url: "login",
+             name: "login",
              iconName: "key",
              label: "Войти",
            },

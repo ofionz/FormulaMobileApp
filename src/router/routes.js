@@ -1,33 +1,65 @@
-
 const routes = [
-  { path: '/', redirect: '/guest' },
+  { path: "/", redirect: "/guest" },
   {
-    path: '/student',
-    component: () => import('layouts/StudentLayout.vue'),
+    path: "/student",
+    component: () => import("layouts/StudentLayout.vue"),
     children: [
-      { path: '/student', redirect: '/student/driving' },
-      { path: 'driving', component: () => import('pages/Driving.vue') },
-      { path: 'services', component: () => import('pages/Services.vue') },
-      { path: 'cabinet', component: () => import('pages/Cabinet.vue') },
-    ],
+      { path: "/student", redirect: "/student/driving" },
+      {
+        path: "driving",
+        name:"driving",
+        component: () => import("pages/StudentPages/Driving.vue")
+      },
+      {
+        path: "services",
+        name:"services",
+        component: () => import("pages/StudentPages/Services.vue")
+      },
+      {
+        path: "cabinet",
+        name:"cabinet",
+        component: () => import("pages/StudentPages/Cabinet.vue")
+      }
+    ]
   },
   {
-    path: '/guest',
-    component: () => import('layouts/AuthLayout.vue'),
+    path: "/guest",
+    component: () => import("layouts/AuthLayout.vue"),
     children: [
-      { path: '/guest', redirect: '/guest/login' },
-      { path: 'prices', component: () => import('pages/Prices.vue') },
-      { path: 'about', component: () => import('pages/About.vue') },
-      { path: 'login', component: () => import('pages/Login.vue') },
-    ],
+      { path: "/guest", redirect: "/guest/login" },
+      {
+        path: "prices",
+        name:"prices",
+        component: () => import("pages/GuestPages/Prices.vue"),
+      },
+      {
+        path: "prices/details/:id",
+        props: true,
+        name:"details",
+        component: () => import("pages/GuestPages/PricesDetails.vue")
+      },
+      {
+        path: "prices/set_user_info",
+        name:"set_user_info",
+        component: () => import("pages/GuestPages/PricesSetUserInfo.vue")
+      },
+      {
+        path: "prices/set_department",
+        name:"set_department",
+        component: () => import("pages/GuestPages/PricesSetDepartment.vue")
+      },
+
+      { path: "about", name:"about", component: () => import("pages/GuestPages/About.vue") },
+      { path: "login", name:"login", component: () => import("pages/GuestPages/Login.vue") }
+    ]
   },
 
-  { path: '*', redirect: '/' },
+  { path: "*", redirect: "/" },
 
   {
-    path: '*',
-    component: () => import('pages/Error404.vue')
+    path: "*",
+    component: () => import("pages/Error404.vue")
   }
-]
+];
 
-export default routes
+export default routes;

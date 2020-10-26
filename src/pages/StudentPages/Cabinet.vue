@@ -13,7 +13,7 @@
           class="q-mr-md"
           :class="$style.student_avatar"
         >
-          <img src="../assets/avatar.png" />
+          <img src="../../assets/avatar.png" />
         </q-avatar>
 
         <div
@@ -209,9 +209,9 @@
 </template>
 
 <script>
-  import UiIcon from '../components/UiIcon';
-  import UiPopUp from '../components/UiPopUp';
-  import UiButton from '../components/UiButton';
+  import UiIcon from '../../components/UiIcon';
+  import UiPopUp from '../../components/UiPopUp';
+  import UiButton from '../../components/UiButton';
 
   export default {
     name: 'Cabinet',

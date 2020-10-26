@@ -90,113 +90,115 @@
         </UiPopUp>
       </q-tab-panel>
       <q-tab-panel name="register">
-      <div v-if="firstStepRegistration" :class="$style.stepsRegistration" >
-        <q-input
-          v-model="registerForm.name"
-          :rules="[val => val.length || 'Введите имя']"
-          label-slot
-          class="input"
-        >
-          <template v-slot:label>
-            <div class="row items-center all-pointer-events input_label">
-              Имя
-            </div>
-          </template>
-        </q-input>
-        <q-input
-          v-model="registerForm.surname"
-          class="input"
-          label-slot
-          :rules="[val => val.length || 'Введите фамилию']"
-        >
-          <template v-slot:label>
-            <div
-              :class="$style.input_label"
-              class="row items-center all-pointer-events input_label"
-            >
-              Фамилия
-            </div>
-          </template>
-        </q-input>
-        <q-input
-          v-model="registerForm.phone"
-          label-slot
-          class="input"
-          @focusin="maskVisible = true"
-          :fill-mask = 'maskVisible'
-          mask="+7(###) ### - ## - ##"
-          :rules="[val => val.length || 'Введите телефон']"
-        >
-          <template v-slot:label>
-            <div
-              :class="$style.input_label"
-              class="row items-center all-pointer-events input_label"
-            >
-              Телефон
-            </div>
-          </template>
-        </q-input>
-        <q-input
-          v-model="registerForm.email"
-          label-slot
-          bottom-slots
-          class="input"
-          :rules="[emailRule]"
-        >
-          <template v-slot:label>
-            <div
-              :class="$style.input_label"
-              class="row items-center all-pointer-events input_label"
-            >
-              Почта
-            </div>
-          </template>
-          <template v-slot:hint>
-            <span class="q-mb-md input_hint">
-              Указанная при оплате в приложении или в филиале.
-            </span>
-          </template>
-        </q-input>
-        <div class="q-mb-lg q-mt-xs">
-          <span :class="$style.email_link" @click="openSwiper">
-            Как оплатить?</span
-          >
-        </div>
-        <UiCheckbox class="q-mb-lg"
-          ><span :class="$style.checkbox_label"
-            >Я согласен на обработку моих персональных данных</span
-          ></UiCheckbox
-        >
-        <UiButton
-          @click="registerButtonHandler"
-          :class="$style.button_register"
-          fluid
-          theme="background-brand"
-        >
-          Зарегистрироваться
-        </UiButton>
-        <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
-          <template #label>Как оплатить ?</template>
-          <template #content>
-            <span class="q-mt-lg" :class="$style.panel_desctiption">
-              Чтобы зарегистрироваться, оплатите пакет обучения во вкладке
-              «Цены» или в любом филиале автошколы «Формула». Каждый пакет
-              доступен при оплате от 1000 ₽</span
-            >
-
-            <UiButton class="q-mt-md" fluid theme="background-brand">
-              Цены
-            </UiButton>
-
-            <UiButton class="q-mt-md q-mb-xl" fluid theme="outline-brand">
-              Адреса филиалов
-            </UiButton>
-          </template>
-        </UiPopUp>
-      </div>
-        <div v-else :class="$style.stepsRegistration" >
+        <div v-if="firstStepRegistration" :class="$style.stepsRegistration">
           <q-input
-            v-model="registerForm.password"
+            v-model="name"
+            :rules="[val => val.length || 'Введите имя']"
+            label-slot
+            class="input"
+          >
+            <template v-slot:label>
+              <div class="row items-center all-pointer-events input_label">
+                Имя
+              </div>
+            </template>
+          </q-input>
+          <q-input
+            v-model="surname"
+            class="input"
+            label-slot
+            :rules="[val => val.length || 'Введите фамилию']"
+          >
+            <template v-slot:label>
+              <div
+                class="row items-center all-pointer-events input_label"
+              >
+                Фамилия
+              </div>
+            </template>
+          </q-input>
+          <q-input
+            v-model="phone"
+            label-slot
+            class="input"
+            @focusin="maskVisible = true"
+            :fill-mask="maskVisible"
+            mask="+7(###) ### - ## - ##"
+            :rules="[val => val.length || 'Введите телефон']"
+          >
+            <template v-slot:label>
+              <div
+                class="row items-center all-pointer-events input_label"
+              >
+                Телефон
+              </div>
+            </template>
+          </q-input>
+          <q-input
+            v-model="email"
+            label-slot
+            bottom-slots
+            class="input"
+            :rules="[emailRule]"
+          >
+            <template v-slot:label>
+              <div
+                class="row items-center all-pointer-events input_label"
+              >
+                Почта
+              </div>
+            </template>
+            <template v-slot:hint>
+              <span class="q-mb-md input_hint">
+                Указанная при оплате в приложении или в филиале.
+              </span>
+            </template>
+          </q-input>
+          <div class="q-mb-lg q-mt-xs">
+            <span :class="$style.email_link" @click="openSwiper">
+              Как оплатить?</span
+            >
+          </div>
+          <UiCheckbox class="q-mb-lg"
+            ><span :class="$style.checkbox_label"
+              >Я согласен на обработку моих персональных данных</span
+            ></UiCheckbox
+          >
+          <UiButton
+            @click="registerButtonHandler"
+            :class="$style.button_register"
+            fluid
+            theme="background-brand"
+          >
+            Зарегистрироваться
+          </UiButton>
+          <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
+            <template #label>Как оплатить ?</template>
+            <template #content>
+              <span class="q-mt-lg" :class="$style.panel_desctiption">
+                Чтобы зарегистрироваться, оплатите пакет обучения во вкладке
+                «Цены» или в любом филиале автошколы «Формула». Каждый пакет
+                доступен при оплате от 1000 ₽</span
+              >
+
+              <UiButton
+                @click="$router.push({ name: 'prices' })"
+                class="q-mt-md"
+                fluid
+                theme="background-brand"
+              >
+                Цены
+              </UiButton>
+
+              <UiButton class="q-mt-md q-mb-xl" fluid theme="outline-brand">
+                Адреса филиалов
+              </UiButton>
+            </template>
+          </UiPopUp>
+        </div>
+        <div v-else :class="$style.stepsRegistration">
+          <q-input
+            v-model="password"
             :rules="[val => val.length || 'Введите пароль']"
             label-slot
             type="password"
@@ -209,7 +211,7 @@
             </template>
           </q-input>
           <q-input
-            v-model="registerForm.password"
+            v-model="password"
             class="input"
             label-slot
             type="password"
@@ -217,14 +219,12 @@
           >
             <template v-slot:label>
               <div
-                :class="$style.input_label"
                 class="row items-center all-pointer-events input_label"
               >
                 Повторите пароль
               </div>
             </template>
           </q-input>
-
 
           <UiButton
             @click="loadData"
@@ -234,7 +234,6 @@
           >
             Поехали!
           </UiButton>
-
         </div>
       </q-tab-panel>
     </q-tab-panels>
@@ -242,9 +241,9 @@
 </template>
 
 <script>
-import UiPopUp from "../components/UiPopUp";
-import UiCheckbox from "../components/UiCheckbox";
-import UiButton from "../components/UiButton";
+import UiPopUp from "../../components/UiPopUp";
+import UiCheckbox from "../../components/UiCheckbox";
+import UiButton from "../../components/UiButton";
 export default {
   name: "MainLayout",
   components: {
@@ -261,13 +260,6 @@ export default {
       tab: "login",
       login: "",
       password: "",
-      registerForm: {
-        name: "",
-        surname: "",
-        phone: "",
-        email: "",
-        password: ""
-      }
     };
   },
   mounted() {
@@ -276,8 +268,43 @@ export default {
       // StatusBar.hide();
     }
   },
+  computed: {
+    name: {
+      get () {
+        return this.$store.state.registerUserInfo.name
+      },
+      set (value) {
+        this.$store.commit('registerUserInfo/setName', value)
+      }
+    },
+    surname: {
+      get () {
+        return this.$store.state.registerUserInfo.surname
+      },
+      set (value) {
+        this.$store.commit('registerUserInfo/setSurname', value)
+      }
+    },
+    phone: {
+      get () {
+        return this.$store.state.registerUserInfo.phone
+      },
+      set (value) {
+        this.$store.commit('registerUserInfo/setPhone', value)
+      }
+    },
+    email: {
+      get () {
+        return this.$store.state.registerUserInfo.email
+      },
+      set (value) {
+        this.$store.commit('registerUserInfo/setEmail', value)
+      }
+    },
+
+  },
   methods: {
-    registerButtonHandler (){
+    registerButtonHandler() {
       this.firstStepRegistration = false;
     },
     closeSwiper() {
@@ -311,18 +338,14 @@ export default {
         }, 3000);
       });
     },
-    resetSteps (){
+    resetSteps() {
       this.firstStepRegistration = true;
     },
     loadData() {
-
-
-
-
       // this.$axios
       //   .get("https://reqres.in/api/users?page=2")
       //   .then(response => {
-      //     this.registerForm.name = response.data.ad.company;
+      //     this.name = response.data.ad.company;
       //   })
       //   .catch(() => {});
     }

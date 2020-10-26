@@ -67,9 +67,9 @@
   </div>
 </template>
 <script>
-import UiCalendar from "../components/UiCalendar";
-import UiButton from "../components/UiButton";
-import UiPopUp from '../components/UiPopUp';
+import UiCalendar from "../../components/UiCalendar";
+import UiButton from "../../components/UiButton";
+import UiPopUp from '../../components/UiPopUp';
 
 export default {
   name: "Driving",

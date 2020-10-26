@@ -8,21 +8,21 @@
     >
 
       <swiper-slide
-        v-for="(slide, index) in swiperData.slides"
+        v-for="(slide, index) in swiperData.tariffs"
         :key="index"
         :class="$style.slide"
       >
-        <div class=" flex column" :class="$style.swiper_inner">
+        <div    @click="clickHandler(slide)"  class=" flex column" :class="$style.swiper_inner">
           <img
-            v-if="slide.imageURL"
+            v-if= 'mode === "promotion"'
             :src='slide.imageURL'
             alt="picture"
           >
           <span :class="$style.swiperHeader" class="q-mb-sm" >
-            {{slide.title}}
+            {{slide.name}}
           </span>
           <span :class="$style.swiperDescription">
-            <span v-for="(row,index) in slide.description" :key="index">{{row}}<br></span>
+            <span v-for="(row,index) in slide.shortDescriptionRows" :key="index">{{row}}<br></span>
           </span>
 
           <div :class="$style.priceWrap">
@@ -32,8 +32,9 @@
           </div>
         </div>
         <span
-          v-if="slide.imageURL"
+          v-if= 'mode === "promotion"'
           :class="$style.swiperImgDescription"
+          @click="clickHandler(slide)"
         > {{slide.imageDescription}}</span>
 
       </swiper-slide>
@@ -52,11 +53,16 @@
       Swiper,
       SwiperSlide,
     },
+
     props: {
       swiperData: {
         type: Object,
         required: true,
       },
+      mode: {
+        default: 'regular',
+        required: true,
+      }
     },
     data() {
       return {
@@ -99,6 +105,11 @@
         },
       };
     },
+    methods: {
+      clickHandler(slide){
+        this.$emit('clicked', slide)
+      }
+    }
   };
 </script>
 <style lang="scss"  module>

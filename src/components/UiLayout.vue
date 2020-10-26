@@ -7,7 +7,7 @@
 
     <q-footer reveal :class= "$style.footer" class="text-white">
       <q-tabs indicator-color="transparent">
-        <q-route-tab v-for="(tab,index) in tabs" :to="tab.url" :key="index" :active-class="$style.active"  :class="$style.button">
+        <q-route-tab v-for="(tab,index) in tabs" :to="{ name: tab.name}" :key="index"  :active-class="$style.active"  :class="$style.button">
           <UiIcon
             :class="$style.button_icon"
             :color-inheritance="true"
