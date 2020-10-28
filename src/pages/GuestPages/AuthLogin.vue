@@ -115,8 +115,8 @@ export default {
   },
   mounted() {
     if (window.device) {
-      //TODO FIX проблема  с клавиатурой в полноэкранном режиме
-      StatusBar.overlaysWebView(true);
+      //TODO обсудить проблему с клавиатурой в полноэкранном режиме
+    //  StatusBar.overlaysWebView(true);
     }
   },
 

@@ -31,7 +31,7 @@
         и практических занятий; скидку на получение мед. справки; бесплатный
         доступ к онлайн-обучению.</span
       >
-      <span :class="$style.price">{{ tariff.price }}</span>
+      <span :class="$style.price">{{ tariff.price | withCurrencySymbol }}</span>
 
       <div class="q-mr-md q-ml-md">
         <UiButton
@@ -50,12 +50,16 @@
 <script>
 import UiIcon from "../../components/UiIcon";
 import UiButton from "../../components/UiButton";
+import withCurrencySymbol from '../../filters/money.filter.js';
 
 export default {
   name: "Details",
   components: {
     UiIcon,
     UiButton
+  },
+  filters: {
+    withCurrencySymbol
   },
   props: {
     id: {

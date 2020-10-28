@@ -29,7 +29,7 @@ export default function() {
         tariffs: [
           {
             id: '1',
-            price: "15 900₽",
+            price: "15900",
             name: "Акционный",
             fullName: '«В» Акционный',
             shortDescriptionRows: [
@@ -51,7 +51,7 @@ export default function() {
           },
           {
             id: '2',
-            price: "1 500₽",
+            price: "1500",
             shortDescriptionRows: [
               "0 часов практики",
               "0 бесплатный внутр. экзамен"
@@ -71,7 +71,7 @@ export default function() {
           {
             id: '3',
             shortDescriptionRows: ["0 часов практики", "Права без экзамена"],
-            price: "350 000₽",
+            price: "350000",
             name: "Люкс",
             fullName: '«В» Люкс',
             detailDescriptionRows: [

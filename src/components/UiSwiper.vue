@@ -27,7 +27,7 @@
 
           <div :class="$style.priceWrap">
               <span :class="$style.price">
-            {{slide.price}}
+            {{slide.price|withCurrencySymbol}}
           </span>
           </div>
         </div>
@@ -46,6 +46,7 @@
 <script>
   import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
   import 'swiper/swiper.scss';
+  import withCurrencySymbol from '../filters/money.filter.js';
 
   export default {
     name: 'UiSwiper',
@@ -63,6 +64,9 @@
         default: 'regular',
         required: true,
       }
+    },
+    filters: {
+      withCurrencySymbol
     },
     data() {
       return {

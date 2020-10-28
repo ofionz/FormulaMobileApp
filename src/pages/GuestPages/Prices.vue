@@ -14,6 +14,7 @@
 
 <script>
 import UiSwiper from "../../components/UiSwiper";
+
 export default {
   components: {
     UiSwiper
@@ -21,7 +22,6 @@ export default {
   data() {
     return {};
   },
-
   methods: {
     swiperClickHandler(slide) {
       this.$router.push({ name: "details", params: {id: slide.id}});

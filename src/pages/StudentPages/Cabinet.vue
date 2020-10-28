@@ -60,7 +60,7 @@
     <div class="flex column">
       <div :class="$style.body_header">
         <div :class="$style.debt_wrap">
-          <span class="q-mr-sm">Долг: 14900</span>
+          <span class="q-mr-sm">Долг: {{'14900'|withCurrencySymbol}}</span>
           <span
             :class="$style.link"
             @click="openPopup"
@@ -170,7 +170,7 @@
       :visible="isPopupVisible"
     >
       <template #label>
-        <div class="q-mb-lg">Долг 14 900 ₽</div>
+        <div class="q-mb-lg">Долг {{'14900'|withCurrencySymbol}}</div>
       </template>
       <template #content>
         <span
@@ -212,6 +212,7 @@
   import UiIcon from '../../components/UiIcon';
   import UiPopUp from '../../components/UiPopUp';
   import UiButton from '../../components/UiButton';
+  import withCurrencySymbol from '../../filters/money.filter';
 
   export default {
     name: 'Cabinet',
@@ -219,6 +220,9 @@
       UiIcon,
       UiPopUp,
       UiButton,
+    },
+    filters: {
+      withCurrencySymbol
     },
     data() {
       return {

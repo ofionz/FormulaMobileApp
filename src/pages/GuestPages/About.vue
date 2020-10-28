@@ -8,7 +8,7 @@
     />
 
     <span :class="$style.about_description">Об автошколе, автопарк, автодромы,
-      Формула Безопасности, лучшая автошкола 2018. Рассрочка от автошколы. Что ещё?</span>
+      Формула Безопасности, лучшая автошкола 2018. Рассрочка от автошколы.</span>
 
     <div :class="$style.about_detail">
       <div class="flex column">
@@ -33,6 +33,7 @@
 
 <script>
   import UiIcon from '../../components/UiIcon';
+
 
   export default {
     name: 'About',

@@ -14,7 +14,7 @@
         </div>
         <span v-if="tariff" :class="$style.total"
           >{{ tariff.groupName }}, пакет {{ tariff.name }}, {{ department }}.
-          Цена: {{ tariff.price }}</span
+          Цена: {{ tariff.price | withCurrencySymbol }}</span
         >
       </div>
 
@@ -78,11 +78,11 @@
       <div v-if="installmentPaymentAmount" class="flex">
         <span :class="$style.to_pay_label">К оплате с рассрочкой: </span>
 
-        <span :class="$style.to_pay_price">{{ installmentPaymentAmount }}</span>
+        <span :class="$style.to_pay_price">{{ installmentPaymentAmount | withCurrencySymbol}}</span>
       </div>
       <div v-else class="flex">
         <span :class="$style.to_pay_label"> К оплате: </span>
-        <span v-if="tariff" :class="$style.to_pay_price">{{ tariff.price }}</span>
+        <span v-if="tariff" :class="$style.to_pay_price">{{ tariff.price | withCurrencySymbol }}</span>
       </div>
 
       <div :class="$style.to_pay_block" class="flex column">
@@ -125,7 +125,7 @@
           class="input"
           bottom-slots
           :rules="[val => val.length || 'Сумма не введена',
-          val => val > 1000 || 'Сумма меньше 1000 руб']"
+          val => val >= 1000 || 'Сумма меньше 1000 руб']"
         >
           <template v-slot:label>
             <div
@@ -167,6 +167,7 @@ import UiIcon from "../../components/UiIcon";
 import UiButton from "../../components/UiButton";
 import UiCheckbox from "../../components/UiCheckbox";
 import UiPopUp from "../../components/UiPopUp";
+import withCurrencySymbol from '../../filters/money.filter.js';
 
 export default {
   name: "Details",
@@ -185,7 +186,9 @@ export default {
       installmentPaymentAmount: ""
     };
   },
-
+  filters: {
+    withCurrencySymbol
+  },
   computed: {
     name() {
       return this.$store.state.registerUserInfo.name;
