@@ -160,7 +160,7 @@ export default {
 .calendar {
   box-shadow: none;
   width: 100%;
-  height: inherit;
+  height: 280px;
   border-radius: 0;
 }
 .q-date__navigation {
@@ -172,16 +172,17 @@ export default {
 }
 .q-date__calendar-days-container {
   height: inherit;
+  min-height: auto!important;
   border-bottom: 0.5px solid #c6c6c9;
 }
 
 .q-date__event {
   z-index: -1;
-  width: 100%;
-  height: 100%;
+  height: 40px;
+  width: 40px;
   border-radius: 100%;
   background: #f2f4f6;
-  transform: translate(-50%, +5%);
+  transform: translate(-50%, 18%);
 }
 .q-date__calendar {
   min-height: 0;
@@ -195,8 +196,11 @@ export default {
 .q-date__calendar-item {
   font-weight: 600;
   font-size: 15px !important;
+
   & button.q-btn-item.bg-primary {
     @include gradientBrand;
+    height: 40px;
+    width: 40px;
     & .q-date__event {
       background-color: transparent !important;
     }

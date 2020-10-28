@@ -120,6 +120,7 @@
           <q-input
             v-model="phone"
             label-slot
+            type="tel"
             class="input"
             @focusin="maskVisible = true"
             :fill-mask="maskVisible"
@@ -136,6 +137,7 @@
           </q-input>
           <q-input
             v-model="email"
+            type="email"
             label-slot
             bottom-slots
             class="input"

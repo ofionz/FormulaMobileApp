@@ -16,3 +16,6 @@ export function setTariffId (state, n) {
 export function setUserDepartment (state, n) {
     state.department = n;
 }
+export function setFirstPayment (state, n) {
+    state.firstPayment = n;
+}

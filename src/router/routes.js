@@ -48,6 +48,17 @@ const routes = [
         name:"set_department",
         component: () => import("pages/GuestPages/PricesSetDepartment.vue")
       },
+      {
+        path: "prices/confirm_payment",
+        name:"confirm_payment",
+        component: () => import("pages/GuestPages/PricesConfirmPayment.vue")
+      },
+      {
+        path: "prices/payment_finished/:type",
+        name:"payment_finished",
+        props: true,
+        component: () => import("pages/GuestPages/PricesPaymentFinished.vue")
+      },
 
       { path: "about", name:"about", component: () => import("pages/GuestPages/About.vue") },
       { path: "login", name:"login", component: () => import("pages/GuestPages/Login.vue") }

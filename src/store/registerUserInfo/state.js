@@ -5,6 +5,7 @@ export default function() {
     phone: "",
     email: "",
     tariffId: "",
-    department: ""
+    department: "",
+    firstPayment: ""
   };
 }

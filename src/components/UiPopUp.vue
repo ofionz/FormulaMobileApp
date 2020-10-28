@@ -149,6 +149,7 @@ $panel_top_item_width: 40px;
 
 .panel_label {
   @include title-mini_18-22_semibold;
+  text-align: center;
 }
 
 .close_button {

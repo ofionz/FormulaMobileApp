@@ -24,10 +24,7 @@ export default {
 
   methods: {
     swiperClickHandler(slide) {
-      //TODO прописать категории динамично
-      this.$router.push({
-        path: `/guest/prices/details/${slide.id}`
-      });
+      this.$router.push({ name: "details", params: {id: slide.id}});
     }
   }
 };

@@ -195,7 +195,7 @@
           </template>
         </q-input>
         <UiButton
-          @click="openPopup"
+          @click="closePopup"
           fluid
           theme="background-brand"
           :class="$style.btn_pay"

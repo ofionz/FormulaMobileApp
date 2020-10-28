@@ -43,6 +43,7 @@
         <q-input
           v-model="phone"
           label-slot
+          type="tel"
           class="input"
           @focusin="maskVisible = true"
           :fill-mask="maskVisible"
@@ -59,6 +60,7 @@
         </q-input>
         <q-input
           v-model="email"
+          type="email"
           label-slot
           bottom-slots
           class="input"
@@ -85,10 +87,10 @@
         >
 
 
-          <UiButton @click="goToSetDepartment" class="q-mt-xl" fluid theme="background-brand">
+          <UiButton @click="nextButtonHandler" class="q-mt-xl" fluid theme="background-brand">
             Выбрать филиал
           </UiButton>
-          <UiButton fluid theme="outline-brand" :class="$style.btn_later">
+          <UiButton @click="skipNextStep" fluid theme="outline-brand" :class="$style.btn_later">
             Выберу позже
           </UiButton>
 
@@ -164,8 +166,12 @@ export default {
     backward(){
       this.$router.go(-1)
     },
-    goToSetDepartment(){
+    nextButtonHandler(){
       this.$router.push({name: 'set_department'})
+    },
+    skipNextStep(){
+      this.$store.commit('registerUserInfo/setUserDepartment', '');
+      this.$router.push({name: 'confirm_payment'})
     }
   },
 

@@ -24,7 +24,7 @@ export default function() {
         ]
       },
       {
-        name: "Категория B",
+        name: "Категория «В»",
         type: 'regular',
         tariffs: [
           {

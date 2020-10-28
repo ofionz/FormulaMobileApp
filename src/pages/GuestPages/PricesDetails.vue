@@ -34,7 +34,12 @@
       <span :class="$style.price">{{ tariff.price }}</span>
 
       <div class="q-mr-md q-ml-md">
-        <UiButton @click="startButtonHandler" fluid theme="background-brand" :class="$style.btn_start">
+        <UiButton
+          @click="startButtonHandler"
+          fluid
+          theme="background-brand"
+          :class="$style.btn_start"
+        >
           Начать обучение
         </UiButton>
       </div>
@@ -65,12 +70,12 @@ export default {
   },
   mounted() {
     this.tariff = this.$store.getters["prices/getTariffById"](this.id);
-    if(!this.tariff) this.$router.push({name: 'prices'})
+    if (!this.tariff) this.$router.push({ name: "prices" });
   },
-  methods:{
-    startButtonHandler(){
-      this.$store.commit('registerUserInfo/setTariffId', this.id)
-      this.$router.push({ name: 'set_user_info' })
+  methods: {
+    startButtonHandler() {
+      this.$store.commit("registerUserInfo/setTariffId", this.id);
+      this.$router.push({ name: "set_user_info" });
     }
   }
 };

@@ -8,7 +8,7 @@
       @unselected="unSelectedDateHandler"
     ></UiCalendar>
 
-    <div class="flex column q-mt-md" :class="$style.appointment_wrap">
+    <div class="flex column" :class="$style.appointment_wrap">
       <div v-if="currentDateData" class="flex column">
       <span
         v-for="choosenTime in currentDateData.choosenTime"
@@ -186,6 +186,7 @@ export default {
 
 .appointment_wrap {
   padding: 0 16px 46px;
+  margin-top: 50px;
 }
 
 .student_appointment {
