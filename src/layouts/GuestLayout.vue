@@ -25,7 +25,7 @@
             label: "Услуги",
           },
            {
-             name: "login",
+             name: "auth",
              iconName: "key",
              label: "Войти",
            },

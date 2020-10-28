@@ -55,12 +55,9 @@ export default {
       type: String
     }
   },
-  mounted() {
-    console.log(this.type);
-  },
   methods: {
     toRegisterButtonHandler() {
-      this.$router.push({ name: "login" });
+      this.$router.push({ name: "register" });
     }
   }
 };

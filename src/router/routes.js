@@ -24,9 +24,9 @@ const routes = [
   },
   {
     path: "/guest",
-    component: () => import("layouts/AuthLayout.vue"),
+    component: () => import("layouts/GuestLayout.vue"),
     children: [
-      { path: "/guest", redirect: "/guest/login" },
+      { path: "/guest", redirect: "/guest/auth/login" },
       {
         path: "prices",
         name:"prices",
@@ -61,7 +61,9 @@ const routes = [
       },
 
       { path: "about", name:"about", component: () => import("pages/GuestPages/About.vue") },
-      { path: "login", name:"login", component: () => import("pages/GuestPages/Login.vue") }
+      { path: "/guest/auth",  name:"auth", redirect: "/guest/auth/login" },
+      { path: "auth/login", name:"login", component: () => import("pages/GuestPages/AuthLogin.vue") },
+      { path: "auth/register", name:"register", component: () => import("pages/GuestPages/AuthRegister.vue") }
     ]
   },
 
