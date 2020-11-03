@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import prices from './prices'
 import registerUserInfo from './registerUserInfo'
 import departments from './departments'
+import studentInfo from './studentInfo'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ export default function ( { ssrContext } ) {
     modules: {
       prices,
       registerUserInfo,
-      departments
+      departments,
+      studentInfo
     },
 
     // enable strict mode (adds overhead!)

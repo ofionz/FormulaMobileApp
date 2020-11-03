@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <q-tabs
       v-model="tab"
       class="text-white"

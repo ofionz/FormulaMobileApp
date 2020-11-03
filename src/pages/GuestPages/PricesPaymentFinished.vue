@@ -1,6 +1,6 @@
 <template>
   <div  :class="$style.container" class="flex column" >
-    <div v-if="type==='installment'"  :class="$style.wrap" class="flex column">
+    <div v-if="type==='later'"  :class="$style.wrap" class="flex column">
       <UiIcon
         :color-inheritance="false"
         name="hand_ok"

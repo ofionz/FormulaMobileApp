@@ -254,6 +254,7 @@ color: $colorInteractive;
   background: -moz-linear-gradient(78deg, $from 10.13%, $to 82.47%)!important;
   background: -webkit-linear-gradient(78deg, $from 10.13%, $to 82.47%)!important;
   background: linear-gradient(78deg, $from 10.13%, $to 82.47%)!important;
+
 }
 
 @mixin borderX($left, $right: $left) {

@@ -205,7 +205,7 @@ export default {
 
 .btn_later {
   margin-top: 16px;
-  margin-bottom: 80px;
+  margin-bottom: 120px;
 }
 .registerForm {
   display: flex;

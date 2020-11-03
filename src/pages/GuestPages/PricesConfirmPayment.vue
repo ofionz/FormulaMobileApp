@@ -78,11 +78,15 @@
       <div v-if="installmentPaymentAmount" class="flex">
         <span :class="$style.to_pay_label">К оплате с рассрочкой: </span>
 
-        <span :class="$style.to_pay_price">{{ installmentPaymentAmount | withCurrencySymbol}}</span>
+        <span :class="$style.to_pay_price">{{
+          installmentPaymentAmount | withCurrencySymbol
+        }}</span>
       </div>
       <div v-else class="flex">
         <span :class="$style.to_pay_label"> К оплате: </span>
-        <span v-if="tariff" :class="$style.to_pay_price">{{ tariff.price | withCurrencySymbol }}</span>
+        <span v-if="tariff" :class="$style.to_pay_price">{{
+          tariff.price | withCurrencySymbol
+        }}</span>
       </div>
 
       <div :class="$style.to_pay_block" class="flex column">
@@ -110,22 +114,24 @@
       >
         Оплатить картой
       </UiButton>
-      <span :class="$style.to_pay_later">Оплатить в филиале</span>
+      <span @click="laterButtonHandler" :class="$style.to_pay_later">Оплатить в филиале</span>
     </div>
 
     <UiPopUp @close="closePopup" :visible="isPopupVisible">
       <template #label>
-        <div class="q-mb-sm">Рассрочка</div>
+        <span>Рассрочка</span>
       </template>
       <template #content>
         <q-input
           v-model="installmentPaymentAmount"
           label-slot
           type="number"
-          class="input"
+          class="input q-mb-xl"
           bottom-slots
-          :rules="[val => val.length || 'Сумма не введена',
-          val => val >= 1000 || 'Сумма меньше 1000 руб']"
+          :rules="[
+            val => val.length || 'Сумма не введена',
+            val => val >= 1000 || 'Сумма меньше 1000 руб'
+          ]"
         >
           <template v-slot:label>
             <div
@@ -144,7 +150,7 @@
             </div>
           </template>
         </q-input>
-        <span class="q-mb-lg q-mt-xl" :class="$style.popup_content">
+        <span :class="$style.popup_content">
           Рассрочка предоставляется от автошколы, без привлечения банков, на
           весь период обучения. Сумму следующих взносов с вами согласует
           администратор.</span
@@ -153,7 +159,7 @@
           @click="setInstallment"
           fluid
           theme="background-brand"
-          class="q-mb-xl"
+          class="q-mt-xl q-mb-xl"
         >
           Отлично
         </UiButton>
@@ -167,7 +173,7 @@ import UiIcon from "../../components/UiIcon";
 import UiButton from "../../components/UiButton";
 import UiCheckbox from "../../components/UiCheckbox";
 import UiPopUp from "../../components/UiPopUp";
-import withCurrencySymbol from '../../filters/money.filter.js';
+import withCurrencySymbol from "../../filters/money.filter.js";
 
 export default {
   name: "Details",
@@ -222,15 +228,16 @@ export default {
   },
   methods: {
     backward() {
-      this.$router.push({ name: "set_department"});
+      this.$router.push({ name: "set_department" });
     },
     backToEdit() {
-      this.$router.push({ name: "set_user_info"});
+      this.$router.push({ name: "set_user_info" });
     },
     nextButtonHandler() {
-      if(this.installmentPaymentAmount)
-      this.$router.push({ name: "payment_finished", params: {type: 'installment'}});
-      else this.$router.push({ name: "payment_finished", params: {type: 'paid'}});
+      this.$router.push({ name: "payment_finished", params: { type: "paid" } });
+    },
+    laterButtonHandler() {
+      this.$router.push({ name: "payment_finished", params: { type: "later" } });
     },
     cancelInstallment() {
       this.firstPayment = this.tariff.price;
@@ -312,7 +319,7 @@ export default {
 
 .btn_later {
   margin-top: 16px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 }
 
 .registerForm {

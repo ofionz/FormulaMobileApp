@@ -9,7 +9,7 @@
           :em-size="false"
           name="arrow"
         />
-        <span :class="$style.category">{{ tariff.fullName }}</span>
+        <span :class="$style.category">{{ tariff.groupName +", "+ tariff.name }}</span>
       </div>
 
       <span class="q-mb-sm" :class="$style.info_title"
@@ -129,7 +129,7 @@ export default {
   padding: 0 16px;
 }
 .btn_start {
-  margin-bottom: 80px;
+  margin-bottom: 96px;
 }
 .price {
   @include title-big_30-38_bold;

@@ -13,7 +13,7 @@ const routes = [
       {
         path: "services",
         name:"services",
-        component: () => import("pages/StudentPages/Services.vue")
+        component: () => import("pages/StudentPages/FillingStudentInfo.vue")
       },
       {
         path: "cabinet",

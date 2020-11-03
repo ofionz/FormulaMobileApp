@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <q-tabs
       v-model="tab"
       class="text-white"
@@ -31,50 +31,50 @@
     <q-tab-panels v-model="tab" :class="$style.panels" animated>
       <q-tab-panel name="register">
         <div v-if="firstStepRegistration" :class="$style.stepsRegistration">
-          <q-input
-            v-model="name"
-            :rules="[val => val.length || 'Введите имя']"
-            label-slot
-            class="input"
-          >
-            <template v-slot:label>
-              <div class="row items-center all-pointer-events input_label">
-                Имя
-              </div>
-            </template>
-          </q-input>
-          <q-input
-            v-model="surname"
-            class="input"
-            label-slot
-            :rules="[val => val.length || 'Введите фамилию']"
-          >
-            <template v-slot:label>
-              <div
-                class="row items-center all-pointer-events input_label"
-              >
-                Фамилия
-              </div>
-            </template>
-          </q-input>
-          <q-input
-            v-model="phone"
-            label-slot
-            type="tel"
-            class="input"
-            @focusin="maskVisible = true"
-            :fill-mask="maskVisible"
-            mask="+7(###) ### - ## - ##"
-            :rules="[val => val.length || 'Введите телефон']"
-          >
-            <template v-slot:label>
-              <div
-                class="row items-center all-pointer-events input_label"
-              >
-                Телефон
-              </div>
-            </template>
-          </q-input>
+          <!--<q-input-->
+          <!--  v-model="name"-->
+          <!--  :rules="[val => val.length || 'Введите имя']"-->
+          <!--  label-slot-->
+          <!--  class="input"-->
+          <!--&gt;-->
+          <!--  <template v-slot:label>-->
+          <!--    <div class="row items-center all-pointer-events input_label">-->
+          <!--      Имя-->
+          <!--    </div>-->
+          <!--  </template>-->
+          <!--</q-input>-->
+          <!--<q-input-->
+          <!--  v-model="surname"-->
+          <!--  class="input"-->
+          <!--  label-slot-->
+          <!--  :rules="[val => val.length || 'Введите фамилию']"-->
+          <!--&gt;-->
+          <!--  <template v-slot:label>-->
+          <!--    <div-->
+          <!--      class="row items-center all-pointer-events input_label"-->
+          <!--    >-->
+          <!--      Фамилия-->
+          <!--    </div>-->
+          <!--  </template>-->
+          <!--</q-input>-->
+          <!--<q-input-->
+          <!--  v-model="phone"-->
+          <!--  label-slot-->
+          <!--  type="tel"-->
+          <!--  class="input"-->
+          <!--  @focusin="maskVisible = true"-->
+          <!--  :fill-mask="maskVisible"-->
+          <!--  mask="+7(###) ### - ## - ##"-->
+          <!--  :rules="[val => val.length || 'Введите телефон']"-->
+          <!--&gt;-->
+          <!--  <template v-slot:label>-->
+          <!--    <div-->
+          <!--      class="row items-center all-pointer-events input_label"-->
+          <!--    >-->
+          <!--      Телефон-->
+          <!--    </div>-->
+          <!--  </template>-->
+          <!--</q-input>-->
           <q-input
             v-model="email"
             type="email"
@@ -101,11 +101,11 @@
               Как оплатить?</span
             >
           </div>
-          <UiCheckbox class="q-mb-lg"
-          ><span :class="$style.checkbox_label"
-          >Я согласен на обработку моих персональных данных</span
-          ></UiCheckbox
-          >
+          <!--<UiCheckbox class="q-mb-lg"-->
+          <!--&gt;<span :class="$style.checkbox_label"-->
+          <!--&gt;Я согласен на обработку моих персональных данных</span-->
+          <!--&gt;</UiCheckbox-->
+          <!--&gt;-->
           <UiButton
             @click="registerButtonHandler"
             :class="$style.button_register"
@@ -117,7 +117,7 @@
           <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
             <template #label>Как оплатить ?</template>
             <template #content>
-              <span class="q-mt-lg" :class="$style.panel_desctiption">
+              <span class="q-mb-lg" :class="$style.panel_desctiption">
                 Чтобы зарегистрироваться, оплатите пакет обучения во вкладке
                 «Цены» или в любом филиале автошколы «Формула». Каждый пакет
                 доступен при оплате от 1000 ₽</span
@@ -125,7 +125,7 @@
 
               <UiButton
                 @click="$router.push({ name: 'prices' })"
-                class="q-mt-md"
+                class="q-mt-lg"
                 fluid
                 theme="background-brand"
               >
@@ -190,7 +190,7 @@
     name: "MainLayout",
     components: {
       UiPopUp,
-      UiCheckbox,
+
       UiButton
     },
     data() {
@@ -313,7 +313,7 @@
 
   .button_register {
     margin-top: auto;
-    margin-bottom: 70px;
+    margin-bottom: 86px;
   }
 
   .email_link {

@@ -8,12 +8,9 @@
         class="flex q-mb-md"
         :class="$style.student_wrap"
       >
-        <q-avatar
-          size="86px"
-          class="q-mr-md"
-          :class="$style.student_avatar"
-        >
-          <img src="../../assets/avatar.png" />
+        <q-avatar size="86px"
+                  :class="$style.avatar" class="q-mr-md">
+          <img :src="avatar" />
         </q-avatar>
 
         <div
@@ -24,11 +21,11 @@
             class="q-mb-xs"
             :class="$style.student_name"
           >
-            Константиненко Константин
+            {{surname}} {{name}}
           </span>
 
           <span :class="$style.student_department">
-            ул. Республики, 164/2, офис 416 <br />
+            {{department.name}} <br />
             «B» Стандарт, №00000000
           </span>
         </div>
@@ -66,7 +63,7 @@
             @click="openPopup"
           >Оплатить</span>
         </div>
-        <span :class="$style.link">Редактировать данные</span>
+        <span  @click="openPopupEdit" :class="$style.link">Редактировать данные</span>
       </div>
 
       <div :class="$style.body_content">
@@ -204,7 +201,17 @@
         </UiButton>
       </template>
     </UiPopUp>
-
+    <UiPopUp
+      @close="closePopupEdit"
+      :visible="isPopupEditVisible"
+    >
+      <template #label>
+        <div class="q-mb-lg">Редактировать данные</div>
+      </template>
+      <template #content>
+      <FillingStudentInfo modal-mode @saved = "closePopupEdit"></FillingStudentInfo>
+      </template>
+    </UiPopUp>
   </div>
 </template>
 
@@ -212,6 +219,7 @@
   import UiIcon from '../../components/UiIcon';
   import UiPopUp from '../../components/UiPopUp';
   import UiButton from '../../components/UiButton';
+  import FillingStudentInfo from './FillingStudentInfo';
   import withCurrencySymbol from '../../filters/money.filter';
 
   export default {
@@ -220,15 +228,109 @@
       UiIcon,
       UiPopUp,
       UiButton,
+      FillingStudentInfo
     },
     filters: {
       withCurrencySymbol
     },
     data() {
       return {
+        isPopupEditVisible: false,
         isPopupVisible: false,
         paymentAmount: "",
       };
+    },
+    computed: {
+      department () {
+          return this.$store.state.studentInfo.department
+        },
+      avatar: {
+        get () {
+          return this.$store.state.studentInfo.avatar
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setAvatar', value)
+        }},
+      name: {
+        get () {
+          return this.$store.state.studentInfo.name
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setName', value)
+        }
+      },
+      surname: {
+        get () {
+          return this.$store.state.studentInfo.surname
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setSurname', value)
+        }
+      },
+      phone: {
+        get () {
+          return this.$store.state.studentInfo.phone
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setPhone', value)
+        }
+      },
+      email: {
+        get () {
+          return this.$store.state.studentInfo.email
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setEmail', value)
+        }
+      },
+      birthDate: {
+        get () {
+          return this.$store.state.studentInfo.birthDate
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setBirthDate', value)
+        }
+      },
+      passportNumber: {
+        get () {
+          return this.$store.state.studentInfo.passportNumber
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setPassportNumber', value)
+        }
+      },
+      passportDate: {
+        get () {
+          return this.$store.state.studentInfo.passportDate
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setPassportDate', value)
+        }
+      },
+      passportPlace: {
+        get () {
+          return this.$store.state.studentInfo.passportPlace
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setPassportPlace', value)
+        }
+      },
+      passportCode: {
+        get () {
+          return this.$store.state.studentInfo.passportCode
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setPassportCode', value)
+        }
+      },
+      passportAddress: {
+        get () {
+          return this.$store.state.studentInfo.passportAddress
+        },
+        set (value) {
+          this.$store.commit('studentInfo/setPassportAddress', value)
+        }
+      },
     },
     methods: {
       closePopup() {
@@ -238,6 +340,14 @@
       openPopup() {
         this.$emit('blockToggle', true);
         this.isPopupVisible = true;
+      },
+      closePopupEdit() {
+        this.$emit('blockToggle', false);
+        this.isPopupEditVisible = false;
+      },
+      openPopupEdit() {
+        this.$emit('blockToggle', true);
+        this.isPopupEditVisible = true;
       },
 
     },
@@ -345,6 +455,10 @@
   .input_placeholder {
     @include signature_12-16_semibold;
     font-weight: 400;
+  }
+  .avatar{
+    box-shadow: 0 0 0 2px $colorWhite;
+
   }
 
   .btn_pay {

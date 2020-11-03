@@ -15,12 +15,16 @@
           name="cross"
         ></UiIcon>
       </button>
-      <span :class="$style.panel_label">
-      <slot name="label"></slot>
+      <span v-touch-pan.vertical.prevent.mouse="handlePan" :class="$style.panel_label">
+
+      <slot  name="label"></slot>
+
       </span>
-      <slot name="content">
+      <div :class="$style.content_wrap">
+      <slot  name="content">
 
       </slot>
+      </div>
     </div>
     </transition>
   </div>
@@ -72,7 +76,7 @@ export default {
       this.moving = true;
     },
      closePanel() {
-       this.transition = 500;
+       this.transition = 800;
       this.$emit('close');
       this.isBackdropped = false;
       this.isVisible = false;
@@ -131,8 +135,10 @@ $panel_top_item_width: 40px;
 }
 
 .panel_label {
-  margin: 0 auto;
+
   @include title-mini_18-22_semibold;
+  text-align: center;
+  margin: 0 auto 24px;
 }
 .panel_item {
   margin: 6px auto 0;
@@ -146,11 +152,11 @@ $panel_top_item_width: 40px;
   height: 15px;
   display: flex;
 }
-
-.panel_label {
-  @include title-mini_18-22_semibold;
-  text-align: center;
+.content_wrap {
+  overflow: scroll;
+  max-height: 80vh;
 }
+
 
 .close_button {
   outline: none;

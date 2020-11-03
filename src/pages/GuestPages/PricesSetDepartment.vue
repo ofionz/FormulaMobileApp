@@ -66,7 +66,7 @@
 
         </yandex-map>
       </div>
-      <div v-else>
+      <div v-else class="q-mb-xl">
         <div
           v-for="(group, index) in allDepartments"
           :key="index"
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="q-mr-md q-ml-md">
+      <div >
         <UiButton
           v-if="currentdepartment"
           @click="nextButtonHandler"
@@ -256,8 +256,13 @@
   }
 
   .list_button {
-    margin-top: 56px;
-    margin-bottom: 80px;
+
+    position: fixed;
+    bottom: 90px;
+    width: 90%;
+    left: 50%;
+    margin-left: -45%;
+
   }
 
   .marker_wrap {
@@ -281,7 +286,7 @@
 
     position: absolute;
     bottom: 90px;
-    max-width: 350px;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
     left: 0;

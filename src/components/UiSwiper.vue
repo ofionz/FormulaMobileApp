@@ -12,30 +12,32 @@
         :key="index"
         :class="$style.slide"
       >
-        <div    @click="clickHandler(slide)"  class=" flex column" :class="$style.swiper_inner">
+        <div    @click="clickHandler(slide)"   :class="$style.slide_container">
           <img
             v-if= 'mode === "promotion"'
             :src='slide.imageURL'
             alt="picture"
           >
+          <div v-else  class=" flex column" :class="$style.swiper_inner">
           <span :class="$style.swiperHeader" class="q-mb-sm" >
             {{slide.name}}
           </span>
           <span :class="$style.swiperDescription">
             <span v-for="(row,index) in slide.shortDescriptionRows" :key="index">{{row}}<br></span>
           </span>
-
           <div :class="$style.priceWrap">
               <span :class="$style.price">
             {{slide.price|withCurrencySymbol}}
           </span>
           </div>
+          </div>
         </div>
+
         <span
           v-if= 'mode === "promotion"'
           :class="$style.swiperImgDescription"
           @click="clickHandler(slide)"
-        > {{slide.imageDescription}}</span>
+        > {{slide.name}}</span>
 
       </swiper-slide>
     </swiper>
@@ -128,8 +130,8 @@
     padding-bottom: 15px;
   }
 
-  .swiper_inner {
-    box-shadow: 3px 3px 16px rgba(0, 97, 243, 0.08);
+
+  .slide_container {
     border-radius: 14px;
     width: 100%;
     height: 160px;
@@ -142,6 +144,11 @@
     }
   }
 
+  .swiper_inner {
+    box-shadow: 3px 3px 16px rgba(0, 97, 243, 0.08);
+    width: 100%;
+    height: 160px;
+  }
   .swiperName {
     @include title_big_30-38_bold;
     margin-bottom: 8px;
@@ -165,6 +172,7 @@
 
   .swiperDescription {
     @include signature_12-16_semibold;
+
     padding: 0 16px;
   }
 
