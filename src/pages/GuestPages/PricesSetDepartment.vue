@@ -3,7 +3,7 @@
     <div class="flex column">
       <div
         class="flex"
-        :class="$style.header"
+        :class="$style.title"
       >
         <UiIcon
           @click="backward"
@@ -12,7 +12,7 @@
           :em-size="false"
           name="arrow"
         />
-        <span :class="$style.title">В каком филиале?</span>
+        <span :class="$style.header">В каком филиале?</span>
         <span
           v-if="mapMode"
           @click="mapMode = false"
@@ -191,8 +191,9 @@
   module
 >
   //$
-  .header {
-    padding: 23px 16px 60px;
+
+  .title {
+    margin: 58px 16px 40px;
     color: $colorBlack;
     justify-content: center;
     position: relative;
@@ -200,7 +201,7 @@
 
   .icon_back {
     position: absolute;
-    left: 16px;
+    left: 0;
     transform: scale(0.9);
   }
 
@@ -209,7 +210,7 @@
     color: $colorInteractive;
   }
 
-  .title {
+  .header {
     @include title-subscreen_16-20_semibold;
   }
 

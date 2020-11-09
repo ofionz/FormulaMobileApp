@@ -20,7 +20,7 @@
       <slot  name="label"></slot>
 
       </span>
-      <div :class="$style.content_wrap">
+      <div ref="content" :class="$style.content_wrap">
       <slot  name="content">
 
       </slot>
@@ -37,6 +37,10 @@ export default {
     UiIcon
   },
   props: {
+    targetSelector: {
+      type: String,
+      default: "#anchor"
+    },
     visible: {
       type: Boolean,
       default: false
@@ -50,6 +54,9 @@ export default {
       moving: false
     };
   },
+  updated() {
+    this.scrollTo()
+  },
   watch: {
     visible: function(newVal) {
       this.isVisible = newVal;
@@ -58,7 +65,6 @@ export default {
     },
   },
   computed: {
-
     classesPanel() {
       const { $style } = this;
       return {
@@ -67,16 +73,23 @@ export default {
       };
     }
   },
- beforeDestroy() {
-   this.closePanel();
- },
   methods: {
+    scrollTo () {
+      const content = this.$refs.content;
+      const target = this.$el.querySelector(this.targetSelector);
+      if (content && target) {
+        const parentTop = content.getBoundingClientRect().top;
+        const currentChildTop = target.getBoundingClientRect().top;
+        const childParentDistance = Math.abs(parentTop - currentChildTop);
+        content.scrollTop = childParentDistance-content.clientHeight/2;
+      }
+
+    },
     returnPanel() {
       this.transition = 0;
       this.moving = true;
     },
-     closePanel() {
-       this.transition = 800;
+    closePanel() {
       this.$emit('close');
       this.isBackdropped = false;
       this.isVisible = false;
@@ -90,9 +103,9 @@ export default {
       }
       if (info.isFinal) {
         const panelHeight = this.$refs.panel.clientHeight;
-        if (info.offset.y > (panelHeight*0.25)) {
+        if (info.offset.y > (panelHeight*0.3)) {
           this.closePanel();
-        } else if (info.offset.y <= (panelHeight*0.25)) {
+        } else if (info.offset.y <= (panelHeight*0.3)) {
           this.returnPanel();
         }
       }
@@ -138,7 +151,31 @@ $panel_top_item_width: 40px;
 
   @include title-mini_18-22_semibold;
   text-align: center;
-  margin: 0 auto 24px;
+  margin: 0 auto 8px;
+}
+
+.panel_label:before{
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  margin-top:28px;
+  content: "";
+  display: block;
+  height: 32px;
+  width: 100%;
+  background: linear-gradient(180deg, #fff 9.38%, rgba(255, 255, 255, 0) 100%);
+}
+.panel_label:after{
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  bottom: -1px;
+  margin-top:28px;
+  content: "";
+  display: block;
+  height: 32px;
+  width: 100%;
+  background: linear-gradient(0deg, #fff 9.38%, rgba(255, 255, 255, 0) 100%);
 }
 .panel_item {
   margin: 6px auto 0;
@@ -154,8 +191,12 @@ $panel_top_item_width: 40px;
 }
 .content_wrap {
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
+
   max-height: 80vh;
 }
+
 
 
 .close_button {

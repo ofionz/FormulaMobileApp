@@ -1,18 +1,14 @@
 <template>
   <div>
     <div class="flex column">
-      <div class="flex" :class="$style.category_wrap">
-        <UiIcon
-          @click="$router.push({ name: 'prices' })"
-          :class="$style.icon_back"
-          :color-inheritance="true"
-          :em-size="false"
-          name="arrow"
-        />
-        <span :class="$style.category">{{ tariff.groupName +", "+ tariff.name }}</span>
-      </div>
+      <ui-page-title
+        :class="$style.title"
+        @backward="$router.push({ name: 'prices' })"
+        :title="tariff.groupName + ', ' + tariff.name"
+      >
+      </ui-page-title>
 
-      <span class="q-mb-sm" :class="$style.info_title"
+      <span class="q-mb-sm q-mt-lg" :class="$style.info_title"
         >В этот пакет включено:</span
       >
       <ul :class="$style.row_list">
@@ -48,15 +44,16 @@
 </template>
 
 <script>
-import UiIcon from "../../components/UiIcon";
+  import UiPageTitle from "../../components/UiPageTitle";
 import UiButton from "../../components/UiButton";
-import withCurrencySymbol from '../../filters/money.filter.js';
+import withCurrencySymbol from "../../filters/money.filter.js";
+
 
 export default {
   name: "Details",
   components: {
-    UiIcon,
-    UiButton
+    UiButton,
+    UiPageTitle
   },
   filters: {
     withCurrencySymbol
@@ -87,23 +84,9 @@ export default {
 
 <style lang="scss" module>
 //$
-.category_wrap {
-  padding: 23px 16px 60px;
-  color: $colorBlack;
-  justify-content: center;
-  position: relative;
+.title {
+  margin: 58px 16px 36px;
 }
-
-.icon_back {
-  position: absolute;
-  left: 16px;
-  transform: scale(0.9);
-}
-
-.category {
-  @include title-subscreen_16-20_semibold;
-}
-
 .row_list {
   border: 0.5px solid $colorGray4;
   border-left: none;
@@ -136,6 +119,6 @@ export default {
   margin: 0 auto 16px;
 }
 .row_name {
-  width: 55%;
+  width: 60%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="avatar-cropper">
+  <div class="avatar-cropper q-mt-xl">
     <div
       class="avatar-cropper-overlay"
       v-if="dataUrl"
@@ -241,7 +241,7 @@ export default {
         padding: 15px 0;
         cursor: pointer;
         margin-top: 32px;
-        margin-bottom: 64px;
+        margin-bottom: 20px;
       }
     }
     .cropper-point {

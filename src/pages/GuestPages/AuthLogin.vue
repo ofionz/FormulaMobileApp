@@ -80,7 +80,7 @@
             >
               Курсант
             </UiButton>
-            <UiButton class="q-mt-md" fluid theme="outline-brand">
+            <UiButton       @click="$router.push('/instructor')" class="q-mt-md" fluid theme="outline-brand">
               Инструктор
             </UiButton>
 
@@ -116,7 +116,9 @@ export default {
   mounted() {
     if (window.device) {
       //TODO обсудить проблему с клавиатурой в полноэкранном режиме
-    //  StatusBar.overlaysWebView(true);
+    //  StatusBar.backgroundColorByName("white")
+        StatusBar.overlaysWebView(true);
+     // StatusBar.styleBlackTranslucent();
     }
   },
 

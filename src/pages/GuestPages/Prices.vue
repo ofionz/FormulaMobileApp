@@ -31,6 +31,6 @@ export default {
 </script>
 <style lang="scss" module>
 .container {
-  padding: 28px 0 70px 16px;
+  padding: 56px 0 70px 16px;
 }
 </style>

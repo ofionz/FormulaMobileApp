@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="$style.swiperWrap" class="q-pt-lg q-pb-lg">
+    <div :class="$style.swiperWrap" class="q-pt-xl q-pb-lg">
       <swiper :options="swiperOption" :class="$style.swiper">
         <swiper-slide
           v-for="(month, index) in monthes"

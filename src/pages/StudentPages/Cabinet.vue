@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.cabinet_wrap">
+  <div>
     <div
       class="text-white"
       :class="$style.cabinet_header"
@@ -77,7 +77,7 @@
             :class="$style.body_title"
           >Подготовить справки</span
           >
-          <span :class="$style.link">Подробнее</span>
+          <span @click="openPopupTimeline" :class="$style.link">Подробнее</span>
         </div>
       </div>
 
@@ -97,6 +97,7 @@
         <li
           class="flex"
           :class="$style.body_li"
+          @click="$router.push({name: 'faq'})"
         >
           Частые вопросы
           <UiIcon
@@ -109,6 +110,7 @@
         <li
           class="flex"
           :class="$style.body_li"
+          @click="$router.push({name: 'feedback'})"
         >
           Обратная связь
           <UiIcon
@@ -145,6 +147,7 @@
         <li
           class="flex"
           :class="$style.body_li"
+          @click="$router.push({name: 'history'})"
         >
           История уведомлений
           <UiIcon
@@ -156,8 +159,11 @@
         </li>
       </ul>
 
+      <div :class="$style.admin"><span>Администратор Анна</span> <span>+7 999 999-99-99</span><a  href='tel:+79998887766'
+                                                                                                  :class="$style.admin_button">  <UiButton  theme="outline-brand">Позвонить </UiButton></a></div>
+
       <div  :class="$style.exit">
-        <span @click="$router.push('/guest/login')" :class="$style.link"> Выйти </span>
+        <span @click="$router.push('/guest/login')" :class="$style.link"> Выйти из аккаунта </span>
       </div>
 
 
@@ -202,11 +208,22 @@
       </template>
     </UiPopUp>
     <UiPopUp
+      @close="closePopupTimeline"
+      :visible="isPopupTimelineVisible"
+    >
+      <template #label>
+      Процесс обучения
+      </template>
+      <template #content>
+      <UiTimeline :completed='timeline.completed' :current="timeline.current" :futures="timeline.futures"/>
+      </template>
+    </UiPopUp>
+    <UiPopUp
       @close="closePopupEdit"
       :visible="isPopupEditVisible"
     >
       <template #label>
-        <div class="q-mb-lg">Редактировать данные</div>
+       Редактировать данные
       </template>
       <template #content>
       <FillingStudentInfo modal-mode @saved = "closePopupEdit"></FillingStudentInfo>
@@ -218,6 +235,7 @@
 <script>
   import UiIcon from '../../components/UiIcon';
   import UiPopUp from '../../components/UiPopUp';
+  import UiTimeline from '../../components/UiTimeline';
   import UiButton from '../../components/UiButton';
   import FillingStudentInfo from './FillingStudentInfo';
   import withCurrencySymbol from '../../filters/money.filter';
@@ -228,6 +246,7 @@
       UiIcon,
       UiPopUp,
       UiButton,
+      UiTimeline,
       FillingStudentInfo
     },
     filters: {
@@ -235,6 +254,8 @@
     },
     data() {
       return {
+        timeline: {},
+        isPopupTimelineVisible: false,
         isPopupEditVisible: false,
         isPopupVisible: false,
         paymentAmount: "",
@@ -349,6 +370,16 @@
         this.$emit('blockToggle', true);
         this.isPopupEditVisible = true;
       },
+      closePopupTimeline() {
+        this.$emit('blockToggle', false);
+        this.isPopupTimelineVisible = false;
+      },
+      openPopupTimeline() {
+        this.$emit('blockToggle', true);
+        this.timeline = this.$store.state.studentInfo.timeline;
+        this.isPopupTimelineVisible = true;
+      },
+
 
     },
   };
@@ -359,12 +390,12 @@
   module
 >
   //$
-  $tab_panel_height: 170px;
+  $tab_panel_height: 200px;
 
   .cabinet_header {
     @include gradientBrand;
     height: $tab_panel_height;
-    padding: 28px 16px 24px;
+    padding: 58px 16px 0;
     color: $colorWhite;
 
     .student_wrap {
@@ -413,7 +444,7 @@
   }
 
   .body_content {
-    padding: 0 16px 40px;
+    padding: 0 16px 30px;
   }
 
   .body_header,
@@ -434,7 +465,7 @@
     padding: 11px 0;
   }
 
-  .popup_content {
+  .popup_content, .admin {
     @include text_16-22_medium;
   }
 
@@ -449,7 +480,8 @@
   }
 
   .exit {
-    padding: 24px 16px 90px;
+    padding: 42px 16px 90px;
+    text-align: center;
   }
 
   .input_placeholder {
@@ -459,6 +491,20 @@
   .avatar{
     box-shadow: 0 0 0 2px $colorWhite;
 
+  }
+  .admin {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+   padding: 0 16px;
+    margin-top: 20px;
+    width: 100%;
+    &_button {
+      margin-top: 8px;
+      text-decoration: none;
+      width: 100%;
+    }
   }
 
   .btn_pay {

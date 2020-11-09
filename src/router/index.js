@@ -26,5 +26,24 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
+  Router.beforeEach(async (to, from, next) => {
+
+//     const requireStudentRole = to.matched.some(record =>
+// record.meta.role === 'student');
+    // if(to.name === 'register') {
+    //   console.log("sdfs");
+    //   next({name: 'login'})
+    // }
+    // else   next()
+    next();
+  //  console.log(requireStudentRole);
+  //   if( !requireStudentRole) {
+  //     next();
+  //   }
+  //  else if (requireStudentRole && false) {
+  //    next();
+  //   } else next({name: 'login'})
+   });
+
   return Router
 }

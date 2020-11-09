@@ -26,7 +26,7 @@
 
     <div :class="$style.wrap" class="flex column">
       <span :class="$style.welcoming_text"
-        >Начнём пользоваться супер-приложением автошколы «Формула»</span
+        >Начнём пользоваться супер&#8209;приложением автошколы «Формула»</span
       >
       <UiButton @click="toRegisterButtonHandler" fluid theme="background-brand">
         Регистрация
@@ -73,7 +73,7 @@ export default {
   overflow: hidden;
   align-items: center;
   text-align: center;
-  padding: 55px 16px 0;
+  padding: 76px 16px 0;
 }
 .icon_message {
   @include title-big_30-38_bold;

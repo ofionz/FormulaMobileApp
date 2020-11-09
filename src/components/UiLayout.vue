@@ -37,7 +37,8 @@
     },
     data() {
       return {
-        isBlocked: false
+        isBlocked: false,
+        blockIterator: 0
       };
     },
     computed: {
@@ -51,7 +52,9 @@
     },
     methods: {
       toggleScreenBlock(block) {
-        this.isBlocked = block;
+        if  (block) this.blockIterator++;
+        else this.blockIterator--;
+        this.isBlocked = this.blockIterator > 0;
       }
     }
   };

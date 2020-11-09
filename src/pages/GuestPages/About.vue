@@ -18,17 +18,13 @@
           <span :class="$style.about_num">1500</span>
         </div>
 
-        <span @click="writer" :class="$style.about_description"
-          >курсантов каждый год</span
-        >
+        <span :class="$style.about_description">курсантов каждый год</span>
       </div>
       <div class="flex column">
         <div :class="$style.about_num_wrap">
           <span :class="$style.about_num">60</span>
         </div>
-        <span @click="reader" :class="$style.about_description"
-          >учебных автомобилей</span
-        >
+        <span :class="$style.about_description">учебных автомобилей</span>
       </div>
     </div>
   </div>
@@ -41,7 +37,7 @@ export default {
   name: "About",
   components: {
     UiIcon
-  },
+  }
 };
 </script>
 
@@ -55,7 +51,7 @@ export default {
   padding: 75px 16px;
   overflow: hidden;
   @media (max-height: 600px) {
-    padding: 5px 16px;
+    padding: 20px 16px;
   }
 }
 

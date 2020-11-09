@@ -1,17 +1,12 @@
 <template>
   <div>
     <div class="flex column">
-      <div class="flex" :class="$style.title_wrap">
-        <UiIcon
-          @click="backward"
-          :class="$style.icon_back"
-          :color-inheritance="true"
-          :em-size="false"
-          name="arrow"
-        />
-        <span :class="$style.title">Данные покупателя</span>
-      </div>
-
+      <ui-page-title
+        :class="$style.title"
+        @backward="backward"
+        title="Данные покупателя"
+      >
+      </ui-page-title>
 
       <div class="q-mr-md q-ml-md" :class="$style.registerForm">
         <q-input
@@ -80,7 +75,7 @@
           </template>
         </q-input>
 
-        <UiCheckbox class="q-mt-xl q-mb-lg"
+        <UiCheckbox @change="(val)=>this.license=val" class="q-mt-xl q-mb-lg"
         ><span :class="$style.checkbox_label"
         >Я согласен на обработку моих персональных данных</span
         ></UiCheckbox
@@ -105,14 +100,14 @@
 </template>
 
 <script>
-import UiIcon from "../../components/UiIcon";
 import UiButton from "../../components/UiButton";
 import UiCheckbox from '../../components/UiCheckbox';
+import UiPageTitle from '../../components/UiPageTitle';
 
 export default {
   name: "Details",
   components: {
-    UiIcon,
+    UiPageTitle,
     UiButton,
     UiCheckbox
   },
@@ -120,6 +115,7 @@ export default {
   data() {
     return {
       maskVisible: false,
+      license: false,
     };
   },
 
@@ -180,6 +176,9 @@ export default {
 
 <style lang="scss" module>
 //$
+.title {
+  margin: 58px 16px 40px;
+}
 .title_wrap {
   @include title-subscreen_16-20_semibold;
   padding: 23px 16px 60px;

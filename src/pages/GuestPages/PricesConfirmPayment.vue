@@ -1,17 +1,8 @@
 <template>
   <div>
     <div class="flex column">
+      <ui-page-title   :class="$style.title" @backward = backward title="Оплата"> </ui-page-title>
       <div class="flex column" :class="$style.title_wrapper">
-        <div class="flex" :class="$style.title_wrap">
-          <UiIcon
-            @click="backward"
-            :class="$style.icon_back"
-            :color-inheritance="true"
-            :em-size="false"
-            name="arrow"
-          />
-          <span :class="$style.title">Оплата</span>
-        </div>
         <span v-if="tariff" :class="$style.total"
           >{{ tariff.groupName }}, пакет {{ tariff.name }}, {{ department }}.
           Цена: {{ tariff.price | withCurrencySymbol }}</span
@@ -169,7 +160,7 @@
 </template>
 
 <script>
-import UiIcon from "../../components/UiIcon";
+  import UiPageTitle from "../../components/UiPageTitle";
 import UiButton from "../../components/UiButton";
 import UiCheckbox from "../../components/UiCheckbox";
 import UiPopUp from "../../components/UiPopUp";
@@ -178,7 +169,7 @@ import withCurrencySymbol from "../../filters/money.filter.js";
 export default {
   name: "Details",
   components: {
-    UiIcon,
+    UiPageTitle,
     UiButton,
     UiCheckbox,
     UiPopUp
@@ -261,14 +252,13 @@ export default {
 
 <style lang="scss" module>
 //$
+.title {
+  margin: 58px 16px 0;
+}
 .title_wrapper {
   @include title-subscreen_16-20_semibold;
-  padding: 23px 16px 60px;
+  padding: 0 16px 30px;
   color: $colorBlack;
-}
-.title_wrap {
-  justify-content: center;
-  position: relative;
 }
 
 .total {
@@ -293,16 +283,6 @@ export default {
 
 .registerForm_buyer {
   @include title_20-24_bold;
-}
-
-.icon_back {
-  position: absolute;
-  left: 0;
-  transform: scale(0.9);
-}
-
-.title {
-  @include title-subscreen_16-20_semibold;
 }
 
 .checkbox_label,

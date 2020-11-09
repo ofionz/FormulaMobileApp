@@ -101,11 +101,6 @@
               Как оплатить?</span
             >
           </div>
-          <!--<UiCheckbox class="q-mb-lg"-->
-          <!--&gt;<span :class="$style.checkbox_label"-->
-          <!--&gt;Я согласен на обработку моих персональных данных</span-->
-          <!--&gt;</UiCheckbox-->
-          <!--&gt;-->
           <UiButton
             @click="registerButtonHandler"
             :class="$style.button_register"
@@ -117,14 +112,14 @@
           <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
             <template #label>Как оплатить ?</template>
             <template #content>
-              <span class="q-mb-lg" :class="$style.panel_desctiption">
+              <span class="q-mb-lg q-mt-md" :class="$style.panel_desctiption">
                 Чтобы зарегистрироваться, оплатите пакет обучения во вкладке
                 «Цены» или в любом филиале автошколы «Формула». Каждый пакет
                 доступен при оплате от 1000 ₽</span
               >
 
               <UiButton
-                @click="$router.push({ name: 'prices' })"
+                @click="closeSwiper(); $router.push({ name: 'prices' })"
                 class="q-mt-lg"
                 fluid
                 theme="background-brand"
@@ -184,13 +179,11 @@
 
 <script>
   import UiPopUp from "../../components/UiPopUp";
-  import UiCheckbox from "../../components/UiCheckbox";
   import UiButton from "../../components/UiButton";
   export default {
     name: "MainLayout",
     components: {
       UiPopUp,
-
       UiButton
     },
     data() {
@@ -198,7 +191,6 @@
         isSliderVisible: false,
         firstStepRegistration: true,
         maskVisible: false,
-        license: false,
         tab: "login",
         password: "",
       };

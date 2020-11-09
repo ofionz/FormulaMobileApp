@@ -1,6 +1,7 @@
 <template>
   <div :class="$style.wrapper">
     <UiCalendar
+
       :monthes="monthes"
       :events="choosenDays"
       :available-days="availableDays"
@@ -9,6 +10,7 @@
     ></UiCalendar>
 
     <div class="flex column" :class="$style.appointment_wrap">
+
       <div v-if="currentDateData" class="flex column">
       <span
         v-for="choosenTime in currentDateData.choosenTime"
@@ -17,15 +19,16 @@
         :class="$style.student_appointment"
       >Вы записаны в {{choosenTime}}</span
       >
+
       </div>
       <span
         v-if="!choosenDays.length"
         class="q-mb-md"
         :class="$style.student_appointment"
-        >У вас записей нет</span
+        >У вас записей нет, выберите дату, чтобы записать</span
       >
       <div v-if="currentDate" class="flex column">
-        <span :class="$style.available_timeTitle">Не занятое время:</span>
+        <span :class="$style.available_timeTitle">Доступное время:</span>
 
         <div ref = 'timelist' class="flex" :class="$style.available_timeList">
           <span
@@ -37,12 +40,20 @@
           >
         </div>
       </div>
+      <div v-else class="flex column">
+           <span
+             class="q-mb-md"
+             :class="$style.student_appointment"
+           >Выберите дату</span
+           >
+
+      </div>
     </div>
     <div  :class="$style.btn_wrap" class="flex column">
       <UiButton  v-if="currentTime && currentDate" @click="openPopup" theme="background-brand">
         Записаться
       </UiButton>
-      <span :class="$style.trips_history">История вождений</span>
+      <span @click="$router.push({name: 'driving_history'})" :class="$style.trips_history">История вождений</span>
     </div>
 
     <UiPopUp
@@ -50,10 +61,10 @@
       :visible="isPopupVisible"
     >
       <template #label>
-        <div class="q-mb-lg">Вы записаны!</div>
-        <div class="q-mb-lg">{{currentDate}} в {{currentTime}}</div>
+          Вы записаны!
       </template>
       <template #content>
+        <span :class="$style.popup_content">{{currentDate}} в {{currentTime}}</span>
         <UiButton
           @click="closePopup"
           fluid
@@ -105,21 +116,22 @@ export default {
       currentDate: "",
       currentTime: "",
       lessons: [
-        { date: "2020/10/10", time: ["9:00", "12:00", "14:00"] },
+        { date: "2020/11/03", time: ["9:00", "13:00", "14:00"] },
+        { date: "2020/11/10", time: ["9:00", "12:00", "14:00"] },
         {
-          date: "2020/10/20",
+          date: "2020/11/20",
           time: ["10:00", "11:00", "15:00"],
           choosenTime: ["8:00", "12:00"]
         },
-        { date: "2020/10/15", time: ["06:00", "19:00", "12:00","17:00","15:00","14:00","13:00","07:00","20:00","10:00"] },
+        { date: "2020/11/15", time: ["06:00", "19:00", "12:00","17:00","15:00","14:00","13:00","07:00","20:00","10:00"] },
         {
-          date: "2020/10/21",
+          date: "2020/11/21",
           time: ["5:00", "15:00", "11:00"],
           choosenTime: ["9:00"]
         },
-        { date: "2020/10/25", time: ["4:00", "12:00", "19:00"] },
-        { date: "2020/10/29", time: ["7:00", "11:00", "14:00"] },
-        { date: "2020/10/06", time: ["8:00", "13:00", "15:00"] }
+        { date: "2020/11/25", time: ["4:00", "12:00", "19:00"] },
+        { date: "2020/11/29", time: ["7:00", "11:00", "14:00"] },
+        { date: "2020/11/06", time: ["8:00", "13:00", "15:00"] }
       ]
     };
   },
@@ -217,6 +229,11 @@ export default {
     color: $colorWhite;
   }
 }
+.popup_content {
+ @include title-mini_18-22_semibold;
+  font-weight: 600;
+  margin: 16px auto 0;
+}
 .popup_btn {
   margin: 32px 0 66px;
 }
@@ -224,12 +241,12 @@ export default {
 .trips_history {
   @include signature_12-16_semibold;
   font-weight: 600;
-  margin: 0 auto;
+  margin: 0 auto ;
   padding: 24px 0 32px;
   color: $colorInteractive;
 }
 
 .btn_wrap {
-  margin-top: auto;
+  margin: auto 16px 10px;
 }
 </style>

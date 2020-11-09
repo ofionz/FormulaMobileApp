@@ -1,8 +1,44 @@
 const routes = [
   { path: "/", redirect: "/guest" },
   {
+    path: "/instructor",
+    component: () => import("layouts/InstructorLayout.vue"),
+    meta: { role: "instructor" },
+    children: [
+      { path: "/instructor", redirect: "/instructor/driving" },
+      {
+        path: "driving",
+        name:"instructorDriving",
+        component: () => import("pages/InstructorPages/Driving.vue")
+      },
+      {
+        path: "instructor/details/:id",
+        props: true,
+        name:"drivingDetails",
+        component: () => import("pages/InstructorPages/DrivingDetails.vue")
+      },
+      {
+        path: "services",
+        name:"instructorServices",
+        component: () => import("pages/InstructorPages/DrivingStudentCabinet.vue")
+      },
+      {
+        path: "cabinet",
+        name:"instructorCabinet",
+        component: () => import("pages/InstructorPages/Cabinet.vue")
+      },
+      {
+        path: "cabinet/knd",
+        name:"knd",
+        component: () => import("pages/InstructorPages/CabinetKND.vue")
+      },
+
+    ]
+  },
+  {
     path: "/student",
     component: () => import("layouts/StudentLayout.vue"),
+    meta: { role: "student" },
     children: [
       { path: "/student", redirect: "/student/driving" },
       {
@@ -11,15 +47,35 @@ const routes = [
         component: () => import("pages/StudentPages/Driving.vue")
       },
       {
+        path: "driving/history",
+        name:"driving_history",
+        component: () => import("pages/StudentPages/DrivingHistory.vue")
+      },
+      {
         path: "services",
         name:"services",
-        component: () => import("pages/StudentPages/FillingStudentInfo.vue")
+        component: () => import("pages/StudentPages/Services.vue")
       },
       {
         path: "cabinet",
         name:"cabinet",
         component: () => import("pages/StudentPages/Cabinet.vue")
-      }
+      },
+      {
+        path: "cabinet/feedback",
+        name:"feedback",
+        component: () => import("pages/StudentPages/CabinetFeedback.vue")
+      },
+      {
+        path: "cabinet/faq",
+        name:"faq",
+        component: () => import("pages/StudentPages/CabinetFAQ.vue")
+      },
+      {
+        path: "cabinet/history",
+        name:"history",
+        component: () => import("pages/StudentPages/CabinetHistory.vue")
+      },
     ]
   },
   {

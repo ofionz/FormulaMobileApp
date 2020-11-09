@@ -5,6 +5,10 @@ import prices from './prices'
 import registerUserInfo from './registerUserInfo'
 import departments from './departments'
 import studentInfo from './studentInfo'
+import questions from './questions'
+import notifications from './notifications'
+import instructorInfo from './instructorInfo'
+
 
 Vue.use(Vuex)
 
@@ -23,7 +27,10 @@ export default function ( { ssrContext } ) {
       prices,
       registerUserInfo,
       departments,
-      studentInfo
+      studentInfo,
+      questions,
+      notifications,
+      instructorInfo
     },
 
     // enable strict mode (adds overhead!)

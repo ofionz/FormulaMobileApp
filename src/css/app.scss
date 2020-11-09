@@ -28,15 +28,15 @@
 }
 
 .slide-fade-enter-active {
-  transition: all 0.8s ease!important;
+  transition: all 1.5s ease!important;
 }
 .slide-fade-leave-active {
-  transition: all 0.8s ease!important;
+  transition: all 1s ease!important;
 
 }
 .slide-fade-enter, .slide-fade-leave-to
 {
-  transform: translateY(500px)!important;
+  transform: translateY(100vh)!important;
 }
 
 
