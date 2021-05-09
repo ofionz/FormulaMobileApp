@@ -163,7 +163,7 @@ export default function() {
         type: 'regular',
         tariffs: [
           {
-            id: '1',
+            id: '112',
             price: "159000",
             name: "Акционный",
             shortDescriptionRows: [
@@ -184,7 +184,7 @@ export default function() {
             ]
           },
           {
-            id: '2',
+            id: '234',
             price: "15000",
             shortDescriptionRows: [
               "0 часов практики",
@@ -202,7 +202,7 @@ export default function() {
             ]
           },
           {
-            id: '3',
+            id: '3345',
             shortDescriptionRows: ["0 часов практики", "Права без экзамена"],
             price: "3500000",
             name: "Люкс",

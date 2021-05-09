@@ -115,11 +115,9 @@ export default {
   },
   mounted() {
     if (window.device) {
-      //TODO обсудить проблему с клавиатурой в полноэкранном режиме
-    //  StatusBar.backgroundColorByName("white")
-        StatusBar.overlaysWebView(true);
-     // StatusBar.styleBlackTranslucent();
+      StatusBar.overlaysWebView(true);
     }
+   // throw new Error()
   },
 
   methods: {
@@ -130,6 +128,18 @@ export default {
       this.$emit("blockToggle", false);
       this.isSliderVisible = false;
     },
+    // pay() {
+    //   ipayCheckout({
+    //       amount:499.99,
+    //       currency:'RUB',
+    //       order_number:'',
+    //       description: 'А. С. Пушкин. Избранное (подарочное издание)'},
+    //     function() {
+    //       console.log('!!!!!!!!'); },
+    //     function() {
+    //       console.log( "---------" )})
+    // },
+
     openSwiper() {
       this.$emit("blockToggle", true);
       this.isSliderVisible = true;
