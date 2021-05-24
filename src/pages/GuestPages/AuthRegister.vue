@@ -31,50 +31,50 @@
     <q-tab-panels v-model="tab" :class="$style.panels" class="desktop_container" animated>
       <q-tab-panel name="register">
         <div v-if="firstStepRegistration" :class="$style.stepsRegistration">
-          <!--<q-input-->
-          <!--  v-model="name"-->
-          <!--  :rules="[val => val.length || 'Введите имя']"-->
-          <!--  label-slot-->
-          <!--  class="input"-->
-          <!--&gt;-->
-          <!--  <template v-slot:label>-->
-          <!--    <div class="row items-center all-pointer-events input_label">-->
-          <!--      Имя-->
-          <!--    </div>-->
-          <!--  </template>-->
-          <!--</q-input>-->
-          <!--<q-input-->
-          <!--  v-model="surname"-->
-          <!--  class="input"-->
-          <!--  label-slot-->
-          <!--  :rules="[val => val.length || 'Введите фамилию']"-->
-          <!--&gt;-->
-          <!--  <template v-slot:label>-->
-          <!--    <div-->
-          <!--      class="row items-center all-pointer-events input_label"-->
-          <!--    >-->
-          <!--      Фамилия-->
-          <!--    </div>-->
-          <!--  </template>-->
-          <!--</q-input>-->
-          <!--<q-input-->
-          <!--  v-model="phone"-->
-          <!--  label-slot-->
-          <!--  type="tel"-->
-          <!--  class="input"-->
-          <!--  @focusin="maskVisible = true"-->
-          <!--  :fill-mask="maskVisible"-->
-          <!--  mask="+7(###) ### - ## - ##"-->
-          <!--  :rules="[val => val.length || 'Введите телефон']"-->
-          <!--&gt;-->
-          <!--  <template v-slot:label>-->
-          <!--    <div-->
-          <!--      class="row items-center all-pointer-events input_label"-->
-          <!--    >-->
-          <!--      Телефон-->
-          <!--    </div>-->
-          <!--  </template>-->
-          <!--</q-input>-->
+          <q-input
+            v-model="name"
+            :rules="[val => val.length || 'Введите имя']"
+            label-slot
+            class="input"
+          >
+            <template v-slot:label>
+              <div class="row items-center all-pointer-events input_label">
+                Имя
+              </div>
+            </template>
+          </q-input>
+          <q-input
+            v-model="surname"
+            class="input"
+            label-slot
+            :rules="[val => val.length || 'Введите фамилию']"
+          >
+            <template v-slot:label>
+              <div
+                class="row items-center all-pointer-events input_label"
+              >
+                Фамилия
+              </div>
+            </template>
+          </q-input>
+          <q-input
+            v-model="phone"
+            label-slot
+            type="tel"
+            class="input"
+            @focusin="maskVisible = true"
+            :fill-mask="maskVisible"
+            mask="+7(###) ### - ## - ##"
+            :rules="[val => val.length || 'Введите телефон']"
+          >
+            <template v-slot:label>
+              <div
+                class="row items-center all-pointer-events input_label"
+              >
+                Телефон
+              </div>
+            </template>
+          </q-input>
           <q-input
             v-model="phone"
             label-slot

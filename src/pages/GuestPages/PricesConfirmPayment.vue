@@ -66,7 +66,7 @@
     </div>
 
     <div :class="$style.to_pay" class="flex column q-mt-lg q-pa-md">
-      <div v-if="installmentPaymentAmount" class="flex">
+      <div v-if="installmentPaymentAmount && installmentPaymentAmount>=1000" class="flex">
         <span :class="$style.to_pay_label">К оплате с рассрочкой: </span>
 
         <span :class="$style.to_pay_price">{{
@@ -87,7 +87,7 @@
           >Можно оплатить в рассрочку, первый взнос от 1000 ₽</span
         >
         <span
-          v-if="installmentPaymentAmount"
+          v-if="installmentPaymentAmount && installmentPaymentAmount>=1000"
           @click="cancelInstallment"
           :class="$style.to_pay_installments_btn"
           >Отменить рассрочку
@@ -177,6 +177,7 @@ export default {
 
   data() {
     return {
+
       tariff: {},
       maskVisible: false,
       isPopupVisible: false,
@@ -228,14 +229,14 @@ export default {
       // this.$router.push({ name: "payment_finished", params: { type: "paid" } });
 
         ipayCheckout({
-            amount: this.tariff.price ,
+            amount: this.installmentPaymentAmount? this.installmentPaymentAmount:this.tariff.price ,
             currency:'RUB',
             order_number:'',
             description: this.tariff.name},
           function() {
-            console.log('Оплата прошла успешно '); },
+            console.log('Оплата прошла успешно'); },
           function() {
-            console.log( "ПОПЫТКА ОПЛАТы ПРОВАЛИЛАСЬ" )})
+            console.log( "ПОПЫТКА ОПЛАТЫ ПРОВАЛИЛАСЬ" )})
     },
 
 
@@ -248,8 +249,10 @@ export default {
       this.installmentPaymentAmount = "";
     },
     setInstallment() {
-      this.firstPayment = this.installmentPaymentAmount;
-      this.closePopup();
+      if (  this.installmentPaymentAmount >=1000) {
+        this.firstPayment = this.installmentPaymentAmount;
+        this.closePopup();
+      }
     },
     closePopup() {
       this.$emit("blockToggle", false);

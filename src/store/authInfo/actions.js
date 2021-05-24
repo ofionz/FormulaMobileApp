@@ -7,7 +7,7 @@ export async function login(context, args) {
       params: args
     })
     .then(response => {
-      if (errorHelper(response) && response.data.token) {
+      if (response.data.token) {
         context.commit("setToken", response.data.token);
         return true;
       } else {
@@ -23,7 +23,7 @@ export async function fetchRoles(context) {
   return Vue.prototype.$axios
     .get(ROLES_ENDPOINT)
     .then(response => {
-      if (errorHelper(response) && response.data) {
+      if (response.data) {
         context.commit("setRoles", response.data);
         return true;
       } else {

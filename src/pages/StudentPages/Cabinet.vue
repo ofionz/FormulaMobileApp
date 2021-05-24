@@ -186,7 +186,7 @@
           label-slot
           type="number"
           class="input"
-          :rules="[val => val.length || 'Сумма не введена']"
+          :rules="[val => val.length || 'Сумма не введена', val => val>1000|| 'Сумма не может быть меньше 1000 руб.']"
         >
           <template v-slot:label>
             <div

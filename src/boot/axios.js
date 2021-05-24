@@ -1,6 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
 import { Loading } from "quasar";
+import errorHelper from '../utils/errorHelper';
 
 Vue.prototype.$axios = axios;
 export default ({ app, router, store, Vue }) => {
@@ -9,6 +10,10 @@ export default ({ app, router, store, Vue }) => {
   );
   axios.interceptors.request.use(startPreloaderInterceptor, ErrorRequestHandler);
   axios.interceptors.response.use(stopPreloaderInterceptor, ErrorRequestHandler);
+  axios.interceptors.response.use(serverResponseErrorHandler, ErrorRequestHandler);
+
+
+
 
 };
 
@@ -37,6 +42,12 @@ const stopPreloaderInterceptor = function(res) {
 const ErrorRequestHandler = function(error) {
   Loading.hide();
   console.log(error);
-  Vue.prototype.$eventBus.$emit('error', {header : 'Ошибка', text: error});
+  Vue.prototype.$eventBus.$emit('error', {header : 'Ошибка соединения', text: error});
   return Promise.reject(error);
+};
+
+
+const serverResponseErrorHandler = function(res) {
+  errorHelper(res);
+  return res;
 };

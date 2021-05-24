@@ -52,6 +52,11 @@
               Телефон
             </div>
           </template>
+          <template v-slot:hint>
+              <span class="q-mb-md input_hint">
+               Аккаунт в приложении будет привязан к телефону
+              </span>
+          </template>
         </q-input>
         <q-input
           v-model="email"
@@ -68,11 +73,7 @@
               Почта
             </div>
           </template>
-          <template v-slot:hint>
-              <span class="q-mb-md input_hint">
-               Аккаунт в приложении будет привязан к почте, на неё отправим чек об оплате
-              </span>
-          </template>
+
         </q-input>
 
         <UiCheckbox @change="(val)=>this.license=val" class="q-mt-xl q-mb-lg"

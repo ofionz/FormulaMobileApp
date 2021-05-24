@@ -66,7 +66,10 @@
 
         </yandex-map>
       </div>
-      <div v-else class="q-mb-xl">
+      <div
+        v-else
+        class="q-mb-xl"
+      >
         <div
           v-for="(group, index) in allDepartments"
           :key="index"
@@ -98,7 +101,7 @@
         </div>
       </div>
 
-      <div >
+      <div>
         <UiButton
           v-if="currentdepartment"
           @click="nextButtonHandler"
@@ -157,16 +160,22 @@
 
 
     },
-    mounted() {
+    async mounted() {
       this.currentdepartment = this.$store.state.registerUserInfo.department;
-      this.allDepartments = this.$store.getters['departments/getDepartmentsList'];
+      await this.$store.dispatch('departments/fetchBranches');
+      this.allDepartments = this.$store.getters['departments/getDefaultCityDepartmentsList'];
       this.flatDepartmentsList = this.$store.getters[
-        'departments/getFlatDepartmentsList'
+        'departments/getDefaultCityFlatDepartmentsList'
         ];
+
+
     },
     methods: {
-      backward () {
-        this.$router.push({ name: "details", params: {id: this.$store.state.registerUserInfo.tariffId}});
+      backward() {
+        this.$router.push({
+          name: 'details',
+          params: { id: this.$store.state.registerUserInfo.tariffId },
+        });
       },
       selectOnMap(department) {
         this.isShowAllMarkers = false;
@@ -178,8 +187,8 @@
         this.$store.commit('registerUserInfo/setUserDepartment', this.currentdepartment);
       },
       nextButtonHandler() {
-     {
-          this.$router.push({name: 'confirm_payment'})
+        {
+          this.$router.push({ name: 'confirm_payment' });
         }
       },
     },

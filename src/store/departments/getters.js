@@ -1,6 +1,10 @@
 export function getDepartmentsList(state) {
-  return state.departmentsList;
+  return state.cityList;
 }
-export function getFlatDepartmentsList(state) {
-  return  state.departmentsList.map(el => el.departments).flat()
+export function getDefaultCityDepartmentsList(state) {
+  return state.branches.cityList[0].departmentsList;
+}
+export function getDefaultCityFlatDepartmentsList(state) {
+
+  return  state.branches.cityList[0].departmentsList.map(el => el.departments).flat(Infinity)
 }

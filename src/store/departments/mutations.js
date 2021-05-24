@@ -1,3 +1,3 @@
 export function setDepartments (state, n) {
-    state.departmentsList = n;
+    state.branches = n;
 }
