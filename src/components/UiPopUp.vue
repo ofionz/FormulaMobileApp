@@ -190,7 +190,7 @@ $panel_top_item_width: 40px;
   display: flex;
 }
 .content_wrap {
-  overflow: scroll;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 

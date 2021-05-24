@@ -194,6 +194,12 @@ export default {
   padding-bottom: 70px;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 1200px){
+    width: 40%;
+    margin: 0 auto;
+    border: 2px solid #87878773;
+  }
 }
 
 .appointment_wrap {

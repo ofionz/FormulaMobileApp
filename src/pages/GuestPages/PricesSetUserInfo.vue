@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex column">
+    <div class="flex column desktop_container">
       <ui-page-title
         :class="$style.title"
         @backward="backward"
@@ -38,12 +38,12 @@
         <q-input
           v-model="phone"
           label-slot
+          unmasked-value
+          fill-mask
           type="tel"
           class="input"
-          @focusin="maskVisible = true"
-          :fill-mask="maskVisible"
-          mask="+7(###) ### - ## - ##"
-          :rules="[val => val.length || 'Введите телефон']"
+          mask="+7(###) ### - ####"
+          :rules="[val => val.length>9 || 'Введите номер телефона']"
         >
           <template v-slot:label>
             <div
@@ -114,7 +114,6 @@ export default {
 
   data() {
     return {
-      maskVisible: false,
       license: false,
     };
   },
@@ -176,6 +175,7 @@ export default {
 
 <style lang="scss" module>
 //$
+
 .title {
   margin: 58px 16px 40px;
 }

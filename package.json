@@ -9,6 +9,7 @@
     "dev": "quasar dev",
     "android": "quasar dev -m android --ide",
     "bldAndroid": "quasar build -m android",
+    "bld": "quasar build",
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0"
   },

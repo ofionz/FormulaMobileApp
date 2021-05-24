@@ -39,4 +39,11 @@
   transform: translateY(100vh)!important;
 }
 
+.desktop_container {
+  @media (min-width: 1200px){
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
 

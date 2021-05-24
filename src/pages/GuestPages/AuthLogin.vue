@@ -11,7 +11,7 @@
     >
       <q-route-tab
         name="login"
-        :to ='{name: "login"}'
+        :to="{ name: 'login' }"
         v-ripple="false"
         :class="$style.tab"
         class="text-capitalize"
@@ -20,14 +20,14 @@
       >
       <q-route-tab
         name="register"
-        :to ='{name: "register"}'
+        :to="{ name: 'register' }"
         v-ripple="false"
         :class="$style.tab"
         class="text-capitalize"
-      ><label :class="$style.tab_label">Регистрация</label>
+        ><label :class="$style.tab_label">Регистрация</label>
       </q-route-tab>
     </q-tabs>
-    <q-tab-panels v-model="tab" :class="$style.panels" animated>
+    <q-tab-panels v-model="tab" :class="$style.panels" class="desktop_container" animated>
       <q-tab-panel name="login">
         <div :class="$style.login_title" class="q-mb-lg q-mt-md">
           Для курсантов и сотрудников
@@ -35,12 +35,16 @@
         <q-input
           v-model="login"
           label-slot
+          type="tel"
+          unmasked-value
+          fill-mask
           class="input"
-          :rules="[val => val.length || 'Введите телефон или e-mail']"
+          mask="+7(###) ### - ####"
+          :rules="[val => val.length>9 || 'Введите номер телефона']"
         >
           <template v-slot:label>
             <div class="row items-center all-pointer-events input_label">
-              Телефон или почта
+              Номер телефона
             </div>
           </template>
         </q-input>
@@ -49,7 +53,7 @@
           type="password"
           label-slot
           class="input"
-          :rules="[val => val.length || 'Введите пароль']"
+          :rules="[val => val.length>=6 || 'Введите пароль']"
         >
           <template v-slot:label>
             <div class="row items-center all-pointer-events input_label">
@@ -59,7 +63,7 @@
         </q-input>
 
         <UiButton
-          @click="openSwiper"
+          @click="loginButtonHandler()"
           class="q-mt-lg q-mb-lg"
           fluid
           theme="background-brand"
@@ -69,22 +73,41 @@
         <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
           <template #label>Под кем заходим ?</template>
           <template #content>
-            <UiButton class="q-mt-lg" fluid theme="outline-brand">
+            <UiButton
+              v-if="roles.find(role => role.url === 'teacher')"
+              class="q-mt-lg"
+              fluid
+              theme="outline-brand"
+              @click="selectRoleHandler('teacher')"
+            >
               Преподаватель
             </UiButton>
             <UiButton
               class="q-mt-md"
-              @click="$router.push('/student')"
+              @click="selectRoleHandler('student')"
               fluid
               theme="outline-brand"
+              v-if="roles.find(role => role.url === 'student')"
             >
               Курсант
             </UiButton>
-            <UiButton       @click="$router.push('/instructor')" class="q-mt-md" fluid theme="outline-brand">
+            <UiButton
+              v-if="roles.find(role => role.url === 'instructor')"
+              @click="selectRoleHandler('instructor')"
+              class="q-mt-md"
+              fluid
+              theme="outline-brand"
+            >
               Инструктор
             </UiButton>
 
-            <UiButton class="q-mt-md q-mb-xl" fluid theme="outline-brand">
+            <UiButton
+              v-if="roles.find(role => role.url === 'examinator')"
+              class="q-mt-md q-mb-xl"
+              fluid
+              theme="outline-brand"
+              @click="selectRoleHandler('examinator')"
+            >
               Экзаменатор
             </UiButton>
           </template>
@@ -95,14 +118,13 @@
 </template>
 
 <script>
+import UiButton from "../../components/UiButton";
 import UiPopUp from "../../components/UiPopUp";
 
-import UiButton from "../../components/UiButton";
 export default {
   name: "MainLayout",
   components: {
     UiPopUp,
-
     UiButton
   },
   data() {
@@ -111,41 +133,61 @@ export default {
       tab: "register",
       login: "",
       password: "",
+      roles: []
     };
   },
   mounted() {
     if (window.device) {
       StatusBar.overlaysWebView(true);
     }
-   // throw new Error()
   },
 
   methods: {
     registerButtonHandler() {
       this.firstStepRegistration = false;
     },
+
+    loginButtonHandler() {
+      let payload = {
+        login: this.login,
+        password: this.password
+      };
+      this.$store.dispatch("authInfo/login", payload).then(this.getRoles);
+    },
+
+    async getRoles(isAuth) {
+      if (isAuth) {
+       await this.$store.dispatch("authInfo/fetchRoles");
+        this.roles = this.$store.state.authInfo.roles;
+        if (this.roles.length > 1) this.openSwiper();
+        else if (this.roles.length === 1) {
+          this.selectRoleHandler(this.roles[0].url);
+        }
+
+      }
+    },
+
     closeSwiper() {
       this.$emit("blockToggle", false);
       this.isSliderVisible = false;
     },
-    // pay() {
-    //   ipayCheckout({
-    //       amount:499.99,
-    //       currency:'RUB',
-    //       order_number:'',
-    //       description: 'А. С. Пушкин. Избранное (подарочное издание)'},
-    //     function() {
-    //       console.log('!!!!!!!!'); },
-    //     function() {
-    //       console.log( "---------" )})
-    // },
+
 
     openSwiper() {
       this.$emit("blockToggle", true);
       this.isSliderVisible = true;
     },
 
-
+   async selectRoleHandler(role) {
+      if (
+       await this.$store.dispatch(
+          "authInfo/selectRole",
+          this.roles.find(elem => elem.url === role).ID
+        )
+      ) {
+        await this.$router.push("/" + role);
+      }
+    }
   }
 };
 </script>
@@ -156,19 +198,23 @@ $tab_panel_height: 120px;
 .tab {
   align-self: flex-end;
 }
+
 .tab_wrap {
   @include gradientBrand;
   height: $tab_panel_height;
 }
+
 .tab_label {
   @include title_20-24_bold;
   color: $colorWhite;
   padding: 0 8px;
   margin-bottom: 16px;
 }
-.login_title{
+
+.login_title {
   @include text_16-22_medium;
 }
+
 .panels {
   height: calc(100vh - #{$tab_panel_height});
 }

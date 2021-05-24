@@ -234,7 +234,7 @@ export default {
 }
 
 .themeBackgroundBrand,
-.themeOutlineBrand {
+ {
   &::before {
     content: "";
     display: block;
@@ -256,29 +256,35 @@ export default {
   }
 }
 
-.themeOutlineBrand {
-  & .inner {
-    width: 100.5%;
-    background-color: $colorWhite;
-    border-radius: 12px;
-    padding: 14px;
-    margin: 2px;
-    @media (max-width: 500px) {
-      width: 102%;
-    }
-    @media (max-width: 900px) {
-      width: 101.3%;
-    }
 
-    & .gradientSpan{
-      color: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
-      background-image: linear-gradient(78deg, #2f4355 10.13%, #97101a 82.47%);
-    }
+
+
+
+.themeOutlineBrand {
+  border: double 2px transparent;
+  border-radius: 10px;
+  padding: 0;
+
+  background-image: linear-gradient(#F6F6F6, #F6F6F6), radial-gradient(circle at top left, #0661b2, #cc0b19);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+
+
+  & .gradientSpan {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 700;
+    background: linear-gradient(78deg, #0661B2 10.13%, #CC0B19 82.47%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #0B2349;
   }
 
-  &.sizeSmall .inner {
+    &.sizeSmall .inner {
     padding: 6px;
   }
 

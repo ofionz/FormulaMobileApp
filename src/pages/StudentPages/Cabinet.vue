@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="flex column">
+    <div class="flex column desktop_container">
       <div :class="$style.body_header">
         <div :class="$style.debt_wrap">
           <span class="q-mr-sm">Долг: {{'14900'|withCurrencySymbol}}</span>
@@ -400,6 +400,11 @@
 
     .student_wrap {
       flex-wrap: nowrap !important;
+    }
+    @media (min-width: 1200px){
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 

@@ -28,7 +28,7 @@
       ><label :class="$style.tab_label">Регистрация</label>
       </q-route-tab>
     </q-tabs>
-    <q-tab-panels v-model="tab" :class="$style.panels" animated>
+    <q-tab-panels v-model="tab" :class="$style.panels" class="desktop_container" animated>
       <q-tab-panel name="register">
         <div v-if="firstStepRegistration" :class="$style.stepsRegistration">
           <!--<q-input-->
@@ -76,23 +76,26 @@
           <!--  </template>-->
           <!--</q-input>-->
           <q-input
-            v-model="email"
-            type="email"
+            v-model="phone"
             label-slot
             bottom-slots
+            unmasked-value
+            fill-mask
+            type="tel"
             class="input"
-            :rules="[emailRule]"
+            mask="+7(###) ### - ####"
+            :rules="[val => val.length>9 || 'Введите номер телефона']"
           >
             <template v-slot:label>
               <div
                 class="row items-center all-pointer-events input_label"
               >
-                Почта
+                Номер телефона
               </div>
             </template>
             <template v-slot:hint>
               <span class="q-mb-md input_hint">
-                Указанная при оплате в приложении или в филиале.
+                Указанный при оплате в приложении или в филиале.
               </span>
             </template>
           </q-input>
@@ -135,8 +138,9 @@
         </div>
         <div v-else :class="$style.stepsRegistration">
           <q-input
+            ref="password"
             v-model="password"
-            :rules="[val => val.length || 'Введите пароль']"
+            :rules="[val =>  val.length>=6 || 'Введите пароль']"
             label-slot
             type="password"
             class="input"
@@ -148,11 +152,12 @@
             </template>
           </q-input>
           <q-input
-            v-model="password"
+            ref="passwordCopy"
+            v-model="passwordCopy"
             class="input"
             label-slot
             type="password"
-            :rules="[val => val.length || 'Введите еще раз пароль']"
+            :rules="[val => !!val || 'Введите пароль еще раз' , val => val === this.password || 'Введённые пароли не совпадают']"
           >
             <template v-slot:label>
               <div
@@ -193,6 +198,7 @@
         maskVisible: false,
         tab: "login",
         password: "",
+        passwordCopy: "",
       };
     },
 
@@ -221,14 +227,6 @@
           this.$store.commit('registerUserInfo/setPhone', value)
         }
       },
-      email: {
-        get () {
-          return this.$store.state.registerUserInfo.email
-        },
-        set (value) {
-          this.$store.commit('registerUserInfo/setEmail', value)
-        }
-      },
 
     },
     methods: {
@@ -244,38 +242,23 @@
         this.isSliderVisible = true;
       },
 
-      emailRule(val) {
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            // call
-            //  resolve(true)
-            //     --> content is valid
-            //  resolve(false)
-            //     --> content is NOT valid, no error message
-            //  resolve(error_message)
-            //     --> content is NOT valid, we have error message
-            resolve(
-              !!val ||
-              "Не найдено оплат, привязанных к этой почте. Возможно оплата обрабатывается, повторите позднее."
-            );
-
-            // calling reject(...) will also mark the input
-            // as having an error, but there will not be any
-            // error message displayed below the input
-            // (only in browser console)
-          }, 3000);
-        });
-      },
       resetSteps() {
         this.firstStepRegistration = true;
       },
       loadData() {
-        // this.$axios
-        //   .get("https://reqres.in/api/users?page=2")
-        //   .then(response => {
-        //     this.name = response.data.ad.company;
-        //   })
-        //   .catch(() => {});
+        this.$refs.password.validate();
+        this.$refs.passwordCopy.validate();
+        if (!this.$refs.password.hasError && !this.$refs.passwordCopy.hasError) {
+          // this.$axios
+          //   .get("https://reqres.in/api/users?page=2")
+          //   .then(response => {
+          //     this.name = response.data.ad.company;
+          //   })
+          //   .catch(() => {});
+        }
+
+
+
       }
     }
   };

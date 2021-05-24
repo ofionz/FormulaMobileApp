@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex column">
+    <div class="flex column desktop_container">
       <ui-page-title
         :class="$style.title"
         @backward="$router.push({ name: 'prices' })"
@@ -84,6 +84,7 @@ export default {
 
 <style lang="scss" module>
 //$
+
 .title {
   margin: 58px 16px 36px;
 }

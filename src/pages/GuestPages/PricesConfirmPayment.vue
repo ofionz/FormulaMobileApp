@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex column">
+    <div class="flex column desktop_container">
       <ui-page-title   :class="$style.title" @backward = backward title="Оплата"> </ui-page-title>
       <div class="flex column" :class="$style.title_wrapper">
         <span v-if="tariff" :class="$style.total"
@@ -225,8 +225,21 @@ export default {
       this.$router.push({ name: "set_user_info" });
     },
     nextButtonHandler() {
-      this.$router.push({ name: "payment_finished", params: { type: "paid" } });
+      // this.$router.push({ name: "payment_finished", params: { type: "paid" } });
+
+        ipayCheckout({
+            amount: this.tariff.price ,
+            currency:'RUB',
+            order_number:'',
+            description: this.tariff.name},
+          function() {
+            console.log('Оплата прошла успешно '); },
+          function() {
+            console.log( "ПОПЫТКА ОПЛАТы ПРОВАЛИЛАСЬ" )})
     },
+
+
+
     laterButtonHandler() {
       this.$router.push({ name: "payment_finished", params: { type: "later" } });
     },
@@ -252,6 +265,7 @@ export default {
 
 <style lang="scss" module>
 //$
+
 .title {
   margin: 58px 16px 0;
 }
@@ -309,6 +323,10 @@ export default {
 }
 
 .to_pay {
+    @media (min-width: 1200px) {
+      padding-right: 25%;
+      padding-left: 26%;
+    }
   background-color: $colorGray2;
   border-top: 5px solid #333333;
   border-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAECAYAAAC3OK7NAAAAUElEQVQIW3WOQQ7AIAgEF2zV/3+2FQUkHoxp0rnOLIHwoUl3NUPNN4ho23R2bxOXPmDmGKq4Eu94TSzM0zo05AkzoZaMxDEIGZGsK3+UeGMCR/QnxDOhJnAAAAAASUVORK5CYII=")

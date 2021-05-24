@@ -8,9 +8,10 @@ import studentInfo from './studentInfo'
 import questions from './questions'
 import notifications from './notifications'
 import instructorInfo from './instructorInfo'
+import authInfo from './authInfo'
 
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can
@@ -30,7 +31,8 @@ export default function ( { ssrContext } ) {
       studentInfo,
       questions,
       notifications,
-      instructorInfo
+      instructorInfo,
+      authInfo
     },
 
     // enable strict mode (adds overhead!)

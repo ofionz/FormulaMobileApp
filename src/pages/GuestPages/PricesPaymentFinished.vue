@@ -1,5 +1,5 @@
 <template>
-  <div  :class="$style.container" class="flex column" >
+  <div  :class="$style.container" class="flex column desktop_container" >
     <div v-if="type==='later'"  :class="$style.wrap" class="flex column">
       <UiIcon
         :color-inheritance="false"
