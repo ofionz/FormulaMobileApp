@@ -49,13 +49,13 @@
             </div>
           </template>
         </q-input>
-        <q-input readonly v-model="email" type="email" label-slot class="input">
-          <template v-slot:label>
-            <div class="row items-center all-pointer-events input_label">
-              Почта
-            </div>
-          </template>
-        </q-input>
+        <!--<q-input readonly v-model="email" type="email" label-slot class="input">-->
+        <!--  <template v-slot:label>-->
+        <!--    <div class="row items-center all-pointer-events input_label">-->
+        <!--      Почта-->
+        <!--    </div>-->
+        <!--  </template>-->
+        <!--</q-input>-->
 
         <UiCheckbox class="q-mt-xs q-mb-md"
           ><span :class="$style.checkbox_label"
@@ -197,9 +197,9 @@ export default {
     phone() {
       return this.$store.state.registerUserInfo.phone;
     },
-    email() {
-      return this.$store.state.registerUserInfo.email;
-    },
+    // email() {
+    //   return this.$store.state.registerUserInfo.email;
+    // },
     department() {
       return this.$store.state.registerUserInfo.department;
     },
@@ -220,7 +220,11 @@ export default {
   },
   methods: {
     backward() {
-      this.$router.push({ name: "set_department" });
+      if (this.$store.state.registerUserInfo.department) {
+        this.$router.push({ name: "set_department" });
+      }
+      else   this.$router.push({ name: "set_user_info" });
+
     },
     backToEdit() {
       this.$router.push({ name: "set_user_info" });

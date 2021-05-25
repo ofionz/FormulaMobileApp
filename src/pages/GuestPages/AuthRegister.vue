@@ -33,6 +33,7 @@
         <div v-if="firstStepRegistration" :class="$style.stepsRegistration">
           <q-input
             v-model="name"
+            ref = "name"
             :rules="[val => val.length || 'Введите имя']"
             label-slot
             class="input"
@@ -46,6 +47,7 @@
           <q-input
             v-model="surname"
             class="input"
+            ref = 'surname'
             label-slot
             :rules="[val => val.length || 'Введите фамилию']"
           >
@@ -62,10 +64,13 @@
             label-slot
             type="tel"
             class="input"
+            unmasked-value
+            ref = "phone"
+            bottom-slots
             @focusin="maskVisible = true"
             :fill-mask="maskVisible"
-            mask="+7(###) ### - ## - ##"
-            :rules="[val => val.length || 'Введите телефон']"
+            mask="+7(###) ### - ####"
+            :rules="[val => val.length>9 || 'Введите номер телефона']"
           >
             <template v-slot:label>
               <div
@@ -74,31 +79,13 @@
                 Телефон
               </div>
             </template>
-          </q-input>
-          <q-input
-            v-model="phone"
-            label-slot
-            bottom-slots
-            unmasked-value
-            fill-mask
-            type="tel"
-            class="input"
-            mask="+7(###) ### - ####"
-            :rules="[val => val.length>9 || 'Введите номер телефона']"
-          >
-            <template v-slot:label>
-              <div
-                class="row items-center all-pointer-events input_label"
-              >
-                Номер телефона
-              </div>
-            </template>
             <template v-slot:hint>
               <span class="q-mb-md input_hint">
                 Указанный при оплате в приложении или в филиале.
               </span>
             </template>
           </q-input>
+
           <div class="q-mb-lg q-mt-xs">
             <span :class="$style.email_link" @click="openSwiper">
               Как оплатить?</span
@@ -231,7 +218,13 @@
     },
     methods: {
       registerButtonHandler() {
-        this.firstStepRegistration = false;
+        this.$refs.name.validate();
+        this.$refs.surname.validate();
+        this.$refs.phone.validate();
+        if ( !this.$refs.name.hasError && !this.$refs.surname.hasError&& !this.$refs.phone.hasError) {
+          this.firstStepRegistration = false;
+        }
+
       },
       closeSwiper() {
         this.$emit("blockToggle", false);

@@ -1,29 +1,38 @@
 <template>
-  <div :class="classesRoot">
-    <label :class="classesCheckbox">
-      <input
-        :id="uniqueId"
-        :name="name"
-        :value="value"
-        :checked="state"
-        :required="required"
-        :disabled="disabled"
-        type="checkbox"
-        @change="changeHandler"
+  <div>
+    <div :class="classesRoot">
+      <label :class="classesCheckbox">
+        <input
+          :id="uniqueId"
+          :name="name"
+          :value="value"
+          :checked="state"
+          :required="required"
+          :disabled="disabled"
+          type="checkbox"
+          @change="changeHandler"
+        >
+        <UiIcon
+          :class="$style.icon"
+          :color-inheritance="true"
+          name="check"
+        />
+      </label>
+      <label
+        v-if="$scopedSlots.default"
+        :for="uniqueId"
+        :class="$style.label"
       >
-      <UiIcon
-        :class="$style.icon"
-        :color-inheritance="true"
-        name="check"
-      />
-    </label>
-    <label
-      v-if="$scopedSlots.default"
-      :for="uniqueId"
-      :class="$style.label"
-    >
-      <slot name="default" />
-    </label>
+        <slot name="default" />
+      </label>
+
+    </div>
+    <p
+      v-if="showError"
+      class="input_hint"
+      ref="hint"
+      :class="$style.hint"
+    >{{errorText}}</p>
   </div>
 </template>
 
@@ -61,6 +70,10 @@
         type: String,
         default: null,
       },
+      errorText: {
+        type: String,
+        default: null,
+      },
       required: {
         type: Boolean,
         default: false,
@@ -73,9 +86,10 @@
     data: () => ({
       defaultState: false,
       uniqueId: null,
+      showError: false
     }),
     computed: {
-      classesCheckbox(){
+      classesCheckbox() {
         const { $style } = this;
         return {
           [$style.checkbox]: true,
@@ -121,6 +135,12 @@
       this.uniqueId = this.id ?? generateId('checkbox-');
     },
     methods: {
+
+      validate() {
+        this.showError = !this.state;
+      },
+
+
       changeHandler() {
         if (this.disabled) return;
 
@@ -139,13 +159,19 @@
           this.defaultState = !this.defaultState;
         }
 
+        if (this.required) {
+          this.validate();
+        }
         this.$emit('change', value);
       },
     },
   };
 </script>
 
-<style lang="scss" module>
+<style
+  lang="scss"
+  module
+>
   $size: 22px;
 
   .container {
@@ -163,7 +189,7 @@
     justify-content: center;
     height: $size;
     width: $size;
-    border: 1.5px solid #AEAEB2;
+    border: 1.5px solid #aeaeb2;
     border-radius: $size;
     position: relative;
     transition: all ease .3s;
@@ -182,11 +208,13 @@
       pointer-events: none;
     }
   }
+
   .checked {
     border: 1.5px solid $colorInteractive;
     background: $colorInteractive;
 
   }
+
   .icon {
     height: $size/2+$size/12;
     width: $size/2+$size/12;
@@ -199,6 +227,15 @@
       opacity: 1;
     }
   }
+
+  .hint {
+    margin-top: 7px;
+    border-top: 3px solid $colorDanger;
+    color: $colorDanger!important;
+    font-weight: 500;
+  }
+
+
 
   .label {
     padding-left: 8px;

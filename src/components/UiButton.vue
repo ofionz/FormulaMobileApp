@@ -265,7 +265,7 @@ export default {
   border-radius: 10px;
   padding: 0;
 
-  background-image: linear-gradient(#F6F6F6, #F6F6F6), radial-gradient(circle at top left, #0661b2, #cc0b19);
+  background-image: linear-gradient(#ffffff, #ffffff), radial-gradient(circle at top left, #0661b2, #cc0b19);
   background-origin: border-box;
   background-clip: content-box, border-box;
   display:flex;

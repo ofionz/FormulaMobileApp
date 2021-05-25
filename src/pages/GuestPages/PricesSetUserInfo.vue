@@ -8,9 +8,13 @@
       >
       </ui-page-title>
 
-      <div class="q-mr-md q-ml-md" :class="$style.registerForm">
+      <div
+        class="q-mr-md q-ml-md"
+        :class="$style.registerForm"
+      >
         <q-input
           v-model="name"
+          ref='clientname'
           :rules="[val => val.length || 'Введите имя']"
           label-slot
           class="input"
@@ -23,6 +27,7 @@
         </q-input>
         <q-input
           v-model="surname"
+          ref='clientsurname'
           class="input"
           label-slot
           :rules="[val => val.length || 'Введите фамилию']"
@@ -38,6 +43,7 @@
         <q-input
           v-model="phone"
           label-slot
+          ref='clientphone'
           unmasked-value
           fill-mask
           type="tel"
@@ -58,42 +64,56 @@
               </span>
           </template>
         </q-input>
-        <q-input
-          v-model="email"
-          type="email"
-          label-slot
-          bottom-slots
-          class="input"
-          :rules="[val => val.length || 'Введите почту']"
-        >
-          <template v-slot:label>
-            <div
-              class="row items-center all-pointer-events input_label"
-            >
-              Почта
-            </div>
-          </template>
+        <!--<q-input-->
+        <!--  v-model="email"-->
+        <!--  type="email"-->
+        <!--  ref='clientmail'-->
+        <!--  label-slot-->
+        <!--  bottom-slots-->
+        <!--  class="input"-->
+        <!--  :rules="[val => val.length || 'Введите почту']"-->
+        <!--&gt;-->
+        <!--  <template v-slot:label>-->
+        <!--    <div-->
+        <!--      class="row items-center all-pointer-events input_label"-->
+        <!--    >-->
+        <!--      Почта-->
+        <!--    </div>-->
+        <!--  </template>-->
 
-        </q-input>
+        <!--</q-input>-->
 
-        <UiCheckbox @change="(val)=>this.license=val" class="q-mt-xl q-mb-lg"
-        ><span :class="$style.checkbox_label"
+        <UiCheckbox
+          @change="(val)=>this.license=val"
+          errorText = 'Необходимо подтвердить согласие на обработку персональных данных'
+          required
+          ref = 'license'
+          class="q-mt-xl q-mb-lg"
+        ><span
+          :class="$style.checkbox_label"
         >Я согласен на обработку моих персональных данных</span
         ></UiCheckbox
         >
 
 
-          <UiButton @click="nextButtonHandler" class="q-mt-xl" fluid theme="background-brand">
-            Выбрать филиал
-          </UiButton>
-          <UiButton @click="skipNextStep" fluid theme="outline-brand" :class="$style.btn_later">
-            Выберу позже
-          </UiButton>
+        <UiButton
+          @click="nextButtonHandler"
+          class="q-mt-xl"
+          fluid
+          theme="background-brand"
+        >
+          Выбрать филиал
+        </UiButton>
+        <UiButton
+          @click="skipNextStep"
+          fluid
+          theme="outline-brand"
+          :class="$style.btn_later"
+        >
+          Выберу позже
+        </UiButton>
 
       </div>
-
-
-
 
 
     </div>
@@ -101,117 +121,145 @@
 </template>
 
 <script>
-import UiButton from "../../components/UiButton";
-import UiCheckbox from '../../components/UiCheckbox';
-import UiPageTitle from '../../components/UiPageTitle';
+  import UiButton from '../../components/UiButton';
+  import UiCheckbox from '../../components/UiCheckbox';
+  import UiPageTitle from '../../components/UiPageTitle';
 
-export default {
-  name: "Details",
-  components: {
-    UiPageTitle,
-    UiButton,
-    UiCheckbox
-  },
+  export default {
+    name: 'Details',
+    components: {
+      UiPageTitle,
+      UiButton,
+      UiCheckbox,
+    },
 
-  data() {
-    return {
-      license: false,
-    };
-  },
+    data() {
+      return {
+        license: false,
+      };
+    },
 
 
-  computed: {
-    name: {
-      get () {
-        return this.$store.state.registerUserInfo.name
+    computed: {
+      name: {
+        get() {
+          return this.$store.state.registerUserInfo.name;
+        },
+        set(value) {
+          this.$store.commit('registerUserInfo/setName', value);
+        },
       },
-      set (value) {
-        this.$store.commit('registerUserInfo/setName', value)
-      }
-    },
-    surname: {
-      get () {
-        return this.$store.state.registerUserInfo.surname
+      surname: {
+        get() {
+          return this.$store.state.registerUserInfo.surname;
+        },
+        set(value) {
+          this.$store.commit('registerUserInfo/setSurname', value);
+        },
       },
-      set (value) {
-        this.$store.commit('registerUserInfo/setSurname', value)
-      }
-    },
-    phone: {
-      get () {
-        return this.$store.state.registerUserInfo.phone
+      phone: {
+        get() {
+          return this.$store.state.registerUserInfo.phone;
+        },
+        set(value) {
+          this.$store.commit('registerUserInfo/setPhone', value);
+        },
       },
-      set (value) {
-        this.$store.commit('registerUserInfo/setPhone', value)
-      }
+      // email: {
+      //   get() {
+      //     return this.$store.state.registerUserInfo.email;
+      //   },
+      //   set(value) {
+      //     this.$store.commit('registerUserInfo/setEmail', value);
+      //   },
+      // },
+
     },
-    email: {
-      get () {
-        return this.$store.state.registerUserInfo.email
+
+
+    methods: {
+      backward() {
+        if (!this.$store.state.registerUserInfo.tariffId) {
+          this.$router.push({ name: 'prices' });
+        } else this.$router.push('details/' + this.$store.state.registerUserInfo.tariffId);
+        this.$store.commit('registerUserInfo/setTariffId', '');
       },
-      set (value) {
-        this.$store.commit('registerUserInfo/setEmail', value)
-      }
+
+      isFormValid() {
+        this.$refs.license.validate();
+        this.$refs.clientname.validate();
+        this.$refs.clientsurname.validate();
+        this.$refs.clientphone.validate();
+        // this.$refs.clientmail.validate();
+        if (this.$refs.clientname.hasError
+          || this.$refs.clientsurname.hasError
+          || this.$refs.clientphone.hasError
+          // || this.$refs.clientmail.hasError
+        ) {
+          return false;
+        }
+        return true;
+      },
+
+      nextButtonHandler() {
+        if (this.isFormValid()) {
+          this.$router.push({ name: 'set_department' });
+        }
+      },
+      skipNextStep() {
+        if (this.isFormValid()) {
+          this.$store.commit('registerUserInfo/setUserDepartment', '');
+          this.$router.push({ name: 'confirm_payment' });
+        }
+      },
     },
 
-  },
-
-
-
-  methods: {
-    backward(){
-      this.$router.go(-1)
-    },
-    nextButtonHandler(){
-      this.$router.push({name: 'set_department'})
-    },
-    skipNextStep(){
-      this.$store.commit('registerUserInfo/setUserDepartment', '');
-      this.$router.push({name: 'confirm_payment'})
-    }
-  },
-
-};
+  };
 </script>
 
-<style lang="scss" module>
-//$
+<style
+  lang="scss"
+  module
+>
+  //$
 
-.title {
-  margin: 58px 16px 40px;
-}
-.title_wrap {
-  @include title-subscreen_16-20_semibold;
-  padding: 23px 16px 60px;
-  color: $colorBlack;
-  justify-content: center;
-  position: relative;
-}
+  .title {
+    margin: 58px 16px 40px;
+  }
 
-.icon_back {
-  position: absolute;
-  left: 16px;
-  transform: scale(0.9);
-}
+  .title_wrap {
+    @include title-subscreen_16-20_semibold;
+    padding: 23px 16px 60px;
+    color: $colorBlack;
+    justify-content: center;
+    position: relative;
+  }
 
-.title {
-  @include title-subscreen_16-20_semibold;
-}
+  .icon_back {
+    position: absolute;
+    left: 16px;
+    transform: scale(0.9);
+  }
 
-.checkbox_label,
- {
-  @include text_16-22_medium;
-}
+  .title {
+    @include title-subscreen_16-20_semibold;
+  }
 
-.btn_later {
-  margin-top: 16px;
-  margin-bottom: 120px;
-}
-.registerForm {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
+  .checkbox_label,
+  {
+    @include text_16-22_medium;
+  }
+
+  .btn_later {
+    margin-top: 16px;
+    margin-bottom: 120px;
+  }
+
+  .registerForm {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 
 
 </style>
