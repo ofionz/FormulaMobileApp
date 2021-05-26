@@ -19,3 +19,6 @@ export function setUserDepartment (state, n) {
 export function setFirstPayment (state, n) {
     state.firstPayment = n;
 }
+export function setLicense (state, n) {
+    state.license = n;
+}

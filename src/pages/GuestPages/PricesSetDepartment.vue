@@ -173,8 +173,7 @@
     methods: {
       backward() {
         this.$router.push({
-          name: 'details',
-          params: { id: this.$store.state.registerUserInfo.tariffId },
+          name: 'set_user_info'
         });
       },
       selectOnMap(department) {

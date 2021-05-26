@@ -6,6 +6,7 @@ export default function() {
     email: "",
     tariffId: "",
     department: "",
-    firstPayment: ""
+    firstPayment: "",
+    license: false
   };
 }

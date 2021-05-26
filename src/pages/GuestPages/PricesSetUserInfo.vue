@@ -85,8 +85,9 @@
 
         <UiCheckbox
           @change="(val)=>this.license=val"
-          errorText = 'Необходимо подтвердить согласие на обработку персональных данных'
-          required
+          label = "Я согласен на обработку моих персональных данных"
+          :rules="[val => val===true || 'Необходимо подтвердить согласие на обработку персональных данных']"
+         :checked='this.license'
           ref = 'license'
           class="q-mt-xl q-mb-lg"
         ><span
@@ -133,14 +134,15 @@
       UiCheckbox,
     },
 
-    data() {
-      return {
-        license: false,
-      };
-    },
-
-
     computed: {
+      license: {
+        get() {
+          return this.$store.state.registerUserInfo.license;
+        },
+        set(value) {
+          this.$store.commit('registerUserInfo/setLicense', value);
+        },
+      },
       name: {
         get() {
           return this.$store.state.registerUserInfo.name;
@@ -181,24 +183,20 @@
       backward() {
         if (!this.$store.state.registerUserInfo.tariffId) {
           this.$router.push({ name: 'prices' });
-        } else this.$router.push('details/' + this.$store.state.registerUserInfo.tariffId);
+        } else this.$router.push({
+          name: 'details',
+          params: { id: this.$store.state.registerUserInfo.tariffId },
+        });
         this.$store.commit('registerUserInfo/setTariffId', '');
       },
 
       isFormValid() {
-        this.$refs.license.validate();
-        this.$refs.clientname.validate();
-        this.$refs.clientsurname.validate();
-        this.$refs.clientphone.validate();
+
         // this.$refs.clientmail.validate();
-        if (this.$refs.clientname.hasError
-          || this.$refs.clientsurname.hasError
-          || this.$refs.clientphone.hasError
-          // || this.$refs.clientmail.hasError
-        ) {
-          return false;
-        }
-        return true;
+        return !(!this.$refs.license.validate()
+          | !this.$refs.clientname.validate()
+          | !this.$refs.clientsurname.validate()
+          | !this.$refs.clientphone.validate());
       },
 
       nextButtonHandler() {

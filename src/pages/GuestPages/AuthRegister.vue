@@ -67,8 +67,7 @@
             unmasked-value
             ref = "phone"
             bottom-slots
-            @focusin="maskVisible = true"
-            :fill-mask="maskVisible"
+            fill-mask
             mask="+7(###) ### - ####"
             :rules="[val => val.length>9 || 'Введите номер телефона']"
           >
@@ -182,7 +181,6 @@
       return {
         isSliderVisible: false,
         firstStepRegistration: true,
-        maskVisible: false,
         tab: "login",
         password: "",
         passwordCopy: "",
