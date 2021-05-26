@@ -57,11 +57,7 @@
         <!--  </template>-->
         <!--</q-input>-->
 
-        <UiCheckbox class="q-mt-xs q-mb-md"
-          ><span :class="$style.checkbox_label"
-            >Покупаю в подарок</span
-          ></UiCheckbox
-        >
+        <UiCheckbox  label="Покупаю в подарок" class="q-mt-xs q-mb-md"></UiCheckbox>
       </div>
     </div>
 
@@ -306,7 +302,6 @@ export default {
   @include title_20-24_bold;
 }
 
-.checkbox_label,
 .to_pay_label,
 .popup_content {
   @include text_16-22_medium;

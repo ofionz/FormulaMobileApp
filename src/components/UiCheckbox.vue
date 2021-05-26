@@ -104,7 +104,7 @@
 <style>
   .chekbox_field .q-field__bottom {
     left: 40px;
-    bottom: 20px;
+    bottom: 10px;
   }
 </style>
 
