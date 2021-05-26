@@ -140,6 +140,7 @@
           return this.$store.state.registerUserInfo.license;
         },
         set(value) {
+
           this.$store.commit('registerUserInfo/setLicense', value);
         },
       },

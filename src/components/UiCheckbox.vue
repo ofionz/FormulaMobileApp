@@ -1,25 +1,26 @@
 <template>
   <div>
-      <q-field
-        ref="toggle"
-        :value="state"
-        :rules="rules"
-        borderless
-        no-error-icon
-        class = 'chekbox_field'
-        @click="changeHandler"
+    <q-field
+      :value="state"
+      :rules="rules"
+      ref="field_checkbox"
+      borderless
+      no-error-icon
+      class='chekbox_field'
+
+    >
+      <q-checkbox
+        :class="$style.checkbox"
+        @input="changeHandler"
+        v-model="state"
+        type="checkbox"
+        :disable='disable'
+        size="md"
+        :label="label"
       >
-        <q-checkbox
-          :class="$style.checkbox"
-          v-model="state"
-          type="checkbox"
-          :disable='disable'
-          size="md"
-          :label="label"
-        >
-        </q-checkbox>
-      </q-field>
-    </div>
+      </q-checkbox>
+    </q-field>
+  </div>
 </template>
 <script>
   export default {
@@ -66,6 +67,9 @@
       this.state = this.checked;
     },
     methods: {
+      validate() {
+        return this.$refs.field_checkbox.validate();
+      },
       changeHandler() {
         if (this.disabled) return;
         this.$emit('change', this.state);
@@ -98,7 +102,7 @@
 </style>
 
 <style>
-  .chekbox_field .q-field__bottom  {
+  .chekbox_field .q-field__bottom {
     left: 40px;
     bottom: 20px;
   }
