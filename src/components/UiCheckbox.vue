@@ -103,6 +103,8 @@
 
 <style>
   .chekbox_field .q-field__bottom {
+    font-weight: 500;
+    font-size: 12px;
     left: 40px;
     bottom: 10px;
   }

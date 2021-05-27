@@ -52,6 +52,7 @@
     justify-content: center;
     position: relative;
     &_text {
+      padding-left: 20px;
       @include title-subscreen_16-20_semibold;
     }
     &_icon {

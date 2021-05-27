@@ -7,6 +7,7 @@ export default function() {
     tariffId: "",
     department: "",
     firstPayment: "",
+    isGift: false,
     license: false
   };
 }

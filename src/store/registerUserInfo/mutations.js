@@ -22,3 +22,6 @@ export function setFirstPayment (state, n) {
 export function setLicense (state, n) {
     state.license = n;
 }
+export function setGiftState (state, n) {
+    state.isGift = n;
+}
