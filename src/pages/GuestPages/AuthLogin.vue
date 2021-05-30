@@ -24,12 +24,20 @@
         v-ripple="false"
         :class="$style.tab"
         class="text-capitalize"
-        ><label :class="$style.tab_label">Регистрация</label>
+      ><label :class="$style.tab_label">Регистрация</label>
       </q-route-tab>
     </q-tabs>
-    <q-tab-panels v-model="tab" :class="$style.panels" class="desktop_container" animated>
+    <q-tab-panels
+      v-model="tab"
+      :class="$style.panels"
+      class="desktop_container"
+      animated
+    >
       <q-tab-panel name="login">
-        <div :class="$style.login_title" class="q-mb-lg q-mt-md">
+        <div
+          :class="$style.login_title"
+          class="q-mb-lg q-mt-md"
+        >
           Для курсантов и сотрудников
         </div>
         <q-input
@@ -70,7 +78,10 @@
         >
           Войти
         </UiButton>
-        <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
+        <UiPopUp
+          @close="closeSwiper"
+          :visible="isSliderVisible"
+        >
           <template #label>Под кем заходим ?</template>
           <template #content>
             <UiButton
@@ -118,104 +129,109 @@
 </template>
 
 <script>
-import UiButton from "../../components/UiButton";
-import UiPopUp from "../../components/UiPopUp";
+  import UiButton from '../../components/UiButton';
+  import UiPopUp from '../../components/UiPopUp';
 
-export default {
-  name: "MainLayout",
-  components: {
-    UiPopUp,
-    UiButton
-  },
-  data() {
-    return {
-      isSliderVisible: false,
-      tab: "register",
-      login: "",
-      password: "",
-      roles: []
-    };
-  },
-  mounted() {
-    if (window.device) {
-      StatusBar.overlaysWebView(true);
-    }
-  },
-
-  methods: {
-    registerButtonHandler() {
-      this.firstStepRegistration = false;
+  export default {
+    name: 'MainLayout',
+    components: {
+      UiPopUp,
+      UiButton,
     },
-
-    loginButtonHandler() {
-      let payload = {
-        login: this.login,
-        password: this.password
+    data() {
+      return {
+        isSliderVisible: false,
+        tab: 'register',
+        login: '',
+        password: '',
+        roles: [],
       };
-      this.$store.dispatch("authInfo/login", payload).then(this.getRoles);
+    },
+    mounted() {
+      if (window.device) {
+        StatusBar.overlaysWebView(true);
+      }
     },
 
-    async getRoles(isAuth) {
-      if (isAuth) {
-       await this.$store.dispatch("authInfo/fetchRoles");
-        this.roles = this.$store.state.authInfo.roles;
-        if (this.roles.length > 1) this.openSwiper();
-        else if (this.roles.length === 1) {
-          this.selectRoleHandler(this.roles[0].url);
+    methods: {
+      async loginButtonHandler() {
+        //    const fcmToken = await FCM.getToken();
+        // this.$eventBus.$emit ('error', {head:' ',text: fcmToken})
+
+        // let payload = {
+        //   login: this.login,
+        //   password: this.password
+        // };
+        // this.$store.dispatch("authInfo/login", payload).then(this.getRoles);
+
+        this.roles.push({ url: 'instructor' });
+        this.openSwiper();
+      },
+
+      async getRoles(isAuth) {
+        if (isAuth) {
+          await this.$store.dispatch('authInfo/fetchRoles');
+          this.roles = this.$store.state.authInfo.roles;
+          if (this.roles.length > 1) this.openSwiper();
+          else if (this.roles.length === 1) {
+            this.selectRoleHandler(this.roles[0].url);
+          }
+
         }
+      },
 
-      }
+      closeSwiper() {
+        this.$emit('blockToggle', false);
+        this.isSliderVisible = false;
+      },
+
+
+      openSwiper() {
+        this.$emit('blockToggle', true);
+        this.isSliderVisible = true;
+      },
+
+      async selectRoleHandler(role) {
+        // if (
+        //   await this.$store.dispatch(
+        //     'authInfo/selectRole',
+        //     this.roles.find(elem => elem.url === role).ID,
+        //   )
+        // ) {
+          await this.$router.push('/' + role);
+        // }
+      },
     },
-
-    closeSwiper() {
-      this.$emit("blockToggle", false);
-      this.isSliderVisible = false;
-    },
-
-
-    openSwiper() {
-      this.$emit("blockToggle", true);
-      this.isSliderVisible = true;
-    },
-
-   async selectRoleHandler(role) {
-      if (
-       await this.$store.dispatch(
-          "authInfo/selectRole",
-          this.roles.find(elem => elem.url === role).ID
-        )
-      ) {
-        await this.$router.push("/" + role);
-      }
-    }
-  }
-};
+  };
 </script>
-<style lang="scss" module>
-//$
-$tab_panel_height: 120px;
+<style
+  lang="scss"
+  module
+>
+  //$
+  $tab_panel_height: 120px;
 
-.tab {
-  align-self: flex-end;
-}
+  .tab {
+    align-self: flex-end;
+  }
 
-.tab_wrap {
-  @include gradientBrand;
-  height: $tab_panel_height;
-}
+  .tab_wrap {
+    @include gradientBrand;
+    height: $tab_panel_height;
+  }
 
-.tab_label {
-  @include title_20-24_bold;
-  color: $colorWhite;
-  padding: 0 8px;
-  margin-bottom: 16px;
-}
+  .tab_label {
+    @include title_20-24_bold;
+    color: $colorWhite;
+    padding: 0 8px;
+    margin-bottom: 16px;
+  }
 
-.login_title {
-  @include text_16-22_medium;
-}
+  .login_title {
+    @include text_16-22_medium;
+  }
 
-.panels {
-  height: calc(100vh - #{$tab_panel_height});
-}
+  .panels {
+    height: calc(100vh - #{$tab_panel_height});
+  }
 </style>

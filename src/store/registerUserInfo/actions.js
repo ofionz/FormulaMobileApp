@@ -9,7 +9,7 @@ export async  function  sendRegisterData ( context ) {
     DEPARTMENT: context.state.department,
   };
 return Vue.prototype.$axios
-    .post(GUEST_REGISTRATION_ENDPOINT, data)
+    .get(GUEST_REGISTRATION_ENDPOINT, {params: data})
     .catch(error => {
       throw new Error("action sendRegisterData " + error);
     });
@@ -27,7 +27,7 @@ export async  function  sendPaymentInfo ( context, paymentinfo ) {
     PAYMENT_INFO: paymentinfo,
   };
   return Vue.prototype.$axios
-    .post(GUEST_BUY_ENDPOINT, data)
+    .get(GUEST_BUY_ENDPOINT, {params: data})
     .catch(error => {
       throw new Error("action sendPaymentInfo " + error);
     });
