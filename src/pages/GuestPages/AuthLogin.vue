@@ -150,6 +150,9 @@
     mounted() {
       if (window.device) {
         StatusBar.overlaysWebView(true);
+        FCM.onNotification((object) => {
+          this.$eventBus.$emit ('error', {head:' ',text: JSON.stringify(object)})
+        })
       }
     },
 

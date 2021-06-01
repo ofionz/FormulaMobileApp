@@ -59,6 +59,26 @@
               </div>
             </template>
           </q-input>
+
+
+          <q-input
+            v-model="email"
+            type="email"
+            label-slot
+            bottom-slots
+            class="input"
+            :rules="[val => !!val || 'Введите email',val => val.length>0 || 'Введите email' , isValidEmail ]"
+
+          >
+            <template v-slot:label>
+              <div
+                class="row items-center all-pointer-events input_label"
+              >
+                Почта
+              </div>
+            </template>
+          </q-input>
+
           <q-input
             v-model="phone"
             label-slot
@@ -212,6 +232,14 @@
           this.$store.commit('registerUserInfo/setPhone', value)
         }
       },
+      email: {
+        get () {
+          return this.$store.state.registerUserInfo.email
+        },
+        set (value) {
+          this.$store.commit('registerUserInfo/setEmail', value)
+        }
+      },
 
     },
     methods: {
@@ -250,7 +278,11 @@
 
 
 
-      }
+      },
+      isValidEmail () {
+        const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+        return emailPattern.test(this.email) || 'Проверьте правильность ввода почты';
+      },
     }
   };
 </script>

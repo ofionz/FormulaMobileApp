@@ -40,6 +40,7 @@
 
       </q-input>
     </div>
+    <div class="q-pb-xl"> </div>
     <UiPopUp @close="closePopup" :visible="isPopupVisible">
       <template #label>
         Фото

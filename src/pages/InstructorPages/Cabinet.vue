@@ -6,17 +6,20 @@
         <q-avatar size="86px" :class="$style.avatar" >
           <img :src="avatar" />
         </q-avatar>
-          <span :class="$style.avatar_money">{{'14001'|withCurrencySymbol}}</span>
+          <!--<span :class="$style.avatar_money">{{'14001'|withCurrencySymbol}}</span>-->
         </div>
         <div class="flex column">
           <span class="q-mb-xs" :class="$style.instructor_name">
             {{ surname }} {{ name }}
           </span>
 
-          <span :class="$style.instructor_description">
-            Старший инструктор, стаж 2 года, 118 учеников обучено, 71% сдача
-            автодрома, 69% сдача города.
-          </span>
+          <!--<span :class="$style.instructor_description">-->
+          <!--  Старший инструктор,-->
+          <!--  стаж 2 года,-->
+          <!--  118 учеников обучено,-->
+          <!--  71% сдача автодрома,-->
+          <!--  69% сдача города.-->
+          <!--</span>-->
           <span class="q-mt-sm" :class="$style.instructor_car">
             Серый Renult Logan
 
