@@ -19,11 +19,11 @@
              iconName: "car",
              label: "Вождение",
            },
-          {
-            name: "instructorServices",
-            iconName: "stars",
-            label: "Сервисы",
-          },
+          // {
+          //   name: "instructorServices",
+          //   iconName: "stars",
+          //   label: "Сервисы",
+          // },
            {
              name: "instructorCabinet",
              iconName: "road",

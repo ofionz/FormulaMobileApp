@@ -18,6 +18,7 @@
         size="md"
         :label="label"
       >
+        <slot  name="label"></slot>
       </q-checkbox>
     </q-field>
   </div>

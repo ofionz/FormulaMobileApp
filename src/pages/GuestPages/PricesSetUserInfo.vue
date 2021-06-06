@@ -64,31 +64,31 @@
               </span>
           </template>
         </q-input>
-        <!--<q-input-->
-        <!--  v-model="email"-->
-        <!--  type="email"-->
-        <!--  ref='clientmail'-->
-        <!--  label-slot-->
-        <!--  bottom-slots-->
-        <!--  class="input"-->
-        <!--  :rules="[val => val.length || 'Введите почту']"-->
-        <!--&gt;-->
-        <!--  <template v-slot:label>-->
-        <!--    <div-->
-        <!--      class="row items-center all-pointer-events input_label"-->
-        <!--    >-->
-        <!--      Почта-->
-        <!--    </div>-->
-        <!--  </template>-->
+        <q-input
+          v-model="email"
+          type="email"
+          ref='clientmail'
+          label-slot
+          bottom-slots
+          class="input"
+          :rules="[val => !!val || 'Введите email', isValidEmail ]"
+        >
+          <template v-slot:label>
+            <div
+              class="row items-center all-pointer-events input_label"
+            >
+              Почта
+            </div>
+          </template>
 
-        <!--</q-input>-->
+        </q-input>
 
         <UiCheckbox
           @change="(val)=>this.license=val"
-          label = "Я согласен на обработку моих персональных данных"
+          label="Я согласен на обработку моих персональных данных"
           :rules="[val => val===true || 'Необходимо подтвердить согласие на обработку персональных данных']"
-         :checked='this.license'
-          ref = 'license'
+          :checked='this.license'
+          ref='license'
           class="q-mt-xl q-mb-lg"
         ><span
           :class="$style.checkbox_label"
@@ -135,6 +135,7 @@
     },
 
     computed: {
+
       license: {
         get() {
           return this.$store.state.registerUserInfo.license;
@@ -168,19 +169,23 @@
           this.$store.commit('registerUserInfo/setPhone', value);
         },
       },
-      // email: {
-      //   get() {
-      //     return this.$store.state.registerUserInfo.email;
-      //   },
-      //   set(value) {
-      //     this.$store.commit('registerUserInfo/setEmail', value);
-      //   },
-      // },
+      email: {
+        get() {
+          return this.$store.state.registerUserInfo.email;
+        },
+        set(value) {
+          this.$store.commit('registerUserInfo/setEmail', value);
+        },
+      },
 
     },
 
 
     methods: {
+      isValidEmail () {
+        const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+        return emailPattern.test(this.email) || 'Проверьте правильность ввода почты';
+      },
       backward() {
         if (!this.$store.state.registerUserInfo.tariffId) {
           this.$router.push({ name: 'prices' });
@@ -193,14 +198,17 @@
 
       isFormValid() {
 
-        // this.$refs.clientmail.validate();
+
         return !(!this.$refs.license.validate()
           | !this.$refs.clientname.validate()
           | !this.$refs.clientsurname.validate()
-          | !this.$refs.clientphone.validate());
+          | !this.$refs.clientphone.validate()
+          | !this.$refs.clientmail.validate())
+          ;
       },
 
       nextButtonHandler() {
+
         if (this.isFormValid()) {
           this.$router.push({ name: 'set_department' });
         }

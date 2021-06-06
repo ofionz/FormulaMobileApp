@@ -12,14 +12,15 @@ const routes = [
         component: () => import("pages/InstructorPages/Driving.vue")
       },
       {
-        path: "driving/details/:id",
+        path: "driving/details",
         props: true,
         name:"drivingDetails",
         component: () => import("pages/InstructorPages/DrivingDetails.vue")
       },
       {
-        path: "services",
-        name:"instructorServices",
+        path: "driving/studentInfo",
+        props: true,
+        name:"studentInfo",
         component: () => import("pages/InstructorPages/DrivingStudentCabinet.vue")
       },
       {

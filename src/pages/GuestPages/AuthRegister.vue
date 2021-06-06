@@ -65,9 +65,10 @@
             v-model="email"
             type="email"
             label-slot
+            ref = "email"
             bottom-slots
             class="input"
-            :rules="[val => !!val || 'Введите email',val => val.length>0 || 'Введите email' , isValidEmail ]"
+            :rules="[val => !!val || 'Введите email', isValidEmail ]"
 
           >
             <template v-slot:label>
@@ -189,6 +190,7 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import UiPopUp from "../../components/UiPopUp";
   import UiButton from "../../components/UiButton";
   export default {
@@ -244,10 +246,8 @@
     },
     methods: {
       registerButtonHandler() {
-        this.$refs.name.validate();
-        this.$refs.surname.validate();
-        this.$refs.phone.validate();
-        if ( !this.$refs.name.hasError && !this.$refs.surname.hasError&& !this.$refs.phone.hasError) {
+
+        if ( this.$refs.name.validate() & this.$refs.email.validate() &  this.$refs.surname.validate() & this.$refs.phone.validate()) {
           this.firstStepRegistration = false;
         }
 
@@ -264,10 +264,14 @@
       resetSteps() {
         this.firstStepRegistration = true;
       },
-      loadData() {
+      async loadData() {
         this.$refs.password.validate();
         this.$refs.passwordCopy.validate();
         if (!this.$refs.password.hasError && !this.$refs.passwordCopy.hasError) {
+          this.$store.commit('registerUserInfo/setPassword', this.password);
+         if (await this.$store.dispatch('registerUserInfo/sendRegisterData')) {
+           this.$eventBus.$emit('error', { header: '', text: "Регистрация прошла успешно" });
+         }
           // this.$axios
           //   .get("https://reqres.in/api/users?page=2")
           //   .then(response => {
@@ -275,7 +279,6 @@
           //   })
           //   .catch(() => {});
         }
-
 
 
       },

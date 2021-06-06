@@ -2,6 +2,7 @@ export default function() {
   return {
     name: "",
     surname: "",
+    password: "",
     phone: "",
     email: "",
     tariffId: "",

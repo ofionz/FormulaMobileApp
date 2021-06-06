@@ -3,12 +3,11 @@ import errorHelper from "../../utils/errorHelper";
 import { ROLES_ENDPOINT, AUTH_ENDPOINT } from "../../api/constants";
 export async function login(context, args) {
   return Vue.prototype.$axios
-    .get(AUTH_ENDPOINT, {
-      params: args
-    })
+    .post(AUTH_ENDPOINT, args)
     .then(response => {
       if (response.data.token) {
         context.commit("setToken", response.data.token);
+        context.commit("setRole", response.data.profile);
         return true;
       } else {
         return false;

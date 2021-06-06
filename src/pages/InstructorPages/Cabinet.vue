@@ -20,12 +20,15 @@
           <!--  71% сдача автодрома,-->
           <!--  69% сдача города.-->
           <!--</span>-->
-          <span class="q-mt-sm" :class="$style.instructor_car">
-            Серый Renult Logan
+          <span v-if="auto" class="q-mt-sm" :class="$style.instructor_car">
+            {{ auto.name }}
 
             <span :class="$style.car_number__wrap">
               <span :class="$style.car_number">
-                <span :class="$style.car_number__letter">А</span>128<span :class="$style.car_number__letter">ЕК</span>&nbsp;72
+                <span :class="$style.car_number__letter">  {{ auto.number.substr(0,1).toUpperCase()}}</span>
+                  {{ auto.number.substr(1,3)}}
+                <span :class="$style.car_number__letter">{{ auto.number.substr(3,2).toUpperCase()}}</span>&nbsp;
+               {{ auto.number.substr(5,2)}}
               </span>
             </span>
           </span>
@@ -51,28 +54,28 @@
           />
         </li>
 
-        <li
-          class="flex"
-          :class="$style.body_li"
-          @click="$router.push({ name: 'history' })"
-        >
-          История уведомлений
-          <UiIcon
-            :class="$style.body_icon"
-            :color-inheritance="true"
-            :em-size="false"
-            name="arrow"
-          />
-        </li>
-        <li class="flex" :class="$style.body_li">
-          Сменить роль
-          <UiIcon
-            :class="$style.body_icon"
-            :color-inheritance="true"
-            :em-size="false"
-            name="arrow"
-          />
-        </li>
+        <!--<li-->
+        <!--  class="flex"-->
+        <!--  :class="$style.body_li"-->
+        <!--  @click="$router.push({ name: 'history' })"-->
+        <!--&gt;-->
+        <!--  История уведомлений-->
+        <!--  <UiIcon-->
+        <!--    :class="$style.body_icon"-->
+        <!--    :color-inheritance="true"-->
+        <!--    :em-size="false"-->
+        <!--    name="arrow"-->
+        <!--  />-->
+        <!--</li>-->
+        <!--<li class="flex" :class="$style.body_li">-->
+        <!--  Сменить роль-->
+        <!--  <UiIcon-->
+        <!--    :class="$style.body_icon"-->
+        <!--    :color-inheritance="true"-->
+        <!--    :em-size="false"-->
+        <!--    name="arrow"-->
+        <!--  />-->
+        <!--</li>-->
       </ul>
 
       <div :class="$style.exit">
@@ -87,10 +90,10 @@
         Редактировать данные
       </template>
       <template #content>
-        <FillingStudentInfo
+        <FillingInstructorInfo
           modal-mode
           @saved="closePopupEdit()"
-        ></FillingStudentInfo>
+        ></FillingInstructorInfo>
       </template>
     </UiPopUp>
   </div>
@@ -99,7 +102,7 @@
 <script>
 import UiIcon from "../../components/UiIcon";
 import UiPopUp from "../../components/UiPopUp";
-import FillingStudentInfo from "../StudentPages/FillingStudentInfo";
+import FillingInstructorInfo from "../InstructorPages/FillingInstructorInfo";
 import withCurrencySymbol from "../../filters/money.filter";
 
 export default {
@@ -107,10 +110,10 @@ export default {
   components: {
     UiIcon,
     UiPopUp,
-    FillingStudentInfo
+    FillingInstructorInfo
   },
   filters: {
-    withCurrencySymbol
+    withCurrencySymbol,
   },
   data() {
     return {
@@ -121,98 +124,35 @@ export default {
       paymentAmount: ""
     };
   },
+  async created() {
+    await this.$store.dispatch('instructorInfo/fetchInstructorInfo')
+  },
   computed: {
     department() {
-      return this.$store.state.studentInfo.department;
+      return this.$store.state.instructorInfo.department;
     },
     avatar: {
       get() {
-        return this.$store.state.studentInfo.avatar;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setAvatar", value);
+        return this.$store.state.instructorInfo.avatar;
       }
     },
     name: {
       get() {
-        return this.$store.state.studentInfo.name;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setName", value);
+        return this.$store.state.instructorInfo.name;
       }
     },
     surname: {
       get() {
-        return this.$store.state.studentInfo.surname;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setSurname", value);
+        return this.$store.state.instructorInfo.surname;
       }
     },
-    phone: {
+
+    auto: {
       get() {
-        return this.$store.state.studentInfo.phone;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setPhone", value);
+        return this.$store.state.instructorInfo.auto;
       }
     },
-    email: {
-      get() {
-        return this.$store.state.studentInfo.email;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setEmail", value);
-      }
-    },
-    birthDate: {
-      get() {
-        return this.$store.state.studentInfo.birthDate;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setBirthDate", value);
-      }
-    },
-    passportNumber: {
-      get() {
-        return this.$store.state.studentInfo.passportNumber;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setPassportNumber", value);
-      }
-    },
-    passportDate: {
-      get() {
-        return this.$store.state.studentInfo.passportDate;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setPassportDate", value);
-      }
-    },
-    passportPlace: {
-      get() {
-        return this.$store.state.studentInfo.passportPlace;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setPassportPlace", value);
-      }
-    },
-    passportCode: {
-      get() {
-        return this.$store.state.studentInfo.passportCode;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setPassportCode", value);
-      }
-    },
-    passportAddress: {
-      get() {
-        return this.$store.state.studentInfo.passportAddress;
-      },
-      set(value) {
-        this.$store.commit("studentInfo/setPassportAddress", value);
-      }
-    }
+
   },
   methods: {
 
@@ -222,6 +162,7 @@ export default {
     },
     openPopupEdit() {
       this.$emit("blockToggle", true);
+
       this.isPopupEditVisible = true;
     },
 

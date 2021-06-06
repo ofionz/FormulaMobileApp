@@ -8,23 +8,41 @@
     />
 
     <span :class="$style.about_description"
-      >Об автошколе, автопарк, автодромы, Формула Безопасности, лучшая автошкола
-      2018. Рассрочка от автошколы.</span
-    >
+      >В 2018 и 2019 году стали лучшей автошколой Тюменской области в конкурсе
+      Департамента образования и науки Тюменской области
+    </span>
 
     <div :class="$style.about_detail">
       <div class="flex column">
         <div :class="$style.about_num_wrap">
-          <span :class="$style.about_num">1500</span>
+          <span :class="$style.about_num">2</span>
         </div>
 
-        <span :class="$style.about_description">курсантов каждый год</span>
+        <span :class="$style.about_description">автодрома в черте города </span>
       </div>
       <div class="flex column">
         <div :class="$style.about_num_wrap">
-          <span :class="$style.about_num">60</span>
+          <span :class="$style.about_num">22</span>
         </div>
-        <span :class="$style.about_description">учебных автомобилей</span>
+        <span :class="$style.about_description"
+          >учебных классов для теории
+        </span>
+      </div>
+      <div class="flex column">
+        <div :class="$style.about_num_wrap">
+          <span :class="$style.about_num">100+</span>
+        </div>
+        <span :class="$style.about_description"
+        >учебных автомобилей
+        </span>
+      </div>
+      <div class="flex column">
+        <div :class="$style.about_num_wrap">
+          <span :class="$style.about_num">10 000+</span>
+        </div>
+        <span :class="$style.about_description"
+        >курсантов получают права каждый год
+        </span>
       </div>
     </div>
   </div>

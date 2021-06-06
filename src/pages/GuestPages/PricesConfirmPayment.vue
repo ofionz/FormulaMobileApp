@@ -74,13 +74,13 @@
             </div>
           </template>
         </q-input>
-        <!--<q-input readonly v-model="email" type="email" label-slot class="input">-->
-        <!--  <template v-slot:label>-->
-        <!--    <div class="row items-center all-pointer-events input_label">-->
-        <!--      Почта-->
-        <!--    </div>-->
-        <!--  </template>-->
-        <!--</q-input>-->
+        <q-input readonly v-model="email" type="email" label-slot class="input">
+          <template v-slot:label>
+            <div class="row items-center all-pointer-events input_label">
+              Почта
+            </div>
+          </template>
+        </q-input>
 
         <UiCheckbox
           @change="(val)=>this.isGift=val"
@@ -88,6 +88,17 @@
           label="Покупаю в подарок"
           class="q-mt-xs q-mb-md"
         ></UiCheckbox>
+        <UiCheckbox
+          @change="(val)=>this.isConsent=val"
+          :checked = "isConsent"
+        >
+          <template v-slot:label>
+            <div>
+              Я согласен с условиями <a href="https://formula.as">договора</a>.
+            </div>
+          </template>
+
+        </UiCheckbox>
       </div>
     </div>
 
@@ -139,6 +150,7 @@
           :class="$style.to_pay_installments_btn"
         >Применить рассрочку
         </span>
+
       </div>
 
       <UiButton
@@ -146,6 +158,7 @@
         class=" q-mt-lg "
         fluid
         theme="background-brand"
+        :disabled = "!isConsent"
       >
         Оплатить картой
       </UiButton>
@@ -228,7 +241,7 @@
 
     data() {
       return {
-
+        isConsent: false,
         tariff: {},
         maskVisible: false,
         isPopupVisible: false,
@@ -248,9 +261,9 @@
       phone() {
         return this.$store.state.registerUserInfo.phone;
       },
-      // email() {
-      //   return this.$store.state.registerUserInfo.email;
-      // },
+      email() {
+        return this.$store.state.registerUserInfo.email;
+      },
       department() {
         return this.$store.state.registerUserInfo.department;
       },
@@ -289,22 +302,25 @@
       },
       async nextButtonHandler() {
         let parent = this;
-        ipayCheckout({
-            amount: this.installmentPaymentAmount ? this.installmentPaymentAmount : this.tariff.price,
-            currency: 'RUB',
-            order_number: '',
-            description: this.tariff.name,
-          },
-          function (paymentInfo) {
-            parent.$store.dispatch('registerUserInfo/sendPaymentInfo', paymentInfo);
-            parent.$router.push({ name: 'payment_finished', params: { type: 'paid' } });
-          },
-          function (e = '') {
-            Vue.prototype.$eventBus.$emit('error', {
-              header: 'Ошибка оплаты',
-              text: 'Произошла ошибка во время оплаты.\n' + e,
-            });
-          });
+
+        this.$store.dispatch('registerUserInfo/sendPaymentInfo', {});
+
+        // ipayCheckout({
+        //     amount: this.installmentPaymentAmount ? this.installmentPaymentAmount : this.tariff.price,
+        //     currency: 'RUB',
+        //     order_number: '',
+        //     description: this.tariff.name,
+        //   },
+        //   function (paymentInfo) {
+        //     parent.$store.dispatch('registerUserInfo/sendPaymentInfo', paymentInfo);
+        //     parent.$router.push({ name: 'payment_finished', params: { type: 'paid' } });
+        //   },
+        //   function (e = '') {
+        //     Vue.prototype.$eventBus.$emit('error', {
+        //       header: 'Ошибка оплаты',
+        //       text: 'Произошла ошибка во время оплаты.\n' + e,
+        //     });
+        //   });
       },
 
 

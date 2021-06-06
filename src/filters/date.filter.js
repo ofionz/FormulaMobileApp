@@ -19,8 +19,8 @@ export default function dateFilter(value, format = "date") {
       (options.weekday = "short"),
       (options.timezone = "UTC");
   }
-  if(format.includes("string")){
-    return `_${value.getMonth()+1}_${value.getFullYear()}`
+  if(format.includes("strMonth")){
+    options.month = "long";
   }
   return new Intl.DateTimeFormat("ru-RU", options).format(new Date(value));
 }

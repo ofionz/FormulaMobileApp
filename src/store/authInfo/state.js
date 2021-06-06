@@ -4,5 +4,6 @@ export default function() {
     login: "",
     roles: [],
     token: "",
+    role: "",
   };
 }

@@ -4,6 +4,9 @@ export function setName (state, n) {
 export function setPhone (state, n) {
     state.phone = n;
 }
+export function setPassword (state, n) {
+    state.password = n;
+}
 export function setSurname (state, n) {
     state.surname = n;
 }

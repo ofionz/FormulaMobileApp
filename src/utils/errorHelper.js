@@ -3,7 +3,7 @@ import Vue from 'vue';
 const errorHelper = function (response) {
 
   let error = response.data.error;
-  if (!error) return true;
+  if (response.data && !error) return true;
   else {
     let payload = { header: 'Ошибка', text: error.message };
     if (error.code === 13) {

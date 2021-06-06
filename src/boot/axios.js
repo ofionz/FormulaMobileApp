@@ -6,7 +6,7 @@ import errorHelper from '../utils/errorHelper';
 Vue.prototype.$axios = axios;
 export default ({ app, router, store, Vue }) => {
   axios.interceptors.request.use(
-    createSetAuthInterceptor(store.state.authInfo)
+    createSetAuthInterceptor(store.state.authInfo), ErrorRequestHandler
   );
   axios.interceptors.request.use(startPreloaderInterceptor, ErrorRequestHandler);
   axios.interceptors.response.use(stopPreloaderInterceptor, ErrorRequestHandler);
@@ -18,13 +18,9 @@ export default ({ app, router, store, Vue }) => {
 };
 
 const createSetAuthInterceptor = options => config => {
+  config.headers["Content-Type"] = "text/plain;charset=utf-8";
   if (options.token) {
-    // config.url =config.url+options.token+'/' ;
-    //  config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    config.headers["Content-Type"] = "text/plain;charset=utf-8";
-    config.headers.Authorization = 'Bearer '+ options.token;
-  } else {
-    delete config.headers.Authorization;
+    config.url =config.url+options.token+'/' ;
   }
   return config;
 };

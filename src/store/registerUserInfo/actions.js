@@ -3,13 +3,19 @@ import Vue from "vue";
 export async  function  sendRegisterData ( context ) {
   let data =  {
     NAME: context.state.name,
-    SURNAME: context.state.surname,
+    LAST_NAME: context.state.surname,
     PHONE: context.state.phone,
-    TARIFF: context.state.tariffId,
-    DEPARTMENT: context.state.department,
+    EMAIL: context.state.email,
+    PASSWORD: context.state.password,
   };
 return Vue.prototype.$axios
-    .get(GUEST_REGISTRATION_ENDPOINT, {params: data})
+    .post(GUEST_REGISTRATION_ENDPOINT, data).then(response => {
+    if (response.data.success) {
+      return true;
+    } else {
+      return false;
+    }
+  })
     .catch(error => {
       throw new Error("action sendRegisterData " + error);
     });
@@ -20,6 +26,7 @@ export async  function  sendPaymentInfo ( context, paymentinfo ) {
     NAME: context.state.name,
     LAST_NAME: context.state.surname,
     PHONE: context.state.phone,
+    EMAIL: context.state.email,
     PRODUCT_ID: context.state.tariffId,
     BRANCH: context.state.department,
     CATEGORY: "B", // TODO убрать статику - только для теста!
@@ -27,7 +34,7 @@ export async  function  sendPaymentInfo ( context, paymentinfo ) {
     PAYMENT_INFO: paymentinfo,
   };
   return Vue.prototype.$axios
-    .get(GUEST_BUY_ENDPOINT, {params: data})
+    .post(GUEST_BUY_ENDPOINT, data)
     .catch(error => {
       throw new Error("action sendPaymentInfo " + error);
     });
