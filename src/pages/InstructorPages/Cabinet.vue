@@ -125,7 +125,7 @@ export default {
     };
   },
   async created() {
-    await this.$store.dispatch('instructorInfo/fetchInstructorInfo')
+    await this.$store.dispatch('instructorInfo/fetchInstructorProfile')
   },
   computed: {
     department() {

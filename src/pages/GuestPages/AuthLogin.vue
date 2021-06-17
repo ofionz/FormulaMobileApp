@@ -157,8 +157,8 @@ export default {
     async loginButtonHandler() {
       //    const fcmToken = await FCM.getToken();
       // this.$eventBus.$emit ('error', {head:' ',text: fcmToken})
-
-      if (this.$refs.login.validate() & this.$refs.password.validate()) {
+      this.$refs.login.validate() ; this.$refs.password.validate();
+      if (!(this.$refs.login.hasError || this.$refs.password.hasError)) {
         let payload = {
           login: this.login,
           password: this.password
@@ -189,6 +189,10 @@ export default {
     openSwiper() {
       this.$emit("blockToggle", true);
       this.isSliderVisible = true;
+    },
+    isValidPhone() {
+      const phonePattern = /^9/;
+      return phonePattern.test(this.phone) || 'Проверьте правильность ввода номера телефона';
     },
     isValidEmail() {
       const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;

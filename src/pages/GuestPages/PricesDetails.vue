@@ -76,6 +76,7 @@ export default {
   methods: {
     startButtonHandler() {
       this.$store.commit("registerUserInfo/setTariffId", this.id);
+      this.$store.commit("registerUserInfo/setCategory", this.tariff.category);
       this.$router.push({ name: "set_user_info" });
     }
   }

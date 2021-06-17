@@ -6,7 +6,9 @@ export default function() {
     phone: "",
     email: "",
     tariffId: "",
+    category: "",
     department: "",
+    departmentName: "",
     firstPayment: "",
     isGift: false,
     license: false

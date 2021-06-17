@@ -16,8 +16,13 @@ export function setEmail (state, n) {
 export function setTariffId (state, n) {
     state.tariffId = n;
 }
+export function setCategory (state, n) {
+    state.category = n;
+}
 export function setUserDepartment (state, n) {
     state.department = n;
+}export function setUserDepartmentName (state, n) {
+    state.departmentName = n;
 }
 export function setFirstPayment (state, n) {
     state.firstPayment = n;

@@ -13,7 +13,7 @@
         <span
           v-if="tariff"
           :class="$style.total"
-        >{{ tariff.groupName }}, пакет {{ tariff.name }}, {{ department }}.
+        >{{ tariff.groupName }}, пакет {{ tariff.name }}, {{ departmentName }}.
           Цена: {{ tariff.price | withCurrencySymbol }}</span
         >
       </div>
@@ -264,8 +264,8 @@
       email() {
         return this.$store.state.registerUserInfo.email;
       },
-      department() {
-        return this.$store.state.registerUserInfo.department;
+      departmentName() {
+        return this.$store.state.registerUserInfo.departmentName;
       },
       firstPayment: {
         get() {
@@ -303,30 +303,29 @@
       async nextButtonHandler() {
         let parent = this;
 
-        this.$store.dispatch('registerUserInfo/sendPaymentInfo', {});
-
-        // ipayCheckout({
-        //     amount: this.installmentPaymentAmount ? this.installmentPaymentAmount : this.tariff.price,
-        //     currency: 'RUB',
-        //     order_number: '',
-        //     description: this.tariff.name,
-        //   },
-        //   function (paymentInfo) {
-        //     parent.$store.dispatch('registerUserInfo/sendPaymentInfo', paymentInfo);
-        //     parent.$router.push({ name: 'payment_finished', params: { type: 'paid' } });
-        //   },
-        //   function (e = '') {
-        //     Vue.prototype.$eventBus.$emit('error', {
-        //       header: 'Ошибка оплаты',
-        //       text: 'Произошла ошибка во время оплаты.\n' + e,
-        //     });
-        //   });
+        ipayCheckout({
+            amount: this.installmentPaymentAmount ? this.installmentPaymentAmount : this.tariff.price,
+            currency: 'RUB',
+            order_number: '',
+            description: this.tariff.name,
+          },
+          function (paymentInfo) {
+            parent.$store.dispatch('registerUserInfo/sendPaymentInfo', paymentInfo);
+            parent.$router.push({ name: 'payment_finished', params: { type: 'paid' } });
+          },
+          function (e = '') {
+            Vue.prototype.$eventBus.$emit('error', {
+              header: 'Ошибка оплаты',
+              text: 'Произошла ошибка во время оплаты.\n' + e,
+            });
+          });
       },
 
 
       async laterButtonHandler() {
-        // await this.$store.dispatch('registerUserInfo/sendRegisterData');
-        this.$router.push({ name: 'payment_finished', params: { type: 'later' } });
+
+        if ( await this.$store.dispatch('registerUserInfo/sendGuestRequest'))
+        await this.$router.push({ name: 'payment_finished', params: { type: 'later' } });
       },
       cancelInstallment() {
         this.firstPayment = this.tariff.price;

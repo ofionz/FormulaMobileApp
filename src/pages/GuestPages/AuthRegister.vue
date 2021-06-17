@@ -11,7 +11,7 @@
     >
       <q-route-tab
         name="login"
-        :to ='{name: "login"}'
+        :to='{name: "login"}'
         v-ripple="false"
         :class="$style.tab"
         class="text-capitalize"
@@ -21,19 +21,27 @@
       >
       <q-route-tab
         name="register"
-        :to ='{name: "register"}'
+        :to='{name: "register"}'
         v-ripple="false"
         :class="$style.tab"
         class="text-capitalize"
       ><label :class="$style.tab_label">Регистрация</label>
       </q-route-tab>
     </q-tabs>
-    <q-tab-panels v-model="tab" :class="$style.panels" class="desktop_container" animated>
+    <q-tab-panels
+      v-model="tab"
+      :class="$style.panels"
+      class="desktop_container"
+      animated
+    >
       <q-tab-panel name="register">
-        <div v-if="firstStepRegistration" :class="$style.stepsRegistration">
+        <div
+          v-if="firstStepRegistration"
+          :class="$style.stepsRegistration"
+        >
           <q-input
             v-model="name"
-            ref = "name"
+            ref="name"
             :rules="[val => val.length || 'Введите имя']"
             label-slot
             class="input"
@@ -47,7 +55,7 @@
           <q-input
             v-model="surname"
             class="input"
-            ref = 'surname'
+            ref='surname'
             label-slot
             :rules="[val => val.length || 'Введите фамилию']"
           >
@@ -65,7 +73,7 @@
             v-model="email"
             type="email"
             label-slot
-            ref = "email"
+            ref="email"
             bottom-slots
             class="input"
             :rules="[val => !!val || 'Введите email', isValidEmail ]"
@@ -86,11 +94,11 @@
             type="tel"
             class="input"
             unmasked-value
-            ref = "phone"
+            ref="phone"
             bottom-slots
             fill-mask
             mask="+7(###) ### - ####"
-            :rules="[val => val.length>9 || 'Введите номер телефона']"
+            :rules="[val => val.length>9 || 'Введите номер телефона', isValidPhone]"
           >
             <template v-slot:label>
               <div
@@ -107,7 +115,10 @@
           </q-input>
 
           <div class="q-mb-lg q-mt-xs">
-            <span :class="$style.email_link" @click="openSwiper">
+            <span
+              :class="$style.email_link"
+              @click="openSwiper"
+            >
               Как оплатить?</span
             >
           </div>
@@ -119,10 +130,16 @@
           >
             Зарегистрироваться
           </UiButton>
-          <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
+          <UiPopUp
+            @close="closeSwiper"
+            :visible="isSliderVisible"
+          >
             <template #label>Как оплатить ?</template>
             <template #content>
-              <span class="q-mb-lg q-mt-md" :class="$style.panel_desctiption">
+              <span
+                class="q-mb-lg q-mt-md"
+                :class="$style.panel_desctiption"
+              >
                 Чтобы зарегистрироваться, оплатите пакет обучения во вкладке
                 «Цены» или в любом филиале автошколы «Формула». Каждый пакет
                 доступен при оплате от 1000 ₽</span
@@ -137,13 +154,20 @@
                 Цены
               </UiButton>
 
-              <UiButton class="q-mt-md q-mb-xl" fluid theme="outline-brand">
+              <UiButton
+                class="q-mt-md q-mb-xl"
+                fluid
+                theme="outline-brand"
+              >
                 Адреса филиалов
               </UiButton>
             </template>
           </UiPopUp>
         </div>
-        <div v-else :class="$style.stepsRegistration">
+        <div
+          v-else
+          :class="$style.stepsRegistration"
+        >
           <q-input
             ref="password"
             v-model="password"
@@ -191,73 +215,77 @@
 
 <script>
   import Vue from 'vue';
-  import UiPopUp from "../../components/UiPopUp";
-  import UiButton from "../../components/UiButton";
+  import UiPopUp from '../../components/UiPopUp';
+  import UiButton from '../../components/UiButton';
+
   export default {
-    name: "MainLayout",
+    name: 'MainLayout',
     components: {
       UiPopUp,
-      UiButton
+      UiButton,
     },
     data() {
       return {
         isSliderVisible: false,
         firstStepRegistration: true,
-        tab: "login",
-        password: "",
-        passwordCopy: "",
+        tab: 'login',
+        password: '',
+        passwordCopy: '',
       };
     },
 
     computed: {
       name: {
-        get () {
-          return this.$store.state.registerUserInfo.name
+        get() {
+          return this.$store.state.registerUserInfo.name;
         },
-        set (value) {
-          this.$store.commit('registerUserInfo/setName', value)
-        }
+        set(value) {
+          this.$store.commit('registerUserInfo/setName', value);
+        },
       },
       surname: {
-        get () {
-          return this.$store.state.registerUserInfo.surname
+        get() {
+          return this.$store.state.registerUserInfo.surname;
         },
-        set (value) {
-          this.$store.commit('registerUserInfo/setSurname', value)
-        }
+        set(value) {
+          this.$store.commit('registerUserInfo/setSurname', value);
+        },
       },
       phone: {
-        get () {
-          return this.$store.state.registerUserInfo.phone
+        get() {
+          return this.$store.state.registerUserInfo.phone;
         },
-        set (value) {
-          this.$store.commit('registerUserInfo/setPhone', value)
-        }
+        set(value) {
+          this.$store.commit('registerUserInfo/setPhone', value);
+        },
       },
       email: {
-        get () {
-          return this.$store.state.registerUserInfo.email
+        get() {
+          return this.$store.state.registerUserInfo.email;
         },
-        set (value) {
-          this.$store.commit('registerUserInfo/setEmail', value)
-        }
+        set(value) {
+          this.$store.commit('registerUserInfo/setEmail', value);
+        },
       },
 
     },
     methods: {
       registerButtonHandler() {
-
-        if ( this.$refs.name.validate() & this.$refs.email.validate() &  this.$refs.surname.validate() & this.$refs.phone.validate()) {
+        this.$refs.name.validate();
+        this.$refs.email.validate();
+        this.$refs.surname.validate();
+        this.$refs.phone.validate();
+        if (!(this.$refs.name.hasError || this.$refs.email.hasError || this.$refs.surname.hasError || this.$refs.phone.hasError)) {
           this.firstStepRegistration = false;
         }
 
       },
       closeSwiper() {
-        this.$emit("blockToggle", false);
+        this.$emit('blockToggle', false);
         this.isSliderVisible = false;
       },
       openSwiper() {
-        this.$emit("blockToggle", true);
+        this.$emit('blockToggle', true);
         this.isSliderVisible = true;
       },
 
@@ -269,9 +297,9 @@
         this.$refs.passwordCopy.validate();
         if (!this.$refs.password.hasError && !this.$refs.passwordCopy.hasError) {
           this.$store.commit('registerUserInfo/setPassword', this.password);
-         if (await this.$store.dispatch('registerUserInfo/sendRegisterData')) {
-           this.$eventBus.$emit('error', { header: '', text: "Регистрация прошла успешно" });
-         }
+          if (await this.$store.dispatch('registerUserInfo/sendRegisterData')) {
+            this.$eventBus.$emit('error', { header: '', text: 'Регистрация прошла успешно' });
+          }
           // this.$axios
           //   .get("https://reqres.in/api/users?page=2")
           //   .then(response => {
@@ -282,24 +310,33 @@
 
 
       },
-      isValidEmail () {
+      isValidPhone() {
+        const phonePattern = /^9/;
+        return phonePattern.test(this.phone) || 'Проверьте правильность ввода номера телефона';
+      },
+      isValidEmail() {
         const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
         return emailPattern.test(this.email) || 'Проверьте правильность ввода почты';
       },
-    }
+    },
   };
 </script>
-<style lang="scss" module>
+<style
+  lang="scss"
+  module
+>
   //$
   $tab_panel_height: 120px;
 
   .tab {
     align-self: flex-end;
   }
+
   .tab_wrap {
     @include gradientBrand;
     height: $tab_panel_height;
   }
+
   .tab_label {
     @include title_20-24_bold;
     color: $colorWhite;
@@ -331,6 +368,7 @@
   .panels {
     height: calc(100vh - #{$tab_panel_height});
   }
+
   .stepsRegistration {
     display: flex;
     flex-direction: column;

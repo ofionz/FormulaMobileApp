@@ -49,7 +49,7 @@
           type="tel"
           class="input"
           mask="+7(###) ### - ####"
-          :rules="[val => val.length>9 || 'Введите номер телефона']"
+          :rules="[val => val.length>9 || 'Введите номер телефона', isValidPhone]"
         >
           <template v-slot:label>
             <div
@@ -105,14 +105,14 @@
         >
           Выбрать филиал
         </UiButton>
-        <UiButton
-          @click="skipNextStep"
-          fluid
-          theme="outline-brand"
-          :class="$style.btn_later"
-        >
-          Выберу позже
-        </UiButton>
+        <!--<UiButton-->fet
+        <!--  @click="skipNextStep"-->
+        <!--  fluid-->
+        <!--  theme="outline-brand"-->
+        <!--  :class="$style.btn_later"-->
+        <!--&gt;-->
+        <!--  Выберу позже-->
+        <!--</UiButton>-->
 
       </div>
 
@@ -195,7 +195,10 @@
         });
         this.$store.commit('registerUserInfo/setTariffId', '');
       },
-
+      isValidPhone() {
+        const phonePattern = /^9/;
+        return phonePattern.test(this.phone) || 'Проверьте правильность ввода номера телефона';
+      },
       isFormValid() {
 
 

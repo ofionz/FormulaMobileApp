@@ -102,6 +102,7 @@ export default function() {
         tariffs: [
           {
             id: '8655',
+            category : 'B',
             price: "39500",
             name: "Профи (обучение у МПО)",
             shortDescriptionRows: [
@@ -124,6 +125,7 @@ export default function() {
           {
             id: '12',
             price: "27500",
+            category : 'B',
             shortDescriptionRows: [
               "Доступно занятий: 24",
               "Занятий в неделю: 3"
@@ -142,6 +144,7 @@ export default function() {
           },
           {
             id: '8659',
+            category : 'B',
             shortDescriptionRows: [
               "Доступно занятий: 10",
               "Занятий в неделю: 2"],
@@ -168,6 +171,7 @@ export default function() {
           {
             id: '3006',
             price: "9900",
+            category : 'A',
             name: "Категория А",
             shortDescriptionRows: [
               "Доступно занятий: 6",

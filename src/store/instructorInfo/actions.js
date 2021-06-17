@@ -9,24 +9,6 @@ import {
 } from '../../api/constants';
 import Vue from "vue";
 
-export async  function  fetchInstructorInfo ( context ) {
-  return Vue.prototype.$axios
-    .get(INSTRUCTOR_INFO)
-    .then(response => {
-      if (response.data) {
-        context.commit("setAvatar", response.data.avatar);
-        context.commit("setName", response.data.name);
-        context.commit("setSurname", response.data.lastName);
-        context.commit("setAuto", response.data.auto);
-        return true;
-      } else {
-        return false;
-      }
-    })
-    .catch(error => {
-      throw new Error("action fetchKNDInfo" + error);
-    });
-}
 
 export async  function  fetchInstructorProfile ( context ) {
   return Vue.prototype.$axios
@@ -44,6 +26,9 @@ export async  function  fetchInstructorProfile ( context ) {
         context.commit("setPassportPlace", response.data.passportPlace);
         context.commit("setPassportCode", response.data.passportCode);
         context.commit("setPassportAddress", response.data.passportAddress);
+        context.commit("setName", response.data.name);
+        context.commit("setSurname", response.data.lastName);
+        context.commit("setAuto", response.data.auto);
         return true;
       } else {
         return false;

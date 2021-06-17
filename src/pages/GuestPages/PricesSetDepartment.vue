@@ -161,7 +161,7 @@
 
     },
     async mounted() {
-      this.currentdepartment = this.$store.state.registerUserInfo.department;
+      this.currentdepartment = this.$store.state.registerUserInfo.departmentName;
       await this.$store.dispatch('departments/fetchBranches');
       this.allDepartments = this.$store.getters['departments/getDefaultCityDepartmentsList'];
       this.flatDepartmentsList = this.$store.getters[
@@ -181,9 +181,11 @@
         this.selectDepartment(department);
       },
       selectDepartment(department) {
+
         this.currentCoords = department.coords;
         this.currentdepartment = department.name;
-        this.$store.commit('registerUserInfo/setUserDepartment', this.currentdepartment);
+        this.$store.commit('registerUserInfo/setUserDepartment', department.id);
+        this.$store.commit('registerUserInfo/setUserDepartmentName', department.name);
       },
       nextButtonHandler() {
         {

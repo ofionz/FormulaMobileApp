@@ -257,7 +257,6 @@ export default {
     };
   },
   async created() {
-    await this.$store.dispatch("instructorInfo/fetchInstructorProfile");
     this.data = JSON.parse(JSON.stringify(this.$store.state.instructorInfo));
     this.isPhotoSeted = Boolean(this.data.avatar);
   },
