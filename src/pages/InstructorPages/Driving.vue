@@ -4,6 +4,7 @@
       :available-days="availableDays"
       @selected="selectedDateHandler"
       @unselected="unSelectedDateHandler"
+      :initDate = 'date'
     ></UiCalendar>
     <ul
       v-if="currentDateData"
@@ -39,32 +40,15 @@
       UiIcon,
 
     },
+    props: {
+      date: {
+        required: false,
+        type: String,
+      },
+    },
     data() {
       return {
         isPopupVisible: false,
-        monthes: [
-          { string: 'Сентябрь', date: '2020/09/01' },
-          { string: 'Октябрь', date: '2020/10/01' },
-          { string: 'Ноябрь', date: '2020/11/01' },
-          { string: 'Декабрь 2020', date: '2020/12/01' },
-          { string: 'Январь 2021', date: '2021/01/01' },
-          { string: 'Февраль', date: '2021/02/01' },
-          { string: 'Март', date: '2021/03/01' },
-          { string: 'Апрель', date: '2021/04/01' },
-          { string: 'Май', date: '2021/05/01' },
-          { string: 'Июнь', date: '2021/06/01' },
-          { string: 'Июль', date: '2021/07/01' },
-          { string: 'Август', date: '2021/08/01' },
-          { string: 'Сентябрь', date: '2021/09/01' },
-          { string: 'Октябрь', date: '2021/10/01' },
-          { string: 'Ноябрь', date: '2021/11/01' },
-          { string: 'Декабрь 2021', date: '2021/12/01' },
-          { string: 'Январь 2022', date: '2021/01/01' },
-          { string: 'Февраль', date: '2022/02/01' },
-          { string: 'Март', date: '2022/03/01' },
-          { string: 'Апрель', date: '2022/04/01' },
-          { string: 'Май', date: '2022/05/01' },
-        ],
         currentDateData: '',
         dates: undefined,
         availableDays: undefined,
@@ -75,8 +59,9 @@
       this.dates = this.$store.state.instructorInfo.dates;
       await this.$store.dispatch('instructorInfo/fetchAvailableDays');
       this.availableDays = this.$store.state.instructorInfo.availableDays;
-    },
 
+
+    },
     methods: {
 
      async selectedDateHandler(date) {

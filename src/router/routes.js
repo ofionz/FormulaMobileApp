@@ -8,6 +8,7 @@ const routes = [
       { path: "/instructor", redirect: "/instructor/driving" },
       {
         path: "driving",
+        props: true,
         name:"instructorDriving",
         component: () => import("pages/InstructorPages/Driving.vue")
       },
@@ -45,6 +46,7 @@ const routes = [
       {
         path: "driving",
         name:"driving",
+        props: true,
         component: () => import("pages/StudentPages/Driving.vue")
       },
       {

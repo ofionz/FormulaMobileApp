@@ -2,7 +2,7 @@
   <div>
     <div class="flex column">
       <ui-page-title
-        @backward="$router.push({ name: 'instructorDriving' })"
+        @backward="$router.push({ name: 'instructorDriving', params: { date: date}})"
         brand_theme
         paddings
         title="Вождение"

@@ -105,7 +105,7 @@
         >
           Выбрать филиал
         </UiButton>
-        <!--<UiButton-->fet
+        <!--<UiButton-->
         <!--  @click="skipNextStep"-->
         <!--  fluid-->
         <!--  theme="outline-brand"-->

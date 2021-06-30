@@ -35,7 +35,7 @@ export async  function  fetchInstructorProfile ( context ) {
       }
     })
     .catch(error => {
-      throw new Error("action fetchKNDInfo" + error);
+      throw new Error("action fetchInstructorProfile" + error);
     });
 }
 
@@ -73,7 +73,7 @@ export async  function  fetchKndDocs ( context ) {
       }
     })
     .catch(error => {
-      throw new Error("action fetchKNDInfo" + error);
+      throw new Error("action fetchKndDocs" + error);
     });
 }
 
@@ -101,8 +101,10 @@ export async  function  fetchAvailableDays ( context ) {
     .then(response => {
       if (response.data) {
         let res = [];
-        response.data.dates.forEach(el => res.push(el.date));
-        context.commit("setAvailableDays", res);
+        if (  response.data.dates) {
+          response.data.dates.forEach(el => res.push(el.date));
+          context.commit("setAvailableDays", res);
+        }
 
         return true;
       } else {
@@ -110,7 +112,7 @@ export async  function  fetchAvailableDays ( context ) {
       }
     })
     .catch(error => {
-      throw new Error("action fetchKNDInfo" + error);
+      throw new Error("action fetchAvailableDays" + error);
     });
 }
 

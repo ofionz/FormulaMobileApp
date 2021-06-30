@@ -93,6 +93,9 @@
       availableDays: {
         type: Array,
       },
+      initDate: {
+        type: String,
+      },
     },
     data() {
       return {
@@ -142,8 +145,8 @@
     },
     mounted() {
       swiper = document.querySelector('.swiper-container').swiper;
-
-      this.changeMonth(this.findCurrentMonthIndex());
+      this.changeMonth(this.findCurrentMonthIndex(), this.initDate);
+      this.$emit('selected', this.date);
     },
     methods: {
       changeHandler(value, reason, details) {
@@ -159,7 +162,7 @@
         );
         return index;
       },
-      changeMonth(newMonthIndex) {
+      changeMonth(newMonthIndex, date = undefined) {
         swiper.slideTo(newMonthIndex, 1000);
         for (const idMonth in this.monthesList) {
           const lst = document.querySelector(`#slideID${idMonth}`).classList;
@@ -172,14 +175,17 @@
         document
           .querySelector(`#slideID${newMonthIndex}`)
           .classList.remove('month_not_selected');
-        this.date = this.monthesList[newMonthIndex].date;
+        if (date) {
+          this.date = date;
+        } else {
+          this.date = this.monthesList[newMonthIndex].date;
+        }
       },
 
       generateMonthes() {
         const counter = this.countBeforeAndAfterCurrentMonth;
         let monthes = [];
         let today = new Date();
-        today.setDate(1);
         for (let i = 0; i < counter; i++) {
           let copy = new Date(today);
           copy.setMonth(today.getMonth() - (counter - i));

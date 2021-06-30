@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueRouter from '../router'
 
 const errorHelper = function (response) {
   let error = response.data.error;
@@ -9,8 +10,9 @@ const errorHelper = function (response) {
   }
   else {
     let payload = { header: 'Ошибка', text: error.message };
-    if (error.code === 13) {
+    if (error.code === 13 || error.message === 'Не верный токен доступа') {
       payload.header = 'Ошибка авторизации';
+      window.router.push({ name: 'login' }).then(() => Vue.prototype.$eventBus.$emit('error', payload) ).catch((err)=> {});
     }
     Vue.prototype.$eventBus.$emit('error', payload);
     return false;

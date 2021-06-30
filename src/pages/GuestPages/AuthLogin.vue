@@ -136,8 +136,8 @@ export default {
     return {
       isSliderVisible: false,
       tab: "register",
-      login: "",
-      password: "",
+      login: "inst@formula.as",
+      password: "1234567",
       roles: []
     };
   },

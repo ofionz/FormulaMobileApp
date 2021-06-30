@@ -24,10 +24,11 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
-  })
+  });
+
 
   Router.beforeEach(async (to, from, next) => {
-
+    window.router = Router;
 //     const requireStudentRole = to.matched.some(record =>
 // record.meta.role === 'student');
     // if(to.name === 'register') {
