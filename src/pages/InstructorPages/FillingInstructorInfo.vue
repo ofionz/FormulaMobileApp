@@ -289,7 +289,7 @@ export default {
         data => {
           // on success
           this.imageSrc = `data:image/jpeg;base64,${data}`;
-          this.openCropper();
+          this.openSwiper();
         },
         () => {
           // on fail
@@ -302,6 +302,8 @@ export default {
           allowEdit: true
         }
       );
+
+      document.getElementsByClassName('cordova-camera-select')[0].click()
     },
 
     cropperHandler(cropper) {

@@ -3,10 +3,6 @@
 // }
 
 
-export function setInstructorProfile(state, n) {
-    state = n;
-}
-
 export function setAvatar(state, n) {
     state.avatar = n;
 }
@@ -28,12 +24,8 @@ export function setAuto (state, n) {
 export function setEmail (state, n) {
     state.email = n;
 }
-export function setTariffId (state, n) {
-    state.tariffId = n;
-}
-export function setUserDepartment (state, n) {
-    state.department = n;
-}
+
+
 export function setBirthDate (state, n) {
     state.birthDate = n;
 }

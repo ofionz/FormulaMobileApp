@@ -73,6 +73,15 @@
         <splash src="res/screen/ios/Default@2x~ipad~anyany.png" />
         <splash src="res/screen/ios/Default@2x~ipad~comany.png" />
     </platform>
+    <platform name="browser">
+        <preference name="SplashScreen" value="/mobileApp/img/logo_formula.png" />
+        <preference name="AutoHideSplashScreen" value="true" />
+        <preference name="SplashScreenDelay" value="2000" />
+        <preference name="SplashScreenBackgroundColor" value="#464646" />
+        <preference name="ShowSplashScreen" value="true" />
+        <preference name="SplashScreenWidth" value="280" />
+        <preference name="SplashScreenHeight" value="160" />
+    </platform>
     <allow-navigation href="about:*" />
     <preference name="SplashMaintainAspectRatio" value="true" />
 </widget>

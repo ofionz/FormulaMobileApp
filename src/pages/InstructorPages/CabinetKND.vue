@@ -159,6 +159,7 @@ export default {
         });
     },
     getPhotoFromCamera() {
+
       navigator.camera.getPicture(
         data => {
           // on success
@@ -183,6 +184,8 @@ export default {
     getPhotoFromGallery() {
       // this.imageSrc = this.testphoto;
       // this.openCropper();
+      // document.getElementsByClassName('cordova-camera-select')[0].onchange();
+
 
       navigator.camera.getPicture(
         data => {
@@ -204,6 +207,8 @@ export default {
           allowEdit: true
         }
       );
+
+      document.getElementsByClassName('cordova-camera-select')[0].click()
     },
     closePopup() {
       this.currentDocument = undefined;

@@ -23,11 +23,9 @@ export async  function  fetchInstructorProfile ( context ) {
         context.commit("setBirthDate", response.data.birthDate);
         context.commit("setPassportNumber", response.data.passportNumber);
         context.commit("setPassportDate", response.data.passportDate);
+        context.commit("setPassportAddress", response.data.passportAddress);
         context.commit("setPassportPlace", response.data.passportPlace);
         context.commit("setPassportCode", response.data.passportCode);
-        context.commit("setPassportAddress", response.data.passportAddress);
-        context.commit("setName", response.data.name);
-        context.commit("setSurname", response.data.lastName);
         context.commit("setAuto", response.data.auto);
         return true;
       } else {
@@ -45,7 +43,18 @@ export async  function  saveInstructorProfile  ( context, data ) {
     .post(INSTRUCTOR_PROFILE_EDIT, data)
     .then(response => {
       if (response.data.success) {
-        context.commit('setInstructorProfile', data);
+        context.commit("setAvatar", data.avatar);
+        context.commit("setName", data.name);
+        context.commit("setSurname", data.surname);
+        context.commit("setPhone", data.phone);
+        context.commit("setEmail", data.email);
+        context.commit("setBirthDate", data.birthDate);
+        context.commit("setPassportNumber", data.passportNumber);
+        context.commit("setPassportDate", data.passportDate);
+        context.commit("setPassportPlace", data.passportPlace);
+        context.commit("setPassportAddress", data.data.passportAddress);
+        context.commit("setPassportCode", data.passportCode);
+        context.commit("setAuto", data.auto);
         return true;
       } else {
         return false;
@@ -83,7 +92,6 @@ export async  function  saveKndDocs ( context, docs ) {
     .post(INSTRUCTOR_KND_EDIT, docs)
     .then(response => {
       if (response.data.success) {
-
         context.commit('setKndDocs', docs);
         return true;
       } else {
