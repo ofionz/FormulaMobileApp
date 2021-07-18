@@ -22,15 +22,14 @@
           <!--</span>-->
           <span v-if="auto" class="q-mt-sm" :class="$style.instructor_car">
             {{ auto.name }}
-
-            <span :class="$style.car_number__wrap">
+            </span>
+          <span  :class="$style.car_number__wrap">
               <span :class="$style.car_number">
                 <span :class="$style.car_number__letter">  {{ auto.number.substr(0,1).toUpperCase()}}</span>
                   {{ auto.number.substr(1,3)}}
-                <span :class="$style.car_number__letter">{{ auto.number.substr(3,2).toUpperCase()}}</span>&nbsp;
-               {{ auto.number.substr(5,2)}}
+                <span :class="$style.car_number__letter">{{ auto.number.substr(4,2).toUpperCase()}}</span>&nbsp;
+               {{ auto.number.substr(6,3)}}
               </span>
-            </span>
           </span>
         </div>
       </div>
@@ -53,6 +52,17 @@
             name="arrow"
           />
         </li>
+
+        <li class="flex"  @click="$router.push({  name: 'changePassword'})" :class="$style.body_li">
+          Сменить пароль
+          <UiIcon
+            :class="$style.body_icon"
+            :color-inheritance="true"
+            :em-size="false"
+            name="arrow"
+          />
+        </li>
+
 
         <!--<li-->
         <!--  class="flex"-->
@@ -79,7 +89,7 @@
       </ul>
 
       <div :class="$style.exit">
-        <span @click="$router.push('/guest/login')" :class="$style.link">
+        <span @click="logoutHandler()" :class="$style.link">
           Выйти
         </span>
       </div>
@@ -155,7 +165,10 @@ export default {
 
   },
   methods: {
-
+    logoutHandler () {
+      this.$store.commit('instructorInfo/resetData');
+      this.$router.push('/guest/login')
+    },
     closePopupEdit() {
       this.$emit("blockToggle", false);
       this.isPopupEditVisible = false;
@@ -205,13 +218,13 @@ $tab_panel_height: 200px;
   font-weight: normal;
 }
 .car_number__wrap {
-  padding: 2px 1px;
+  padding: 0 1px;
 
   width: fit-content;
   height: fit-content;
   background: #FFFFFF;
   border-radius: 4px;
-  margin-left: 8px ;
+  margin-top: 8px;
 }
 .car_number {
   background: #ffffff;

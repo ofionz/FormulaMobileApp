@@ -145,7 +145,7 @@
     },
     mounted() {
       swiper = document.querySelector('.swiper-container').swiper;
-      this.changeMonth(this.findCurrentMonthIndex(), this.initDate);
+      this.changeMonth(this.findCurrentMonthIndex(this.initDate), this.initDate);
       this.$emit('selected', this.date);
     },
     methods: {
@@ -153,8 +153,10 @@
         if (reason === 'add-day') this.$emit('selected', this.date);
         else if (reason === 'remove-day') this.$emit('unselected');
       },
-      findCurrentMonthIndex() {
-        const today = new Date();
+      findCurrentMonthIndex(thisdate = '') {
+        let today;
+        if (thisdate) today = new Date(thisdate);
+        else today = new Date();
         let index = this.monthesList.findIndex(
           elem =>
             new Date(elem.date).getFullYear() == today.getFullYear() &&
@@ -163,6 +165,7 @@
         return index;
       },
       changeMonth(newMonthIndex, date = undefined) {
+        this.$emit('unselected');
         swiper.slideTo(newMonthIndex, 1000);
         for (const idMonth in this.monthesList) {
           const lst = document.querySelector(`#slideID${idMonth}`).classList;

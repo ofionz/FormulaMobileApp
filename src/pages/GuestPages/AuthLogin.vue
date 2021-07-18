@@ -142,6 +142,7 @@ export default {
     };
   },
   mounted() {
+    this.$store.commit('instructorInfo/resetData');
     if (window.device) {
       StatusBar.overlaysWebView(true);
       FCM.onNotification(object => {
@@ -164,16 +165,16 @@ export default {
           password: this.password
         };
         // this.$store.dispatch("authInfo/login", payload).then(this.getRoles);
-
-        if (await this.$store.dispatch("authInfo/login", payload)) {
-            this.selectRoleHandler (this.$store.state.authInfo.role)}
+        this.selectRoleHandler ('student')
+      //   if (await this.$store.dispatch("authInfo/login", payload)) {
+      //       this.selectRoleHandler (this.$store.state.authInfo.role)}
       }
     },
 
     // async getRoles(isAuth) {
     //   if (isAuth) {
-    //     await this.$store.dispatch("authInfo/fetchRoles");
-    //     this.roles = this.$store.state.authInfo.roles;
+        // await this.$store.dispatch("authInfo/fetchRoles");
+        // this.roles = this.$store.state.authInfo.roles;
     //     if (this.roles.length > 1) this.openSwiper();
     //     else if (this.roles.length === 1) {
     //       this.selectRoleHandler(this.roles[0].url);

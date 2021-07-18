@@ -5,7 +5,10 @@ export default function() {
     avatar: "",
     name: "",
     surname: "",
-    auto: "",
+    auto: {
+      name: '',
+      number: ''
+    },
     phone: "",
     email: "",
     birthDate: "",

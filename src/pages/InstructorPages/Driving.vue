@@ -58,8 +58,7 @@
     async created() {
       this.dates = this.$store.state.instructorInfo.dates;
       await this.$store.dispatch('instructorInfo/fetchAvailableDays');
-      this.availableDays = this.$store.state.instructorInfo.availableDays;
-
+      this.availableDays = this.$store.state.instructorInfo.availableDays
 
     },
     methods: {

@@ -52,7 +52,7 @@ export async  function  saveInstructorProfile  ( context, data ) {
         context.commit("setPassportNumber", data.passportNumber);
         context.commit("setPassportDate", data.passportDate);
         context.commit("setPassportPlace", data.passportPlace);
-        context.commit("setPassportAddress", data.data.passportAddress);
+        context.commit("setPassportAddress", data.passportAddress);
         context.commit("setPassportCode", data.passportCode);
         context.commit("setAuto", data.auto);
         return true;

@@ -400,6 +400,10 @@
 
     .student_wrap {
       flex-wrap: nowrap !important;
+      width: 50%;
+    }
+    .instructor_wrap {
+      width: 50%;
     }
     @media (min-width: 1200px){
       display: flex;

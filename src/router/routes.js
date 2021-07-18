@@ -13,6 +13,12 @@ const routes = [
         component: () => import("pages/InstructorPages/Driving.vue")
       },
       {
+        path: "changepassword",
+        props: true,
+        name:"changePassword",
+        component: () => import("pages/InstructorPages/CabinetChangePassword.vue")
+      },
+      {
         path: "driving/details",
         props: true,
         name:"drivingDetails",
