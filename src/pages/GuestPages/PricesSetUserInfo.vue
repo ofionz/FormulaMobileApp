@@ -26,8 +26,8 @@
           </template>
         </q-input>
         <q-input
-          v-model="surname"
-          ref='clientsurname'
+          v-model="lastName"
+          ref='clientlastName'
           class="input"
           label-slot
           :rules="[val => val.length || 'Введите фамилию']"
@@ -153,12 +153,12 @@
           this.$store.commit('registerUserInfo/setName', value);
         },
       },
-      surname: {
+      lastName: {
         get() {
-          return this.$store.state.registerUserInfo.surname;
+          return this.$store.state.registerUserInfo.lastName;
         },
         set(value) {
-          this.$store.commit('registerUserInfo/setSurname', value);
+          this.$store.commit('registerUserInfo/setLastName', value);
         },
       },
       phone: {
@@ -204,7 +204,7 @@
 
         return !(!this.$refs.license.validate()
           | !this.$refs.clientname.validate()
-          | !this.$refs.clientsurname.validate()
+          | !this.$refs.clientlastName.validate()
           | !this.$refs.clientphone.validate()
           | !this.$refs.clientmail.validate())
           ;

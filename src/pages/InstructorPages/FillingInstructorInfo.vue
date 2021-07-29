@@ -62,7 +62,7 @@
         </template>
       </q-input>
       <q-input
-        v-model="data.surname"
+        v-model="data.lastName"
         class="input"
         label-slot
         :rules="[val => val.length || 'Введите фамилию']"
@@ -244,7 +244,7 @@ export default {
       data : {
         avatar:'',
         name:'',
-        surname:'',
+        lastName:'',
         phone:'',
         email:'',
         birthDate:'',
@@ -325,7 +325,7 @@ export default {
 
 
      if ( await   this.$store.dispatch("instructorInfo/saveInstructorProfile", this.data)) {
-       Vue.prototype.$eventBus.$emit("error", {
+       Vue.prototype.$eventBus.$emit("message", {
          header: "",
          text: "Успешно сохранено"
        });

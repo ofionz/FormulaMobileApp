@@ -7,8 +7,8 @@ export function setPhone (state, n) {
 export function setPassword (state, n) {
     state.password = n;
 }
-export function setSurname (state, n) {
-    state.surname = n;
+export function setLastName (state, n) {
+    state.lastName = n;
 }
 export function setEmail (state, n) {
     state.email = n;

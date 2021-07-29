@@ -146,7 +146,7 @@
     mounted() {
       swiper = document.querySelector('.swiper-container').swiper;
       this.changeMonth(this.findCurrentMonthIndex(this.initDate), this.initDate);
-      this.$emit('selected', this.date);
+      // this.$emit('selected', this.date);
     },
     methods: {
       changeHandler(value, reason, details) {
@@ -180,9 +180,11 @@
           .classList.remove('month_not_selected');
         if (date) {
           this.date = date;
-        } else {
+        }
+        else {
           this.date = this.monthesList[newMonthIndex].date;
         }
+        this.$emit('selected', this.date);
       },
 
       generateMonthes() {
@@ -192,6 +194,7 @@
         for (let i = 0; i < counter; i++) {
           let copy = new Date(today);
           copy.setMonth(today.getMonth() - (counter - i));
+          copy.setDate(1);
 
           monthes[i] = {
             date: this.formatDate(copy),
@@ -204,7 +207,7 @@
         for (let i = 1; i <= counter; i++) {
           let copy = new Date(today);
           copy.setMonth(today.getMonth() + i);
-
+          copy.setDate(1);
           monthes[i + counter] = {
             date: this.formatDate(copy),
           };

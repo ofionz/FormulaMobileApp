@@ -10,7 +10,7 @@
         </div>
         <div class="flex column">
           <span class="q-mb-xs" :class="$style.instructor_name">
-            {{ surname }} {{ name }}
+            {{ lastName }} {{ name }}
           </span>
 
           <!--<span :class="$style.instructor_description">-->
@@ -151,9 +151,9 @@ export default {
         return this.$store.state.instructorInfo.name;
       }
     },
-    surname: {
+    lastName: {
       get() {
-        return this.$store.state.instructorInfo.surname;
+        return this.$store.state.instructorInfo.lastName;
       }
     },
 

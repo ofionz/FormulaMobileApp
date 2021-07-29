@@ -5,7 +5,7 @@
 export function resetData(state, n) {
   state.avatar = '';
   state.name = '';
-  state.surname = '';
+  state.lastName = '';
   state.auto = {
     name: '',
     number: '',
@@ -36,8 +36,8 @@ export function setPhone(state, n) {
   state.phone = n;
 }
 
-export function setSurname(state, n) {
-  state.surname = n;
+export function setLastName(state, n) {
+  state.lastName = n;
 }
 
 export function setAuto(state, n) {

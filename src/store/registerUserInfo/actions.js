@@ -3,18 +3,14 @@ import Vue from "vue";
 export async  function  sendRegisterData ( context ) {
   let data =  {
     NAME: context.state.name,
-    LAST_NAME: context.state.surname,
+    LAST_NAME: context.state.lastName,
     PHONE: context.state.phone,
     EMAIL: context.state.email,
     PASSWORD: context.state.password,
   };
 return Vue.prototype.$axios
     .post(GUEST_REGISTRATION_ENDPOINT, data).then(response => {
-    if (response.data.success) {
-      return true;
-    } else {
-      return false;
-    }
+    return !!response.data.success;
   })
     .catch(error => {
       throw new Error("action sendRegisterData " + error);
@@ -24,7 +20,7 @@ return Vue.prototype.$axios
 export async  function  sendPaymentInfo ( context, paymentinfo ) {
   let data =  {
     NAME: context.state.name,
-    LAST_NAME: context.state.surname,
+    LAST_NAME: context.state.lastName,
     PHONE: context.state.phone,
     EMAIL: context.state.email,
     PRODUCT_ID: context.state.tariffId,
@@ -35,6 +31,9 @@ export async  function  sendPaymentInfo ( context, paymentinfo ) {
   };
   return Vue.prototype.$axios
     .post(GUEST_BUY_ENDPOINT, data)
+    .then(response => {
+      return !!response.data.success;
+    })
     .catch(error => {
       throw new Error("action sendPaymentInfo " + error);
     });
@@ -43,7 +42,7 @@ export async  function  sendPaymentInfo ( context, paymentinfo ) {
 export async  function  sendGuestRequest ( context ) {
   let data =  {
     NAME: context.state.name,
-    LAST_NAME: context.state.surname,
+    LAST_NAME: context.state.lastName,
     PHONE: context.state.phone,
     EMAIL: context.state.email,
     PRODUCT_ID: context.state.tariffId,
@@ -53,8 +52,8 @@ export async  function  sendGuestRequest ( context ) {
   };
   return Vue.prototype.$axios
     .post(GUEST_REQUEST_ENDPOINT, data).then(response => {
-      if (response.data && response.data.error ) return false;
-      return true
+      return !(response.data && response.data.error);
+
     })
     .catch(error => {
       throw new Error("action sendGuestRequest " + error);

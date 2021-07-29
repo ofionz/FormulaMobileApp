@@ -6,6 +6,7 @@
     <q-page-container style="padding-bottom: 0">
       <router-view
         @error="openErrorSwiper"
+        @message="openMessageSwiper"
         @blockToggle="toggleScreenBlock"
       />
       <UiPopUp
@@ -14,7 +15,7 @@
       >
         <template #label>{{ headerError }}</template>
         <template #content>
-          <span :class="$style.popup_content">{{textError}}</span>
+          <span :class="$style.popup_content" :style="'color:'+color">{{textError}}</span>
         </template>
       </UiPopUp>
     </q-page-container>
@@ -65,6 +66,7 @@
       return {
         headerError: '',
         textError: '',
+        color: '',
         isBlocked: false,
         blockIterator: 0,
         isSliderVisible: false,
@@ -72,6 +74,7 @@
     },
     created() {
       this.$eventBus.$on('error', (data) => this.openErrorSwiper(data));
+      this.$eventBus.$on('message', (data) => this.openMessageSwiper(data));
     },
     computed: {
       layoutClasses() {
@@ -90,10 +93,27 @@
       },
       openErrorSwiper(data) {
         let { header, text } = data;
+        if (!header) header = 'Ошибка!';
+        this.showSwiper (header, text, '#ff0000');
+      },
+
+      openMessageSwiper(data) {
+
+        let { header, text } = data;
+        if (!header) header = '';
+        this.showSwiper (header, text, '#00ad06');
+      },
+
+
+      showSwiper (header, text, color) {
+
         this.headerError = header;
         this.textError = text;
+        this.color = color;
+
         this.toggleScreenBlock(true);
         this.isSliderVisible = true;
+
       },
       closeErrorSwiper() {
         this.toggleScreenBlock(false);

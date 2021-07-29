@@ -153,7 +153,7 @@ export default {
       if (
         await this.$store.dispatch("instructorInfo/saveKndDocs", this.documents)
       )
-        Vue.prototype.$eventBus.$emit("error", {
+        Vue.prototype.$eventBus.$emit("message", {
           header: "",
           text: "Успешно сохранено"
         });

@@ -7,6 +7,12 @@ export function setPassword (state, n) {
 export function setToken (state, n) {
     state.token = n;
 }
+export function setRoles (state, n) {
+    state.roles = [];
+    for (let key in n) {
+        n[key].forEach ((profile) => state.roles.push({url: key.toLowerCase(), type: key, id: profile.id, name: profile.name}))
+    }
+}
 export function setRole (state, n) {
     state.role = n;
 }

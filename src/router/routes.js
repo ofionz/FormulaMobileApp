@@ -48,12 +48,18 @@ const routes = [
     component: () => import("layouts/StudentLayout.vue"),
     meta: { role: "student" },
     children: [
-      { path: "/student", redirect: "/student/driving" },
+      { path: "/student", redirect: "/student/cabinet" },
       {
         path: "driving",
         name:"driving",
         props: true,
         component: () => import("pages/StudentPages/Driving.vue")
+      },
+      {
+        path: "driving/rating",
+        name:"driving_rating",
+        props: true,
+        component: () => import("pages/StudentPages/RatingTeacher.vue")
       },
       {
         path: "driving/history",

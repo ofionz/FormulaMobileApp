@@ -4,8 +4,8 @@ import {
   INSTRUCTOR_LESSONS_DAY,
   INSTRUCTOR_CARD_STUDENT,
   INSTRUCTOR_KND_EDIT,
-  INSTRUCTOR_INFO,
-  INSTRUCTOR_PROFILE, INSTRUCTOR_PROFILE_EDIT,
+  INSTRUCTOR_PROFILE,
+  INSTRUCTOR_PROFILE_EDIT,
 } from '../../api/constants';
 import Vue from "vue";
 
@@ -17,7 +17,7 @@ export async  function  fetchInstructorProfile ( context ) {
       if (response.data) {
         context.commit("setAvatar", response.data.avatar);
         context.commit("setName", response.data.name);
-        context.commit("setSurname", response.data.lastName);
+        context.commit("setLastName", response.data.lastName);
         context.commit("setPhone", response.data.phone);
         context.commit("setEmail", response.data.email);
         context.commit("setBirthDate", response.data.birthDate);
@@ -45,7 +45,7 @@ export async  function  saveInstructorProfile  ( context, data ) {
       if (response.data.success) {
         context.commit("setAvatar", data.avatar);
         context.commit("setName", data.name);
-        context.commit("setSurname", data.surname);
+        context.commit("setLastName", data.lastName);
         context.commit("setPhone", data.phone);
         context.commit("setEmail", data.email);
         context.commit("setBirthDate", data.birthDate);

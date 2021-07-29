@@ -1,7 +1,7 @@
 export default function() {
   return {
     name: "",
-    surname: "",
+    lastName: "",
     password: "",
     phone: "",
     email: "",

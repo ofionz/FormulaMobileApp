@@ -53,9 +53,9 @@
             </template>
           </q-input>
           <q-input
-            v-model="surname"
+            v-model="lastName"
             class="input"
-            ref='surname'
+            ref='lastName'
             label-slot
             :rules="[val => val.length || 'Введите фамилию']"
           >
@@ -243,12 +243,12 @@
           this.$store.commit('registerUserInfo/setName', value);
         },
       },
-      surname: {
+      lastName: {
         get() {
-          return this.$store.state.registerUserInfo.surname;
+          return this.$store.state.registerUserInfo.lastName;
         },
         set(value) {
-          this.$store.commit('registerUserInfo/setSurname', value);
+          this.$store.commit('registerUserInfo/setLastName', value);
         },
       },
       phone: {
@@ -273,9 +273,9 @@
       registerButtonHandler() {
         this.$refs.name.validate();
         this.$refs.email.validate();
-        this.$refs.surname.validate();
+        this.$refs.lastName.validate();
         this.$refs.phone.validate();
-        if (!(this.$refs.name.hasError || this.$refs.email.hasError || this.$refs.surname.hasError || this.$refs.phone.hasError)) {
+        if (!(this.$refs.name.hasError || this.$refs.email.hasError || this.$refs.lastName.hasError || this.$refs.phone.hasError)) {
           this.firstStepRegistration = false;
         }
 

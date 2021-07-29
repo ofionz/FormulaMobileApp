@@ -13,17 +13,20 @@ export function setName (state, n) {
 export function setPhone (state, n) {
     state.phone = n;
 }
-export function setSurname (state, n) {
-    state.surname = n;
+export function setLastName (state, n) {
+    state.lastName = n;
 }
 export function setEmail (state, n) {
     state.email = n;
 }
-export function setTariffId (state, n) {
-    state.tariffId = n;
+export function setTariff(state, n) {
+    state.tariff = n;
 }
 export function setUserDepartment (state, n) {
     state.department = n;
+}
+export function setDealNumber (state, n) {
+    state.deal_number = n;
 }
 export function setBirthDate (state, n) {
     state.birthDate = n;
@@ -44,4 +47,29 @@ export function setPassportCode (state, n) {
 }
 export function setPassportAddress (state, n) {
     state.passportAddress = n;
+}
+export function setDebt (state, n) {
+    state.debt = n;
+}
+export function setLessonsLeft (state, n) {
+    state.lessonsLeft = n;
+}
+export function setInstructor (state, n) {
+    state.instructor = n;
+}
+export function setAssigned (state, n) {
+    state.assigned = n;
+}
+export function setHistoryLessons (state, n) {
+    state.historyLessons = n;
+}
+export function setAvailableDays (state, n) {
+    state.availableDays = n;
+}
+
+export function setAvailableTime (state, n) {
+    state.availableTime = n;
+}
+export function setFeedbackQuestions (state, n) {
+    state.feedbackQuestions = n;
 }

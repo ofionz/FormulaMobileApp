@@ -48,7 +48,7 @@
         </q-input>
         <q-input
           readonly
-          v-model="surname"
+          v-model="lastName"
           class="input"
           label-slot
         >
@@ -255,8 +255,8 @@
       name() {
         return this.$store.state.registerUserInfo.name;
       },
-      surname() {
-        return this.$store.state.registerUserInfo.surname;
+      lastName() {
+        return this.$store.state.registerUserInfo.lastName;
       },
       phone() {
         return this.$store.state.registerUserInfo.phone;

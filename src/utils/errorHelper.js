@@ -6,7 +6,7 @@ const errorHelper = function (response) {
   if (response.data && !error && !response.data.message) return true;
   else if (response.data.message) {
     let payload = { header: '', text: response.data.message };
-    Vue.prototype.$eventBus.$emit('error', payload);
+    Vue.prototype.$eventBus.$emit('message', payload);
   }
   else {
     let payload = { header: 'Ошибка', text: error.message };

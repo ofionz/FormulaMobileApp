@@ -109,7 +109,7 @@ export default {
       this.$refs.newPassword.validate();
       this.$refs.newPasswordCopy.validate();
       if (!this.$refs.newPassword.hasError && !this.$refs.newPasswordCopy.hasError) {
-        Vue.prototype.$eventBus.$emit("error", {
+        Vue.prototype.$eventBus.$emit("message", {
           header: "",
           text: "Успешно сохранено"
         });

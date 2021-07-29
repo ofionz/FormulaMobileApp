@@ -4,7 +4,7 @@ export default function() {
 
     avatar: "",
     name: "",
-    surname: "",
+    lastName: "",
     auto: {
       name: '',
       number: ''
@@ -17,7 +17,10 @@ export default function() {
     passportPlace: "",
     passportCode: "",
     passportAddress: "",
+    assigned: {
+      full_name: 'alsdlalsd',
 
+    },
     department: { name: "ул. Моторостроителей 9" },
 
 

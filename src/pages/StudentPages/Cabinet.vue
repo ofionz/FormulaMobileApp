@@ -8,8 +8,11 @@
         class="flex q-mb-md"
         :class="$style.student_wrap"
       >
-        <q-avatar size="86px"
-                  :class="$style.avatar" class="q-mr-md">
+        <q-avatar
+          size="86px"
+          :class="$style.avatar"
+          class="q-mr-md"
+        >
           <img :src="avatar" />
         </q-avatar>
 
@@ -21,12 +24,12 @@
             class="q-mb-xs"
             :class="$style.student_name"
           >
-            {{surname}} {{name}}
+            {{lastName}} {{name}}
           </span>
 
           <span :class="$style.student_department">
-            {{department.name}} <br />
-            «B» Стандарт, №00000000
+            {{department}} <br />
+            {{tariff}},  №{{deal_number}}
           </span>
         </div>
       </div>
@@ -45,25 +48,35 @@
             :em-size="false"
             name="car"
           />
-          6
+          {{lessonsLeft}}
         </span>
 
         <span :class="$style.instructor">
-          Инструктор: Терещенко Дмитрий
+          Инструктор: {{instructor.full_name}}
         </span>
       </div>
     </div>
 
     <div class="flex column desktop_container">
       <div :class="$style.body_header">
-        <div :class="$style.debt_wrap">
-          <span class="q-mr-sm">Долг: {{'14900'|withCurrencySymbol}}</span>
+        <div v-if="debt>0" :class="$style.debt_wrap">
+          <span class="q-mr-sm">Долг: {{debt|withCurrencySymbol}}</span>
           <span
             :class="$style.link"
             @click="openPopup"
           >Оплатить</span>
         </div>
-        <span  @click="openPopupEdit" :class="$style.link">Редактировать данные</span>
+
+        <div v-else :class="$style.debt_wrap">
+          <span class="q-mr-sm">Задолженности нет</span>
+
+        </div>
+
+
+        <span
+          @click="openPopupEdit"
+          :class="$style.link"
+        >Редактировать данные</span>
       </div>
 
       <div :class="$style.body_content">
@@ -77,7 +90,10 @@
             :class="$style.body_title"
           >Подготовить справки</span
           >
-          <span @click="openPopupTimeline" :class="$style.link">Подробнее</span>
+          <span
+            @click="openPopupTimeline"
+            :class="$style.link"
+          >Подробнее</span>
         </div>
       </div>
 
@@ -159,11 +175,19 @@
         </li>
       </ul>
 
-      <div :class="$style.admin"><span>Администратор Анна</span> <span>+7 999 999-99-99</span><a  href='tel:+79998887766'
-                                                                                                  :class="$style.admin_button">  <UiButton  theme="outline-brand">Позвонить </UiButton></a></div>
+      <div :class="$style.admin"><span>{{assigned.full_name}}</span> <span>{{assigned.phone}}</span>
+        <a
+       :href="'tel:'+assigned.phone"
+        :class="$style.admin_button"
+      >
+        <UiButton theme="outline-brand">Позвонить</UiButton>
+      </a></div>
 
-      <div  :class="$style.exit">
-        <span @click="$router.push('/guest/login')" :class="$style.link"> Выйти из аккаунта </span>
+      <div :class="$style.exit">
+        <span
+          @click="$router.push('/guest/login')"
+          :class="$style.link"
+        > Выйти из аккаунта </span>
       </div>
 
 
@@ -173,7 +197,7 @@
       :visible="isPopupVisible"
     >
       <template #label>
-        <div class="q-mb-lg">Долг {{'14900'|withCurrencySymbol}}</div>
+        <div class="q-mb-lg">Долг {{debt|withCurrencySymbol}}</div>
       </template>
       <template #content>
         <span
@@ -198,7 +222,7 @@
           </template>
         </q-input>
         <UiButton
-          @click="closePopup"
+          @click="payButtonHandler"
           fluid
           theme="background-brand"
           :class="$style.btn_pay"
@@ -212,10 +236,14 @@
       :visible="isPopupTimelineVisible"
     >
       <template #label>
-      Процесс обучения
+        Процесс обучения
       </template>
       <template #content>
-      <UiTimeline :completed='timeline.completed' :current="timeline.current" :futures="timeline.futures"/>
+        <UiTimeline
+          :completed='timeline.completed'
+          :current="timeline.current"
+          :futures="timeline.futures"
+        />
       </template>
     </UiPopUp>
     <UiPopUp
@@ -223,10 +251,13 @@
       :visible="isPopupEditVisible"
     >
       <template #label>
-       Редактировать данные
+        Редактировать данные
       </template>
       <template #content>
-      <FillingStudentInfo modal-mode @saved = "closePopupEdit"></FillingStudentInfo>
+        <FillingStudentInfo
+          modal-mode
+          @saved="closePopupEdit"
+        ></FillingStudentInfo>
       </template>
     </UiPopUp>
   </div>
@@ -247,10 +278,10 @@
       UiPopUp,
       UiButton,
       UiTimeline,
-      FillingStudentInfo
+      FillingStudentInfo,
     },
     filters: {
-      withCurrencySymbol
+      withCurrencySymbol,
     },
     data() {
       return {
@@ -258,99 +289,132 @@
         isPopupTimelineVisible: false,
         isPopupEditVisible: false,
         isPopupVisible: false,
-        paymentAmount: "",
+        paymentAmount: '',
       };
     },
+    async created() {
+      await this.$store.dispatch('studentInfo/fetchStudentProfile');
+    },
     computed: {
-      department () {
-          return this.$store.state.studentInfo.department
-        },
-      avatar: {
-        get () {
-          return this.$store.state.studentInfo.avatar
-        },
-        set (value) {
-          this.$store.commit('studentInfo/setAvatar', value)
-        }},
-      name: {
-        get () {
-          return this.$store.state.studentInfo.name
-        },
-        set (value) {
-          this.$store.commit('studentInfo/setName', value)
-        }
+      department() {
+        return this.$store.state.studentInfo.department;
       },
-      surname: {
-        get () {
-          return this.$store.state.studentInfo.surname
+      deal_number() {
+        return this.$store.state.studentInfo.deal_number;
+      },
+      avatar: {
+        get() {
+          return this.$store.state.studentInfo.avatar;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setSurname', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setAvatar', value);
+        },
+      },
+      name: {
+        get() {
+          return this.$store.state.studentInfo.name;
+        },
+        set(value) {
+          this.$store.commit('studentInfo/setName', value);
+        },
+      },
+      lastName: {
+        get() {
+          return this.$store.state.studentInfo.lastName;
+        },
+        set(value) {
+          this.$store.commit('studentInfo/setLastName', value);
+        },
       },
       phone: {
-        get () {
-          return this.$store.state.studentInfo.phone
+        get() {
+          return this.$store.state.studentInfo.phone;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setPhone', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setPhone', value);
+        },
       },
       email: {
-        get () {
-          return this.$store.state.studentInfo.email
+        get() {
+          return this.$store.state.studentInfo.email;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setEmail', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setEmail', value);
+        },
       },
       birthDate: {
-        get () {
-          return this.$store.state.studentInfo.birthDate
+        get() {
+          return this.$store.state.studentInfo.birthDate;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setBirthDate', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setBirthDate', value);
+        },
       },
       passportNumber: {
-        get () {
-          return this.$store.state.studentInfo.passportNumber
+        get() {
+          return this.$store.state.studentInfo.passportNumber;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setPassportNumber', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setPassportNumber', value);
+        },
       },
       passportDate: {
-        get () {
-          return this.$store.state.studentInfo.passportDate
+        get() {
+          return this.$store.state.studentInfo.passportDate;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setPassportDate', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setPassportDate', value);
+        },
       },
       passportPlace: {
-        get () {
-          return this.$store.state.studentInfo.passportPlace
+        get() {
+          return this.$store.state.studentInfo.passportPlace;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setPassportPlace', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setPassportPlace', value);
+        },
       },
       passportCode: {
-        get () {
-          return this.$store.state.studentInfo.passportCode
+        get() {
+          return this.$store.state.studentInfo.passportCode;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setPassportCode', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setPassportCode', value);
+        },
       },
       passportAddress: {
-        get () {
-          return this.$store.state.studentInfo.passportAddress
+        get() {
+          return this.$store.state.studentInfo.passportAddress;
         },
-        set (value) {
-          this.$store.commit('studentInfo/setPassportAddress', value)
-        }
+        set(value) {
+          this.$store.commit('studentInfo/setPassportAddress', value);
+        },
+      },
+      debt: {
+        get() {
+          return this.$store.state.studentInfo.debt;
+        },
+      },
+      instructor: {
+        get() {
+          return this.$store.state.studentInfo.instructor;
+        },
+      },
+      assigned : {
+        get() {
+          return this.$store.state.studentInfo.assigned;
+        },
+      },
+
+      lessonsLeft: {
+        get() {
+          return this.$store.state.studentInfo.lessonsLeft;
+        },
+      },
+      tariff: {
+        get() {
+          return this.$store.state.studentInfo.tariff;
+        },
       },
     },
     methods: {
@@ -379,7 +443,27 @@
         this.timeline = this.$store.state.studentInfo.timeline;
         this.isPopupTimelineVisible = true;
       },
+      payButtonHandler (){
+        let parent = this;
 
+        ipayCheckout({
+            amount: this.paymentAmount,
+            currency: 'RUB',
+            order_number: '',
+            // description: this.tariff.name,
+          },
+          function (paymentInfo) {
+            parent.$store.dispatch('studentInfo/studentBuy', paymentInfo);
+            parent.closePopup();
+          },
+          function (e = '') {
+            Vue.prototype.$eventBus.$emit('error', {
+              header: 'Ошибка оплаты',
+              text: 'Произошла ошибка во время оплаты.\n' + e,
+            });
+          });
+
+      }
 
     },
   };
@@ -395,20 +479,29 @@
   .cabinet_header {
     @include gradientBrand;
     height: $tab_panel_height;
-    padding: 58px 16px 0;
+    padding: 20px 16px 0;
     color: $colorWhite;
 
     .student_wrap {
       flex-wrap: nowrap !important;
-      width: 50%;
+      width: 80%;
+      @media (min-width: 1200px) {
+        width: 50%;
+      }
     }
+
     .instructor_wrap {
-      width: 50%;
+      width: 80%;
+      @media (min-width: 1200px) {
+        width: 50%;
+      }
     }
-    @media (min-width: 1200px){
+
+    @media (min-width: 1200px) {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 58px 16px 0;
     }
   }
 
@@ -497,18 +590,21 @@
     @include signature_12-16_semibold;
     font-weight: 400;
   }
-  .avatar{
+
+  .avatar {
     box-shadow: 0 0 0 2px $colorWhite;
 
   }
+
   .admin {
     display: flex;
     flex-direction: column;
     align-self: center;
     align-items: center;
-   padding: 0 16px;
+    padding: 0 16px;
     margin-top: 20px;
     width: 100%;
+
     &_button {
       margin-top: 8px;
       text-decoration: none;

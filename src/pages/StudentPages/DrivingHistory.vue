@@ -16,9 +16,9 @@
     </div>
     <div v-for="(row, index) in history" :key = 'index' :class="$style.history">
       <span>{{index+1}}</span>
-      <span>{{row.date}}</span>
-      <span>{{row.state}}</span>
-      <span>{{row.instructor}}</span>
+      <span>{{row.date}} в {{row.time}}</span>
+      <span>{{row.status}}</span>
+      <span>{{row.teacher}}</span>
       </div>
     </div>
     </div>
@@ -29,23 +29,15 @@
   export default {
     name: 'DrivingHistory',
     components: { UiPageTitle},
+
+    async created() {
+      await this.$store.dispatch('studentInfo/fetchStudentHistoryLessons');
+      this.history =  this.$store.state.studentInfo.historyLessons;
+
+    },
     data: () => {
       return {
         history: [
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-          {date: '03.06.2020 в 08:00', state: "Состоявшееся", instructor: 'Ежов Иван Николаевич'},
-
         ]
       }
     }

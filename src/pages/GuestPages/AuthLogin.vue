@@ -24,7 +24,7 @@
         v-ripple="false"
         :class="$style.tab"
         class="text-capitalize"
-        ><label :class="$style.tab_label">Регистрация</label>
+      ><label :class="$style.tab_label">Регистрация</label>
       </q-route-tab>
     </q-tabs>
     <q-tab-panels
@@ -34,7 +34,10 @@
       animated
     >
       <q-tab-panel name="login">
-        <div :class="$style.login_title" class="q-mb-lg q-mt-md">
+        <div
+          :class="$style.login_title"
+          class="q-mb-lg q-mt-md"
+        >
           Для курсантов и сотрудников
         </div>
         <q-input
@@ -75,7 +78,11 @@
         >
           Войти
         </UiButton>
-        <UiPopUp @close="closeSwiper" :visible="isSliderVisible">
+        <UiPopUp
+          @close="closeSwiper"
+          :visible="isSliderVisible"
+
+        >
           <template #label>Под кем заходим ?</template>
           <template #content>
             <UiButton
@@ -83,13 +90,13 @@
               class="q-mt-lg"
               fluid
               theme="outline-brand"
-              @click="selectRoleHandler('teacher')"
+              @click="() => openProfileSwiper('teacher')"
             >
               Преподаватель
             </UiButton>
             <UiButton
               class="q-mt-md"
-              @click="selectRoleHandler('student')"
+              @click="() => openProfileSwiper('student')"
               fluid
               theme="outline-brand"
               v-if="roles.find(role => role.url === 'student')"
@@ -98,7 +105,7 @@
             </UiButton>
             <UiButton
               v-if="roles.find(role => role.url === 'instructor')"
-              @click="selectRoleHandler('instructor')"
+              @click="() => openProfileSwiper('instructor')"
               class="q-mt-md"
               fluid
               theme="outline-brand"
@@ -108,13 +115,34 @@
 
             <UiButton
               v-if="roles.find(role => role.url === 'examinator')"
-              class="q-mt-md q-mb-xl"
+              class="q-mt-md"
               fluid
               theme="outline-brand"
-              @click="selectRoleHandler('examinator')"
+              @click="() => openProfileSwiper('examinator')"
             >
               Экзаменатор
             </UiButton>
+          </template>
+        </UiPopUp>
+
+        <UiPopUp
+          @close="closeSwiper"
+          :visible="isProfileSliderVisible"
+        >
+          <template #label>Какой профиль выбираем ?</template>
+          <template #content>
+            <UiButton
+
+              v-for="(profile, index) in roles.filter(role => role.type.toLowerCase() === roleType.toLowerCase()) "
+              :key="index"
+              class="q-mt-lg q-mb-md"
+              fluid
+              theme="outline-brand"
+              @click="selectRoleHandler (profile)"
+            >
+              {{profile.name}}
+            </UiButton>
+
           </template>
         </UiPopUp>
       </q-tab-panel>
@@ -123,123 +151,141 @@
 </template>
 
 <script>
-import UiButton from "../../components/UiButton";
-import UiPopUp from "../../components/UiPopUp";
 
-export default {
-  name: "MainLayout",
-  components: {
-    UiPopUp,
-    UiButton
-  },
-  data() {
-    return {
-      isSliderVisible: false,
-      tab: "register",
-      login: "inst@formula.as",
-      password: "1234567",
-      roles: []
-    };
-  },
-  mounted() {
-    this.$store.commit('instructorInfo/resetData');
-    if (window.device) {
-      StatusBar.overlaysWebView(true);
-      FCM.onNotification(object => {
-        this.$eventBus.$emit("error", {
-          head: " ",
-          text: JSON.stringify(object)
+  import UiButton from '../../components/UiButton';
+  import UiPopUp from '../../components/UiPopUp';
+
+  export default {
+    name: 'MainLayout',
+    components: {
+      UiPopUp,
+      UiButton,
+    },
+    data() {
+      return {
+        isSliderVisible: false,
+        isProfileSliderVisible: false,
+        tab: 'register',
+        login: 'qwe@qwe.ru',
+        password: '123123',
+        roleType: '',
+        roles: [],
+      };
+    },
+    mounted() {
+      this.$store.commit('instructorInfo/resetData');
+      if (window.device) {
+        StatusBar.overlaysWebView(true);
+        FCM.onNotification(object => {
+          this.$eventBus.$emit('error', {
+            head: ' ',
+            text: JSON.stringify(object),
+          });
         });
-      });
-    }
-  },
-
-  methods: {
-    async loginButtonHandler() {
-      //    const fcmToken = await FCM.getToken();
-      // this.$eventBus.$emit ('error', {head:' ',text: fcmToken})
-      this.$refs.login.validate() ; this.$refs.password.validate();
-      if (!(this.$refs.login.hasError || this.$refs.password.hasError)) {
-        let payload = {
-          login: this.login,
-          password: this.password
-        };
-        // this.$store.dispatch("authInfo/login", payload).then(this.getRoles);
-        this.selectRoleHandler ('student')
-      //   if (await this.$store.dispatch("authInfo/login", payload)) {
-      //       this.selectRoleHandler (this.$store.state.authInfo.role)}
       }
     },
 
-    // async getRoles(isAuth) {
-    //   if (isAuth) {
-        // await this.$store.dispatch("authInfo/fetchRoles");
-        // this.roles = this.$store.state.authInfo.roles;
-    //     if (this.roles.length > 1) this.openSwiper();
-    //     else if (this.roles.length === 1) {
-    //       this.selectRoleHandler(this.roles[0].url);
-    //     }
-    //   }
-    // },
+    methods: {
+      async loginButtonHandler() {
+        //    const fcmToken = await FCM.getToken();
+        // this.$eventBus.$emit ('error', {head:' ',text: fcmToken})
+        this.$refs.login.validate();
+        this.$refs.password.validate();
+        if (!(this.$refs.login.hasError || this.$refs.password.hasError)) {
+          let payload = {
+            login: this.login,
+            password: this.password,
+          };
 
-    closeSwiper() {
-      this.$emit("blockToggle", false);
-      this.isSliderVisible = false;
-    },
+          await this.$store.dispatch('authInfo/login', payload).then(this.getRoles);
+        }
+      },
 
-    openSwiper() {
-      this.$emit("blockToggle", true);
-      this.isSliderVisible = true;
-    },
-    isValidPhone() {
-      const phonePattern = /^9/;
-      return phonePattern.test(this.phone) || 'Проверьте правильность ввода номера телефона';
-    },
-    isValidEmail() {
-      const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
-      return (
-        emailPattern.test(this.login) || "Проверьте правильность ввода почты"
-      );
-    },
+      async getRoles(isAuth) {
 
-    async selectRoleHandler(role) {
-      // if (
-      //   await this.$store.dispatch(
-      //     'authInfo/selectRole',
-      //     this.roles.find(elem => elem.url === role).ID,
-      //   )
-      // ) {
-      await this.$router.push("/" + role);
-      // }
-    }
-  }
-};
+        if (isAuth) {
+          this.roles = this.$store.state.authInfo.roles;
+
+          if (this.roles.length > 1) this.openSwiper();
+          else if (this.roles.length === 1) {
+            this.selectRoleHandler(this.roles[0]);
+          }
+        }
+      },
+
+      closeSwiper() {
+        this.$emit('blockToggle', false);
+        this.isSliderVisible = false;
+        this.isProfileSliderVisible = false;
+      },
+
+      openSwiper() {
+        this.$emit('blockToggle', true);
+        this.isSliderVisible = true;
+      },
+      openProfileSwiper(type) {
+        this.roleType = type;
+        if (this.roles.filter(role => role.type.toLowerCase() === this.roleType.toLowerCase()).length === 1) {
+          this.selectRoleHandler(this.roles.find(role => role.type.toLowerCase() === this.roleType.toLowerCase()));
+        }
+        this.$emit('blockToggle', true);
+        this.isProfileSliderVisible = true;
+
+      },
+
+
+      isValidPhone() {
+        const phonePattern = /^9/;
+        return phonePattern.test(this.phone) || 'Проверьте правильность ввода номера телефона';
+      },
+      isValidEmail() {
+        const emailPattern = /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+        return (
+          emailPattern.test(this.login) || 'Проверьте правильность ввода почты'
+        );
+      },
+
+      async selectRoleHandler(profile) {
+        if (
+          await this.$store.dispatch(
+            'authInfo/selectRole',
+            profile,
+          )
+        ) {
+          await this.$router.push('/' + profile.url);
+        }
+      },
+    },
+  };
 </script>
-<style lang="scss" module>
-//$
-$tab_panel_height: 120px;
+<style
+  lang="scss"
+  module
+>
+  //$
+  $tab_panel_height: 120px;
 
-.tab {
-  align-self: flex-end;
-}
+  .tab {
+    align-self: flex-end;
+  }
 
-.tab_wrap {
-  @include gradientBrand;
-  height: $tab_panel_height;
-}
+  .tab_wrap {
+    @include gradientBrand;
+    height: $tab_panel_height;
+  }
 
-.tab_label {
-  @include title_20-24_bold;
-  color: $colorWhite;
-  padding: 0 8px;
-  margin-bottom: 16px;
-}
+  .tab_label {
+    @include title_20-24_bold;
+    color: $colorWhite;
+    padding: 0 8px;
+    margin-bottom: 16px;
+  }
 
-.login_title {
-  @include text_16-22_medium;
-}
+  .login_title {
+    @include text_16-22_medium;
+  }
 
-.panels {
-  height: calc(100vh - #{$tab_panel_height});
-}
+  .panels {
+    height: calc(100vh - #{$tab_panel_height});
+  }
 </style>
