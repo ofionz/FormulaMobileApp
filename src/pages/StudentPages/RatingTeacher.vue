@@ -78,12 +78,14 @@
               currentAnswer = {
                 id: questionElem.id,
                 q_id: questionElem.question.id,
-                withComment: answer.comment,
+                comment: answer.comment,
+                checkbox: answer.checkbox,
                 value: answer.value,
               }
             "
             >
               <UiIcon
+                v-if="answer.icon"
                 :class="$style[answer.icon]"
                 :color-inheritance="true"
                 :name="answer.icon"
@@ -93,11 +95,17 @@
 
         </div>
 
+        <div class="flex column"  v-if="currentAnswer.checkbox" >
+          <q-checkbox v-for="(check, index) in currentAnswer.checkbox" :key="index" :label="check.text" v-model = check.value size="sm" color="grey">
+          </q-checkbox>
+        </div>
+
         <q-input
-          v-if="currentAnswer.withComment"
+          v-if="currentAnswer.comment"
           label-slot
-          v-model = "currentAnswer.value.comment"
+          v-model = "currentAnswer.comment.value"
           class="input"
+
         >
           <template v-slot:label>
             <div class="row items-center all-pointer-events input_label">
@@ -239,7 +247,7 @@
   .smiles {
     padding: 0 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     user-select: none;
     margin-bottom: 32px;
   }
@@ -254,6 +262,7 @@
     flex-direction: column;
     align-items: center;
     color: $colorBlack;
+    margin: 2px;
   }
 
   .button {
