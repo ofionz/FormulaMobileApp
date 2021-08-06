@@ -37,6 +37,7 @@
         default: false,
       },
     },
+
     computed: {
       classes() {
         const { $style } = this;

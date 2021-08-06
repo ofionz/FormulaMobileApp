@@ -131,17 +131,25 @@
         >
           <template #label>Какой профиль выбираем ?</template>
           <template #content>
+            <div   v-for="(profile, index) in roles.filter(role => role.type.toLowerCase() === roleType.toLowerCase()) "
+                   :key="index"  class="q-mt-lg q-mb-md flex flex-center" >
+              <div :class="$style.profile_button__wrap" >
             <UiButton
 
-              v-for="(profile, index) in roles.filter(role => role.type.toLowerCase() === roleType.toLowerCase()) "
-              :key="index"
-              class="q-mt-lg q-mb-md"
               fluid
               theme="outline-brand"
               @click="selectRoleHandler (profile)"
             >
+              <UiIcon
+                :color-inheritance="true"
+                :class="$style.profile_icon"
+                :name="profile.category"
+              >
+              </UiIcon>
               {{profile.name}}
             </UiButton>
+              </div>
+            </div>
 
           </template>
         </UiPopUp>
@@ -153,6 +161,7 @@
 <script>
 
   import UiButton from '../../components/UiButton';
+  import UiIcon from '../../components/UiIcon';
   import UiPopUp from '../../components/UiPopUp';
 
   export default {
@@ -160,13 +169,14 @@
     components: {
       UiPopUp,
       UiButton,
+      UiIcon,
     },
     data() {
       return {
         isSliderVisible: false,
         isProfileSliderVisible: false,
         tab: 'register',
-        login: 'qwe@qwe.ru',
+        login: 'toster@mail.ru',
         password: '123123',
         roleType: '',
         roles: [],
@@ -246,6 +256,7 @@
       },
 
       async selectRoleHandler(profile) {
+
         if (
           await this.$store.dispatch(
             'authInfo/selectRole',
@@ -287,5 +298,14 @@
 
   .panels {
     height: calc(100vh - #{$tab_panel_height});
+  }
+  .profile_icon{
+    color:#0661B2;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  .profile_button__wrap {
+    width: 90%;
   }
 </style>
