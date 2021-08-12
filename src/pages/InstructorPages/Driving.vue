@@ -17,7 +17,9 @@
         @click='$router.push({ name: "drivingDetails", params: {lesson: lesson, date: currentDate}})'
         :class="$style.body_li"
       >
-        {{`${lesson.time}, ${lesson.duration} ${lesson.studentName}`}}
+        <span v-if="lesson.id"> {{`${lesson.time}, ${lesson.duration} ${lesson.studentName}`}}</span>
+        <span v-else> {{`${lesson.time}, ${lesson.duration} - Занятия нет`}}</span>
+
         <UiIcon
           :class="$style.body_icon"
           :color-inheritance="true"

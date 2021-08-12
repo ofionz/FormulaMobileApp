@@ -176,8 +176,8 @@
         isSliderVisible: false,
         isProfileSliderVisible: false,
         tab: 'register',
-        login: 'toster@mail.ru',
-        password: '123123',
+        login: '',
+        password: '',
         roleType: '',
         roles: [],
       };

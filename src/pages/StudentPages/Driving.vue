@@ -181,6 +181,7 @@
           arr.forEach((el, index) => index === 0 ? str += el : str += ', ' + el);
           return str;
         }
+
       },
 
 
@@ -195,6 +196,8 @@
             time: this.currentTime,
           })
         ) {
+          this.$store.commit('studentInfo/setAvailableDayStatus', {date: this.currentDate, status: true} );
+          this.selectedDateHandler(this.currentDate);
           this.$emit('blockToggle', true);
           this.popupMessage = 'Вы записаны!';
           this.isPopupVisible = true;
@@ -208,6 +211,8 @@
             time: this.currentTime,
           })
         ) {
+          this.$store.commit('studentInfo/setAvailableDayStatus', {date: this.currentDate, status: false} );
+          this.selectedDateHandler(this.currentDate);
           this.$emit('blockToggle', true);
           this.popupMessage = 'Вы отменили занятие';
           this.isPopupVisible = true;
@@ -215,11 +220,14 @@
       },
 
       async selectedDateHandler(date) {
+        this.$store.commit('studentInfo/setAvailableTime', []);
         this.currentTime = '';
         this.resetCurrentDateTimeStyles();
-        await this.$store.dispatch('studentInfo/fetchAvailableTime', date);
+        if ( this.availableDays.find((el) => el === date)) {
 
-        this.currentDate = date;
+          await this.$store.dispatch('studentInfo/fetchAvailableTime', date);
+          this.currentDate = date;
+        }
       },
       selectTimeHandler(time, event) {
         if (this.currentTime === time) {

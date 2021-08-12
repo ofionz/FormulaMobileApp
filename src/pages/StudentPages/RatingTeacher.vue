@@ -163,6 +163,7 @@
     methods: {
       async setAnswer() {
         this.allAnswers.push(this.currentAnswer);
+        this.currentAnswer = '';
         this.iterator++;
         if (this.iterator === this.questions.length) {
           await this.$store.dispatch('studentInfo/sendFeedbackAnswers', this.allAnswers);

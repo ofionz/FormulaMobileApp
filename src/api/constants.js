@@ -1,4 +1,5 @@
 const API_ENDPOINT = 'https://b24dev13.formula.starlabs.su/api/v1/';
+// const API_ENDPOINT = 'https://b24.formula.as/api/v1/';
 
 
 export const AUTH_ENDPOINT = `${API_ENDPOINT}GuestAuth/`;

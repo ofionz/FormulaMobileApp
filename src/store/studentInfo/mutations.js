@@ -67,6 +67,11 @@ export function setAvailableDays (state, n) {
     state.availableDays = n;
 }
 
+export function setAvailableDayStatus (state, {date, status}) {
+    state.availableDays.find((el) => el.date === date).can_unsigned = status;
+}
+
+
 export function setAvailableTime (state, n) {
     state.availableTime = n;
 }

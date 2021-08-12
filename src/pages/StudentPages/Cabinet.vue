@@ -50,16 +50,28 @@
           />
           {{lessonsLeft}}
         </span>
+        <span
+          v-if="instructor"
+          :class="$style.instructor"
+        >
+              Инструктор: {{instructor.full_name}}
+        </span>
+        <span
+          v-else
+          :class="$style.instructor"
+        >
+                Инструктор не назначен
 
-        <span :class="$style.instructor">
-          Инструктор: {{instructor.full_name}}
         </span>
       </div>
     </div>
 
     <div class="flex column desktop_container">
       <div :class="$style.body_header">
-        <div v-if="debt>0" :class="$style.debt_wrap">
+        <div
+          v-if="debt>0"
+          :class="$style.debt_wrap"
+        >
           <span class="q-mr-sm">Долг: {{debt|withCurrencySymbol}}</span>
           <span
             :class="$style.link"
@@ -67,7 +79,10 @@
           >Оплатить</span>
         </div>
 
-        <div v-else :class="$style.debt_wrap">
+        <div
+          v-else
+          :class="$style.debt_wrap"
+        >
           <span class="q-mr-sm">Задолженности нет</span>
 
         </div>
@@ -175,13 +190,19 @@
         </li>
       </ul>
 
-      <div :class="$style.admin"><span>{{assigned.full_name}}</span> <span>{{assigned.phone}}</span>
+      <div
+        :class="$style.admin"
+        v-if="assigned"
+      ><span>{{assigned.full_name}}</span>
+
+        <span v-if="assigned.phone">{{assigned.phone}}</span>
         <a
-       :href="'tel:'+assigned.phone"
-        :class="$style.admin_button"
-      >
-        <UiButton theme="outline-brand">Позвонить</UiButton>
-      </a></div>
+          :href="'tel:'+assigned.phone"
+          v-if="assigned.phone"
+          :class="$style.admin_button"
+        >
+          <UiButton theme="outline-brand">Позвонить</UiButton>
+        </a></div>
 
       <div :class="$style.exit">
         <span
@@ -400,7 +421,7 @@
           return this.$store.state.studentInfo.instructor;
         },
       },
-      assigned : {
+      assigned: {
         get() {
           return this.$store.state.studentInfo.assigned;
         },
@@ -443,7 +464,7 @@
         this.timeline = this.$store.state.studentInfo.timeline;
         this.isPopupTimelineVisible = true;
       },
-      payButtonHandler (){
+      payButtonHandler() {
         let parent = this;
 
         ipayCheckout({
@@ -463,7 +484,7 @@
             });
           });
 
-      }
+      },
 
     },
   };
