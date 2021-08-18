@@ -35,9 +35,7 @@
           </template>
         </q-input>
 
-        <UiCheckbox  @change="(val)=>this.anon=val" class="q-mt-lg q-mb-lg"
-          ><span :class="$style.checkbox_label"
-            >Отправить анонимно</span
+        <UiCheckbox label="Отправить анонимно" @change="(val)=>this.anon=val" class="q-mt-lg q-mb-lg"
           ></UiCheckbox
         >
 
