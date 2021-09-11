@@ -28,4 +28,5 @@ export const STUDENT_SIGNED_LESSON= `${API_ENDPOINT}StudentSignedLesson/`;
 export const STUDENT_UNSIGNED_LESSON= `${API_ENDPOINT}StudentUnSignedLesson/`;
 export const STUDENT_FEEDBACK= `${API_ENDPOINT}StudentFeedBack/`;
 export const STUDENT_FEEDBACK_ANSWER= `${API_ENDPOINT}StudentFeedBackAnswer/`;
+export const STUDENT_REVIEW= `${API_ENDPOINT}StudentReview/`;
 

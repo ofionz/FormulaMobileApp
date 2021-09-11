@@ -10,6 +10,7 @@ import {
   STUDENT_UNSIGNED_LESSON,
   STUDENT_FEEDBACK,
   STUDENT_FEEDBACK_ANSWER,
+  STUDENT_REVIEW,
 } from '../../api/constants';
 import Vue from "vue";
 export async  function  fetchStudentProfile ( context ) {
@@ -137,6 +138,17 @@ export async  function  signUpStudent  ( context, data ) {
     })
     .catch(error => {
       throw new Error("action signUpStudent" + error);
+    });
+}
+
+export async  function  sendReview  ( context, data ) {
+  return Vue.prototype.$axios
+    .post(STUDENT_REVIEW, data)
+    .then(response => {
+      return !!response.data.success;
+    })
+    .catch(error => {
+      throw new Error("action sendReview" + error);
     });
 }
 export async  function  unsignStudent  ( context, data ) {

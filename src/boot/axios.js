@@ -11,10 +11,6 @@ export default ({ app, router, store, Vue }) => {
   axios.interceptors.request.use(startPreloaderInterceptor, ErrorRequestHandler);
   axios.interceptors.response.use(stopPreloaderInterceptor, ErrorRequestHandler);
   axios.interceptors.response.use(serverResponseErrorHandler, ErrorRequestHandler);
-
-
-
-
 };
 
 const createSetAuthInterceptor = options => config => {

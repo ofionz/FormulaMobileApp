@@ -113,18 +113,18 @@
       </div>
 
       <ul :class="$style.body_ul">
-        <li
-          class="flex"
-          :class="$style.body_li"
-        >
-          Магазин
-          <UiIcon
-            :class="$style.body_icon"
-            :color-inheritance="true"
-            :em-size="false"
-            name="arrow"
-          />
-        </li>
+        <!--<li-->
+        <!--  class="flex"-->
+        <!--  :class="$style.body_li"-->
+        <!--&gt;-->
+        <!--  Магазин-->
+        <!--  <UiIcon-->
+        <!--    :class="$style.body_icon"-->
+        <!--    :color-inheritance="true"-->
+        <!--    :em-size="false"-->
+        <!--    name="arrow"-->
+        <!--  />-->
+        <!--</li>-->
         <li
           class="flex"
           :class="$style.body_li"
@@ -151,30 +151,30 @@
             name="arrow"
           />
         </li>
-        <li
-          class="flex"
-          :class="$style.body_li"
-        >
-          Докупить вождение
-          <UiIcon
-            :class="$style.body_icon"
-            :color-inheritance="true"
-            :em-size="false"
-            name="arrow"
-          />
-        </li>
-        <li
-          class="flex"
-          :class="$style.body_li"
-        >
-          Купить ещё пакет обучения
-          <UiIcon
-            :class="$style.body_icon"
-            :color-inheritance="true"
-            :em-size="false"
-            name="arrow"
-          />
-        </li>
+        <!--<li-->
+        <!--  class="flex"-->
+        <!--  :class="$style.body_li"-->
+        <!--&gt;-->
+        <!--  Докупить вождение-->
+        <!--  <UiIcon-->
+        <!--    :class="$style.body_icon"-->
+        <!--    :color-inheritance="true"-->
+        <!--    :em-size="false"-->
+        <!--    name="arrow"-->
+        <!--  />-->
+        <!--</li>-->
+        <!--<li-->
+        <!--  class="flex"-->
+        <!--  :class="$style.body_li"-->
+        <!--&gt;-->
+        <!--  Купить ещё пакет обучения-->
+        <!--  <UiIcon-->
+        <!--    :class="$style.body_icon"-->
+        <!--    :color-inheritance="true"-->
+        <!--    :em-size="false"-->
+        <!--    name="arrow"-->
+        <!--  />-->
+        <!--</li>-->
         <li
           class="flex"
           :class="$style.body_li"
